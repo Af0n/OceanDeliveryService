@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class WindManager : MonoBehaviour
 {
+    public Transform WindVisual;
     [Header("Testing")]
     public bool Test;
     public Vector3 TestWind;
@@ -20,6 +21,7 @@ public class WindManager : MonoBehaviour
 
     public void SetWind(Vector3 wind){
         this.wind = wind;
+        WindVisual.transform.rotation = Quaternion.Euler(TestWind);
     }
 
     public void SetWind(Vector3 direction, float speed){
