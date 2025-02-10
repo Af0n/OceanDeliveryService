@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using UnityEngine;
 
 public class WindManager : MonoBehaviour
@@ -7,10 +8,17 @@ public class WindManager : MonoBehaviour
     public bool Test;
     public Vector3 TestWind;
 
-    private Vector3 wind;
+    private Vector3 windDir;
+    private static WindManager instance;
 
     private void Awake() {
-        wind = new Vector3(0,0,0);
+        windDir = new Vector3(0,0,0);
+
+        // singleton
+        if(instance != null){
+            return;
+        }
+        instance = this;
     }
 
     private void Update() {
@@ -19,9 +27,12 @@ public class WindManager : MonoBehaviour
         }
     }
 
+    public static WindManager GetInstance(){
+        return instance;
+    }
+
     public void SetWind(Vector3 wind){
-        this.wind = wind;
-        WindVisual.transform.rotation = Quaternion.Euler(TestWind);
+        windDir = wind;
     }
 
     public void SetWind(Vector3 direction, float speed){
