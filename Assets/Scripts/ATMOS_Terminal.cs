@@ -10,6 +10,11 @@ public class ATMOS_Terminal : MonoBehaviour
     public Transform TerminalUI;
 
     private WindManager windManager;
+    private Transform mainCam;
+
+    private void Awake() {
+        mainCam = Camera.main.transform;
+    }
 
     private void Start() {
         windManager = WindManager.Instance;
@@ -17,20 +22,20 @@ public class ATMOS_Terminal : MonoBehaviour
 
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)){
-            Interact(Camera.main.transform);
+            Interact();
         }
     }
 
-    public void Interact(Transform cam){
+    public void Interact(){
         // [TODO] lock player movement
-        cam.SetPositionAndRotation(CamPos.position, CamPos.rotation); // [TODO] smoother transition
+        mainCam.SetPositionAndRotation(CamPos.position, CamPos.rotation); // [TODO] smoother transition
         Cursor.lockState = CursorLockMode.None; // Unlock cursor
         TerminalUI.gameObject.SetActive(true); // show UI
     }
 
-    public void Cancel(Transform cam){
+    public void Cancel(){
         // [TODO] unlock player movement
-        cam.SetLocalPositionAndRotation(new Vector3(0f,0.75f,0f), Quaternion.identity); // [TODO] smoother transition
+        mainCam.SetLocalPositionAndRotation(new Vector3(0f,0.75f,0f), Quaternion.identity); // [TODO] smoother transition
         Cursor.lockState = CursorLockMode.Locked; // lock cursor
         TerminalUI.gameObject.SetActive(false); // hide UI
     }
