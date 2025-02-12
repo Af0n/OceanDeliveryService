@@ -22,6 +22,11 @@ public class WindManager : MonoBehaviour
     public static WindManager Instance;
 
     private Vector3 windDir;
+
+    public Vector3 WindDir{
+        get { return windDir; }
+        set { SetWind(value); } // uses SetWind(Vector3)
+    }
     
     private void Awake() {
         windDir = new Vector3(0,0,0);
