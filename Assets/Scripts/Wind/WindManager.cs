@@ -13,28 +13,19 @@ public class WindManager : MonoBehaviour
     7 = North-West
     */
 
-    public Transform WindVisual;
     [Header("Testing")]
     public bool Test;
     public Vector3 TestWind;
 
-    [HideInInspector]
-    public static WindManager Instance;
+    private static Vector3 windDir;
 
-    private Vector3 windDir;
-
-    public Vector3 WindDir{
+    public static Vector3 WindDir{
         get { return windDir; }
         set { SetWind(value); } // uses SetWind(Vector3)
     }
     
     private void Awake() {
         windDir = new Vector3(0,0,0);
-
-        // singleton
-        if(Instance == null){
-            Instance = this;
-        }
     }
 
     private void Update() {
@@ -43,25 +34,21 @@ public class WindManager : MonoBehaviour
         }
     }
 
-    public void SetWind(Vector3 wind){
+    public static void SetWind(Vector3 wind){
         windDir = wind;
-
-        var vOverL = WindVisual.GetComponent<ParticleSystem>().velocityOverLifetime;
-        vOverL.x = windDir.x;
-        vOverL.z = windDir.z;
     }
 
-    public void SetWind(Vector3 direction, float speed){
+    public static void SetWind(Vector3 direction, float speed){
         SetWind(direction * speed);
     }
 
-    public void SetWind(int windCode){
+    public static void SetWind(int windCode){
         Vector3 direction = WindCodetoVec3(windCode);
         
         SetWind(direction);
     }
 
-    public Vector3 WindCodetoVec3(int windCode){
+    public static Vector3 WindCodetoVec3(int windCode){
         switch(windCode){
             case 0:
                 return new Vector3(0f, 0f, 10f);

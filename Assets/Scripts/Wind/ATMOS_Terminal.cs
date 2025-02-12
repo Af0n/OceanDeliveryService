@@ -16,10 +16,6 @@ public class ATMOS_Terminal : MonoBehaviour
         mainCam = Camera.main.transform;
     }
 
-    private void Start() {
-        windManager = WindManager.Instance;
-    }
-
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)){
             Interact();
@@ -42,6 +38,6 @@ public class ATMOS_Terminal : MonoBehaviour
 
     // i had to do it this way for it to be recognized in the unity event for buttons
     public void SetWind(int windCode){
-        windManager.SetWind(windCode);
+        WindManager.SetWind(windCode);
     }
 }
