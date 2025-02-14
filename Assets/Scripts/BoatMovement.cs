@@ -135,8 +135,8 @@ public class BoatMovement : MonoBehaviour
     {
         if (context.started)
         {
+            anchored = true;
             dismountBoat?.Invoke();
         }
-        
     }
 }

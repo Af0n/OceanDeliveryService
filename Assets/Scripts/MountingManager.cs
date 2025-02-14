@@ -26,6 +26,9 @@ public class MountingManager : MonoBehaviour
     {
         playerInput.enabled = false;
         playerCamera.SetActive(false);
+        playerInput.gameObject.GetComponent<CharacterController>().enabled = false;
+        playerInput.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        playerInput.gameObject.transform.SetParent(boatInput.gameObject.transform, true);
         
         boatInput.enabled = true;
         boatCamera.SetActive(true);
@@ -35,8 +38,10 @@ public class MountingManager : MonoBehaviour
     {
         playerInput.enabled = true;
         playerCamera.SetActive(true);
-        playerInput.gameObject.GetComponent<PlayerMovement>().DeactivateWheel();
-        
+        playerInput.gameObject.GetComponent<PlayerMovement>().enabled = true;
+        playerInput.gameObject.GetComponent<CharacterController>().enabled = true;
+        playerInput.gameObject.transform.SetParent(null, true);
+
         boatInput.enabled = false;
         boatCamera.SetActive(false);
     }

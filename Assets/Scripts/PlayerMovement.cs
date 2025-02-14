@@ -147,16 +147,7 @@ public class PlayerMovement : MonoBehaviour
         
         direction = (localForward * input.y + localRight * input.x).normalized;
         direction.y = velocity;
-    
-        if (isOnBoat)
-        {
-            cc.Move(boatMovement.boatDirection * Time.deltaTime);
-            
-            if (isOnWheel)
-            {
-                transform.rotation = Wheel.transform.rotation;
-            }
-        }
+        
         direction *= currentSpeed;
         cc.Move(direction * Time.deltaTime);
     }
