@@ -7,7 +7,6 @@ public class PauseUI : MonoBehaviour
     [Tooltip("How long the menu remembers the selected window.")]
     public float SelectionMemoryTime;
     public int DefaultPanel;
-    public int OptionsIndex;
 
     [Header("Unity Setup")]
     public Transform PauseMenu;
@@ -20,14 +19,22 @@ public class PauseUI : MonoBehaviour
     private bool isPaused;
     private int activeMenu;
 
+    public int systemIndex;
+    public int optionsIndex;
+
     private void Awake()
     {
         // input system boilerplate
         actions = new InputSystem_Actions();
 
         isPaused = false;
+
+        // dynamically grabbing panels with unique functionality
+        optionsIndex = ScreenPanels.Find("Options").GetSiblingIndex();
+        systemIndex = ScreenPanels.Find("System").GetSiblingIndex();
+
         // defaults to inventory screen
-        SetActiveMenu(2);
+        SetActiveMenu(DefaultPanel);
     }
 
     private IEnumerator ResetActiveWindow()
@@ -36,12 +43,18 @@ public class PauseUI : MonoBehaviour
         SetActiveMenu(DefaultPanel);
     }
 
-    public void Pause(){
-        if(activeMenu == OptionsIndex){
-
+    public void Pause()
+    {
+        // travels back to System if on Options
+        if (activeMenu == optionsIndex)
+        {
+            SetActiveMenu(systemIndex);
+            return;
         }
-        isPaused = !isPaused;
 
+        // actually pause/unpause happens here
+
+        isPaused = !isPaused;
         PauseMenu.gameObject.SetActive(isPaused);
 
         if (isPaused)

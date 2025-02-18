@@ -3261,6 +3261,7 @@ MonoBehaviour:
   SelectionMemoryTime: 5
   DefaultPanel: 2
   OptionsIndex: 5
+  SystemIndex: 4
   PauseMenu: {fileID: 353951635}
   ScreenPanels: {fileID: 1853756073}
 --- !u!1 &1639333525
