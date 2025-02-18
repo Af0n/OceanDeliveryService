@@ -7,15 +7,11 @@ public class PauseUI : MonoBehaviour
     [Tooltip("How long the menu remembers the selected window.")]
     public float SelectionMemoryTime;
     public int DefaultPanel;
+    public int OptionsIndex;
 
-    [Space]
+    [Header("Unity Setup")]
     public Transform PauseMenu;
     public Transform ScreenPanels;
-    public Transform MapPanel;
-    public Transform DirPanel;
-    public Transform InvPanel;
-    public Transform InfPanel;
-    public Transform SysPanel;
 
     public InputSystem_Actions actions;
 
@@ -40,8 +36,10 @@ public class PauseUI : MonoBehaviour
         SetActiveMenu(DefaultPanel);
     }
 
-    private void Pause(InputAction.CallbackContext context)
-    {
+    public void Pause(){
+        if(activeMenu == OptionsIndex){
+
+        }
         isPaused = !isPaused;
 
         PauseMenu.gameObject.SetActive(isPaused);
@@ -56,12 +54,17 @@ public class PauseUI : MonoBehaviour
         StartCoroutine(nameof(ResetActiveWindow));
     }
 
+    public void DoPause(InputAction.CallbackContext context)
+    {
+        Pause();
+    }
+
     private void OnEnable()
     {
         // input system boilerplate
         pause = actions.UI.Pause;
         pause.Enable();
-        pause.performed += Pause;
+        pause.performed += DoPause;
     }
 
     private void OnDisable()
