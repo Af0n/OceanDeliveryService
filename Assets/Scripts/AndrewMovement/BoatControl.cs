@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BoatMovement : MonoBehaviour
+public class BoatControl : MonoBehaviour
 {
     [Header("Boat Limits")]
     [Tooltip("How long it takes to turn the wheel from the center to any extreme. Keep positive")]
