@@ -131,9 +131,10 @@ GameObject:
   - component: {fileID: 10896282}
   - component: {fileID: 10896281}
   - component: {fileID: 10896280}
+  - component: {fileID: 10896283}
   m_Layer: 3
   m_Name: Wheel
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -227,6 +228,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 10896278}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &10896283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10896278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e880de5e79b0bca4cb1d0bc23d8e2bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boatToggle: {fileID: 1838016910}
 --- !u!1 &71625925
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +543,7 @@ GameObject:
   - component: {fileID: 449993412}
   - component: {fileID: 449993410}
   - component: {fileID: 449993413}
+  - component: {fileID: 449993414}
   - component: {fileID: 449993411}
   m_Layer: 0
   m_Name: Player
@@ -619,6 +634,20 @@ MonoBehaviour:
   Sens: 10
   MinLookAngle: -89
   MaxLookAngle: 89
+  Cam: {fileID: 2137066976}
+--- !u!114 &449993414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449993409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd34fcb19585ea499d7f764ed62c174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractDistance: 2
   Cam: {fileID: 2137066976}
 --- !u!1 &519029994
 GameObject:

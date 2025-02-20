@@ -18,14 +18,9 @@ public class ControlBoatToggle : MonoBehaviour
         Mount(false);
     }
 
-    void Update()
-    {
-        // [TODO] replace with proper interaction
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            isMounted = !isMounted;
-            Mount();
-        }
+    public void MountToggle(){
+        isMounted = !isMounted;
+        Mount();
     }
 
     private void Mount()
