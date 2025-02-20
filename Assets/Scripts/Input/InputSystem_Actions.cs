@@ -1050,45 +1050,36 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""SailLower"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""d207704a-e817-4772-b935-3fbcbd39725a"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""SailTurn"",
-                    ""type"": ""Button"",
-                    ""id"": ""861a4328-0d10-4802-b434-7a6777fcd0cd"",
-                    ""expectedControlType"": """",
+                    ""type"": ""Value"",
+                    ""id"": ""79f8f4d4-3854-4934-862b-53a634df2425"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Wheel"",
-                    ""type"": ""Button"",
-                    ""id"": ""6d1d6462-bbd5-4089-bc97-2371d0d74546"",
-                    ""expectedControlType"": """",
+                    ""type"": ""Value"",
+                    ""id"": ""533a4200-eba1-4f97-81f9-ad7a9859ba38"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Anchor"",
-                    ""type"": ""Button"",
-                    ""id"": ""b41b614a-f117-4ee7-b055-fbae7e937124"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": ""WASD"",
-                    ""id"": ""54e01cb3-d30d-4a47-a4d1-310f2de46a30"",
+                    ""id"": ""2b57c4fd-577f-46f9-85d9-0af7fe6e884a"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1098,8 +1089,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""5318139d-68c4-4e80-bcdd-dd6d47ec665f"",
+                    ""name"": ""Negative"",
+                    ""id"": ""bf092d24-7172-4ef6-92a4-51d39d5dd348"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1109,8 +1100,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""cc8788ba-b655-4a59-8a66-f51bd97cea4a"",
+                    ""name"": ""Positive"",
+                    ""id"": ""7c79fabc-15e2-4a0d-a725-d1b1b393e916"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1120,41 +1111,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Gamepad"",
-                    ""id"": ""e5b9686d-a922-4cf6-ac14-64dccbe074ea"",
-                    ""path"": ""1DAxis"",
+                    ""name"": """",
+                    ""id"": ""4cd9cc6f-0531-4ec0-8a8d-736bd61e3ac9"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""SailLower"",
-                    ""isComposite"": true,
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""42fe7dea-6288-4b5e-9a40-c404b4019684"",
-                    ""path"": ""<Gamepad>/leftStick/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""SailLower"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""80bdd8bb-d01e-4c5f-b9d4-adcf37e79542"",
-                    ""path"": ""<Gamepad>/leftStick/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""SailLower"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""WASD"",
-                    ""id"": ""e341769a-ad4b-4418-9a02-915899a7c9fa"",
+                    ""id"": ""b393a2a3-e789-44b3-841b-c36f311e4f70"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1164,8 +1133,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""0b884326-860f-411f-afbe-39c83a32d8dc"",
+                    ""name"": ""Negative"",
+                    ""id"": ""82741c4c-20a0-4779-93c0-a411c95dc220"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1175,8 +1144,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""bb2e7c46-80cb-4f9e-bf7c-5e79bd7396f6"",
+                    ""name"": ""Positive"",
+                    ""id"": ""976d85db-63f6-4fa8-b5f1-ccccddfd64c4"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1186,41 +1155,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Gamepad"",
-                    ""id"": ""06d807f6-9724-4f8d-b473-a34a20baa92a"",
-                    ""path"": ""1DAxis"",
+                    ""name"": """",
+                    ""id"": ""23ee62e8-2243-4ff0-bdef-ab3b29bb48c2"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Wheel"",
-                    ""isComposite"": true,
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""08c6e4a2-0525-42a5-b165-7a3123661e24"",
-                    ""path"": ""<Gamepad>/leftStick/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Wheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""9b20d3e6-7b56-467c-a1e4-3dcb9dada2af"",
-                    ""path"": ""<Gamepad>/leftStick/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Wheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""WASD"",
-                    ""id"": ""182d0d31-5fd1-4e0e-88ba-496d965f3957"",
+                    ""id"": ""1c76622f-109d-49e3-8872-9b40f6169658"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1230,8 +1177,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""8152e4c5-c46c-4067-81b2-795940cde4d6"",
+                    ""name"": ""Negative"",
+                    ""id"": ""3fcfe904-2845-4505-9b3a-63ac3c8623db"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1241,8 +1188,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""09c26300-e246-4947-82d4-4e4785243808"",
+                    ""name"": ""Positive"",
+                    ""id"": ""25cce908-4fd2-4730-a613-c7a1aa454839"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1252,8 +1199,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""5fbdbda3-b62b-46d1-997b-c59452bf5d4f"",
+                    ""name"": ""Gamepad"",
+                    ""id"": ""c7a23cf6-9cfb-4ad2-b3e6-2901f80aae5b"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1264,7 +1211,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""negative"",
-                    ""id"": ""dddbf063-e827-4162-a53c-8471c9676616"",
+                    ""id"": ""e74c3ae0-4542-46eb-9e6e-6c36c77da1bb"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1275,7 +1222,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""positive"",
-                    ""id"": ""1ba4b73d-4abe-4a08-8957-6dbbee953ce0"",
+                    ""id"": ""55f83376-c761-4f3f-9bbe-514ab9e3cdcd"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1283,28 +1230,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""SailTurn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""25ffceba-f815-4fac-b903-cee58bc0f423"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Anchor"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0114cbcb-36ef-4c54-bf8f-42be6ebd4c42"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Anchor"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1401,7 +1326,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Boat_SailLower = m_Boat.FindAction("SailLower", throwIfNotFound: true);
         m_Boat_SailTurn = m_Boat.FindAction("SailTurn", throwIfNotFound: true);
         m_Boat_Wheel = m_Boat.FindAction("Wheel", throwIfNotFound: true);
-        m_Boat_Anchor = m_Boat.FindAction("Anchor", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1709,7 +1633,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Boat_SailLower;
     private readonly InputAction m_Boat_SailTurn;
     private readonly InputAction m_Boat_Wheel;
-    private readonly InputAction m_Boat_Anchor;
     public struct BoatActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1717,7 +1640,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @SailLower => m_Wrapper.m_Boat_SailLower;
         public InputAction @SailTurn => m_Wrapper.m_Boat_SailTurn;
         public InputAction @Wheel => m_Wrapper.m_Boat_Wheel;
-        public InputAction @Anchor => m_Wrapper.m_Boat_Anchor;
         public InputActionMap Get() { return m_Wrapper.m_Boat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1736,9 +1658,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Wheel.started += instance.OnWheel;
             @Wheel.performed += instance.OnWheel;
             @Wheel.canceled += instance.OnWheel;
-            @Anchor.started += instance.OnAnchor;
-            @Anchor.performed += instance.OnAnchor;
-            @Anchor.canceled += instance.OnAnchor;
         }
 
         private void UnregisterCallbacks(IBoatActions instance)
@@ -1752,9 +1671,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Wheel.started -= instance.OnWheel;
             @Wheel.performed -= instance.OnWheel;
             @Wheel.canceled -= instance.OnWheel;
-            @Anchor.started -= instance.OnAnchor;
-            @Anchor.performed -= instance.OnAnchor;
-            @Anchor.canceled -= instance.OnAnchor;
         }
 
         public void RemoveCallbacks(IBoatActions instance)
@@ -1848,6 +1764,5 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSailLower(InputAction.CallbackContext context);
         void OnSailTurn(InputAction.CallbackContext context);
         void OnWheel(InputAction.CallbackContext context);
-        void OnAnchor(InputAction.CallbackContext context);
     }
 }
