@@ -76,7 +76,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1074,6 +1074,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dismount"",
+                    ""type"": ""Button"",
+                    ""id"": ""f87f9d23-07a0-4ffc-ae69-e3de5f4f80e4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1230,6 +1239,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""SailTurn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed3af35e-af9d-40de-98c7-b211f1ae8b01"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Dismount"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91170de2-8c9d-4432-94bb-0af3f829402d"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Dismount"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1326,6 +1357,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Boat_SailLower = m_Boat.FindAction("SailLower", throwIfNotFound: true);
         m_Boat_SailTurn = m_Boat.FindAction("SailTurn", throwIfNotFound: true);
         m_Boat_Wheel = m_Boat.FindAction("Wheel", throwIfNotFound: true);
+        m_Boat_Dismount = m_Boat.FindAction("Dismount", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1633,6 +1665,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Boat_SailLower;
     private readonly InputAction m_Boat_SailTurn;
     private readonly InputAction m_Boat_Wheel;
+    private readonly InputAction m_Boat_Dismount;
     public struct BoatActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1640,6 +1673,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @SailLower => m_Wrapper.m_Boat_SailLower;
         public InputAction @SailTurn => m_Wrapper.m_Boat_SailTurn;
         public InputAction @Wheel => m_Wrapper.m_Boat_Wheel;
+        public InputAction @Dismount => m_Wrapper.m_Boat_Dismount;
         public InputActionMap Get() { return m_Wrapper.m_Boat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1658,6 +1692,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Wheel.started += instance.OnWheel;
             @Wheel.performed += instance.OnWheel;
             @Wheel.canceled += instance.OnWheel;
+            @Dismount.started += instance.OnDismount;
+            @Dismount.performed += instance.OnDismount;
+            @Dismount.canceled += instance.OnDismount;
         }
 
         private void UnregisterCallbacks(IBoatActions instance)
@@ -1671,6 +1708,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Wheel.started -= instance.OnWheel;
             @Wheel.performed -= instance.OnWheel;
             @Wheel.canceled -= instance.OnWheel;
+            @Dismount.started -= instance.OnDismount;
+            @Dismount.performed -= instance.OnDismount;
+            @Dismount.canceled -= instance.OnDismount;
         }
 
         public void RemoveCallbacks(IBoatActions instance)
@@ -1764,5 +1804,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSailLower(InputAction.CallbackContext context);
         void OnSailTurn(InputAction.CallbackContext context);
         void OnWheel(InputAction.CallbackContext context);
+        void OnDismount(InputAction.CallbackContext context);
     }
 }

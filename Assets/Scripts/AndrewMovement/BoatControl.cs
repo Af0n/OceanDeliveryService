@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(ControlBoatToggle))]
+
 public class BoatControl : MonoBehaviour
 {
     [Header("Boat Limits")]
@@ -26,6 +28,8 @@ public class BoatControl : MonoBehaviour
         get{ return sailAmount / SailFurlTime; }
     }
 
+    private ControlBoatToggle controlBoatToggle;
+
     private float wheelAngle;
     private float sailAngle;
     private float sailAmount;
@@ -35,9 +39,12 @@ public class BoatControl : MonoBehaviour
     private InputAction wheelTurn;
     private InputAction sailTurn;
     private InputAction sailLower;
+    private InputAction dismount;
 
     private void Awake() {
         actions = new InputSystem_Actions();
+
+        controlBoatToggle = GetComponent<ControlBoatToggle>();
     }
 
     void Update()
@@ -64,6 +71,10 @@ public class BoatControl : MonoBehaviour
         sailAmount = Mathf.Clamp(sailAmount, 0, SailFurlTime);
     }
 
+    private void Dismount(InputAction.CallbackContext context){
+        controlBoatToggle.MountToggle();
+    }
+
     void OnEnable()
     {
         // input system boilerplate
@@ -75,6 +86,10 @@ public class BoatControl : MonoBehaviour
 
         sailLower = actions.Boat.SailLower;
         sailLower.Enable();
+
+        dismount = actions.Boat.Dismount;
+        dismount.Enable();
+        dismount.performed += Dismount;
     }
 
     void OnDisable()
@@ -83,5 +98,6 @@ public class BoatControl : MonoBehaviour
         wheelTurn.Disable();
         sailTurn.Disable();
         sailLower.Disable();
+        dismount.Disable();
     }
 }
