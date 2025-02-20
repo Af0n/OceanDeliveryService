@@ -10,18 +10,12 @@ public class AndrewMovement : MonoBehaviour
     public float Speed;
     public float JumpHeight;
 
-    [Header("Look Properties")]
-    public float Sens;
-    public float MinLookAngle;
-    public float MaxLookAngle;
-
     [Header("Gravity Properties")]
     public bool UsePhysicsGravity;
     public float GravityForce;
     public float SettlingForce;
 
     [Header("Unity Set Up")]
-    public Transform Cam;
     public Transform GroundCheck;
     public LayerMask standableMask;
     public float GroundCheckRadius;
@@ -30,11 +24,9 @@ public class AndrewMovement : MonoBehaviour
     // input system
     private InputSystem_Actions actions;
     private InputAction move;
-    private InputAction look;
     private InputAction jump;
 
     private CharacterController controller;
-    private float xRotation;
     private float yVelocity;
     private bool isGrounded;
     private bool checkForGround;
@@ -62,8 +54,6 @@ public class AndrewMovement : MonoBehaviour
 
         Move();
 
-        Look();
-
         Gravity();
     }
 
@@ -74,19 +64,6 @@ public class AndrewMovement : MonoBehaviour
         moveVec *= Time.deltaTime * Speed;
 
         controller.Move(moveVec);
-    }
-
-    private void Look(){
-        Vector2 readLook = look.ReadValue<Vector2>();
-        readLook *= Time.deltaTime * Sens;
-
-        // rotate player body sideways
-        transform.Rotate(Vector3.up, readLook.x);
-
-        // rotate camera
-        xRotation -= readLook.y;
-        xRotation = Mathf.Clamp(xRotation, MinLookAngle, MaxLookAngle);
-        Cam.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
     private void Gravity(){
@@ -119,9 +96,6 @@ public class AndrewMovement : MonoBehaviour
         move = actions.Player.Move;
         move.Enable();
 
-        look = actions.Player.Look;
-        look.Enable();
-
         jump = actions.Player.Jump;
         jump.Enable();
         jump.performed += Jump;
@@ -133,7 +107,6 @@ public class AndrewMovement : MonoBehaviour
     {
         // input system boilerplate
         move.Disable();
-        look.Disable();
         jump.Disable();
 
         controller.enabled = false;
