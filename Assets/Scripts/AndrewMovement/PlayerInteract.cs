@@ -17,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
     }
 
     private void TryInteract(InputAction.CallbackContext context){
-        Debug.Log("Trying Interaction");
+        //Debug.Log("Trying Interaction");
         Physics.Raycast(Cam.position, Cam.forward, out RaycastHit hitInfo, InteractDistance);
         Debug.DrawRay(Cam.position, Cam.forward * InteractDistance, Color.red, 2f);
         try
