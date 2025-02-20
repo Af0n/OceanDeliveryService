@@ -438,53 +438,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &1033968501
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1033968503}
-  - component: {fileID: 1033968502}
-  m_Layer: 0
-  m_Name: Mouse3D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1033968502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033968501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac30488c1c830224cab0a41dadbd2abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseColliderLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
---- !u!4 &1033968503
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033968501}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.610891, y: -1.6172323, z: 5.9618087}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1099928609
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,8 +448,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1099928611}
   - component: {fileID: 1099928610}
+  - component: {fileID: 1099928612}
   m_Layer: 0
-  m_Name: GridBuildingSystem
+  m_Name: Inventory System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,6 +472,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2571549ff3fab414fb9fbd3816e7e3b7, type: 2}
   - {fileID: 11400000, guid: b625ccb204cc91544b6bf014bd8186fc, type: 2}
   - {fileID: 11400000, guid: 669dd3317b8bd594f8b8051353bca318, type: 2}
+  width: 10
+  height: 5
 --- !u!4 &1099928611
 Transform:
   m_ObjectHideFlags: 0
@@ -533,6 +489,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1099928612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099928609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac30488c1c830224cab0a41dadbd2abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &1131745289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -607,7 +578,7 @@ GameObject:
   - component: {fileID: 1466220473}
   - component: {fileID: 1466220472}
   m_Layer: 6
-  m_Name: Plane
+  m_Name: Inventory BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -771,7 +742,6 @@ SceneRoots:
   - {fileID: 326841105}
   - {fileID: 967203704}
   - {fileID: 1099928611}
-  - {fileID: 1033968503}
   - {fileID: 1466220475}
   - {fileID: 1131745289}
   - {fileID: 611055374}
