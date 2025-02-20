@@ -16,12 +16,6 @@ public class ATMOS_Terminal : MonoBehaviour
         mainCam = Camera.main.transform;
     }
 
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            Interact();
-        }
-    }
-
     public void Interact(){
         // [TODO] lock player movement
         mainCam.SetPositionAndRotation(CamPos.position, CamPos.rotation); // [TODO] smoother transition
