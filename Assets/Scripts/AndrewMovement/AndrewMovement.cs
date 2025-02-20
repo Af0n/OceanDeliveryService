@@ -125,6 +125,8 @@ public class AndrewMovement : MonoBehaviour
         jump = actions.Player.Jump;
         jump.Enable();
         jump.performed += Jump;
+
+        controller.enabled = true;
     }
 
     void OnDisable()
@@ -133,6 +135,8 @@ public class AndrewMovement : MonoBehaviour
         move.Disable();
         look.Disable();
         jump.Disable();
+
+        controller.enabled = false;
     }
 
     private void OnDrawGizmosSelected()
