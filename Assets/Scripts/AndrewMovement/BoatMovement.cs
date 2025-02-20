@@ -11,14 +11,17 @@ public class BoatMovement : MonoBehaviour
     [Tooltip("How long it takes to open the sail from closed. Keep positive")]
     public float SailFurlTime;
 
+    // value between [-1, 1]
     public float WheelTurnAmount{
         get{ return wheelAngle / WheelTurnTime; }
     }
 
+    // value between [-1, 1]
     public float SailTurnAmount{
         get{ return sailAngle / SailTurnTime; }
     }
 
+    // value between [0, 1]
     public float SailFurlAmount{
         get{ return sailAmount / SailFurlTime; }
     }
