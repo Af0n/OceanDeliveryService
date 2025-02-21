@@ -1,9 +1,14 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 [RequireComponent(typeof(BoatControl))]
 
 public class ControlBoatToggle : MonoBehaviour
 {
+    
+    public Transform MountPos;
+
+    private Transform player;
     private PlayerManager playerMan;
     private BoatControl boatControl;
 
@@ -11,7 +16,8 @@ public class ControlBoatToggle : MonoBehaviour
 
     private void Awake()
     {
-        playerMan = GameObject.FindWithTag("Player").GetComponent<PlayerManager>();
+        player = GameObject.FindWithTag("Player").transform;
+        playerMan = player.GetComponent<PlayerManager>();
         boatControl = GetComponent<BoatControl>();
 
         // default to not mounted
@@ -30,11 +36,27 @@ public class ControlBoatToggle : MonoBehaviour
         playerMan.SetInteraction(!isMounted);
 
         boatControl.enabled = isMounted;
+
+        if(isMounted){
+            TeleportMount();
+            return;
+        }
+
+        Dismount();
     }
 
     private void Mount(bool b)
     {
         isMounted = b;
         Mount();
+    }
+
+    private void TeleportMount(){
+        player.parent = MountPos;
+        player.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+    }
+
+    private void Dismount(){
+        player.parent = null;
     }
 }
