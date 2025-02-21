@@ -31,17 +31,23 @@ public class BoatControl : MonoBehaviour
         get { return sailAmount / SailFurlTime; }
     }
 
+    public bool IsAnchored{
+        get{ return isAnchored; }
+    }
+
     private ControlBoatToggle controlBoatToggle;
 
     private float wheelAngle;
     private float sailAngle;
     private float sailAmount;
+    private bool isAnchored;
 
     // input system
     private InputSystem_Actions actions;
     private InputAction wheelTurn;
     private InputAction sailTurn;
     private InputAction sailLower;
+    private InputAction anchor;
     private InputAction dismount;
 
     private void Awake()
@@ -83,6 +89,10 @@ public class BoatControl : MonoBehaviour
         controlBoatToggle.MountToggle();
     }
 
+    private void AnchorToggle(InputAction.CallbackContext context){
+        isAnchored = !isAnchored;
+    }
+
     void OnEnable()
     {
         // input system boilerplate
@@ -98,6 +108,10 @@ public class BoatControl : MonoBehaviour
         dismount = actions.Boat.Dismount;
         dismount.Enable();
         dismount.performed += Dismount;
+
+        anchor = actions.Boat.Anchor;
+        anchor.Enable();
+        anchor.performed += AnchorToggle;
     }
 
     void OnDisable()
@@ -107,5 +121,6 @@ public class BoatControl : MonoBehaviour
         sailTurn.Disable();
         sailLower.Disable();
         dismount.Disable();
+        anchor.Disable();
     }
 }

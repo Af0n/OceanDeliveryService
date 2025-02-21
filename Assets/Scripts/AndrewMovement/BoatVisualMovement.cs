@@ -15,6 +15,7 @@ public class BoatVisualMovement : MonoBehaviour
     public Transform Mast;
     public Transform SailOrigin;
     public Transform Wheel;
+    public Transform Anchor;
 
     private BoatControl movement;
 
@@ -29,6 +30,8 @@ public class BoatVisualMovement : MonoBehaviour
         RotateWheel();
 
         FurlSail();
+
+        AnchorShowing();
     }
 
     private void RotateMast(){
@@ -45,5 +48,9 @@ public class BoatVisualMovement : MonoBehaviour
         float sailAmount = movement.SailFurlAmount;
         sailAmount = Mathf.Clamp(sailAmount, SailMin, SailMax);
         SailOrigin.localScale = new Vector3(1f, sailAmount, 1f);
+    }
+
+    private void AnchorShowing(){
+        Anchor.gameObject.SetActive(!movement.IsAnchored);
     }
 }

@@ -27,6 +27,7 @@ public class ControlBoatToggle : MonoBehaviour
     private void Mount()
     {
         playerMan.SetMovement(!isMounted);
+        playerMan.SetInteraction(!isMounted);
 
         boatControl.enabled = isMounted;
     }

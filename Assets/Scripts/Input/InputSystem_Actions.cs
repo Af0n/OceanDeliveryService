@@ -1083,6 +1083,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Anchor"",
+                    ""type"": ""Button"",
+                    ""id"": ""5324a669-ef87-4442-b1ed-36787872abbb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1261,6 +1270,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Dismount"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d169644-daf4-48f6-9830-8ba3f7ae00fd"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Anchor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""538be002-b7b6-44cd-a89e-a2f8854a4340"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Anchor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1358,6 +1389,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Boat_SailTurn = m_Boat.FindAction("SailTurn", throwIfNotFound: true);
         m_Boat_Wheel = m_Boat.FindAction("Wheel", throwIfNotFound: true);
         m_Boat_Dismount = m_Boat.FindAction("Dismount", throwIfNotFound: true);
+        m_Boat_Anchor = m_Boat.FindAction("Anchor", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1666,6 +1698,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Boat_SailTurn;
     private readonly InputAction m_Boat_Wheel;
     private readonly InputAction m_Boat_Dismount;
+    private readonly InputAction m_Boat_Anchor;
     public struct BoatActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1674,6 +1707,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @SailTurn => m_Wrapper.m_Boat_SailTurn;
         public InputAction @Wheel => m_Wrapper.m_Boat_Wheel;
         public InputAction @Dismount => m_Wrapper.m_Boat_Dismount;
+        public InputAction @Anchor => m_Wrapper.m_Boat_Anchor;
         public InputActionMap Get() { return m_Wrapper.m_Boat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1695,6 +1729,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Dismount.started += instance.OnDismount;
             @Dismount.performed += instance.OnDismount;
             @Dismount.canceled += instance.OnDismount;
+            @Anchor.started += instance.OnAnchor;
+            @Anchor.performed += instance.OnAnchor;
+            @Anchor.canceled += instance.OnAnchor;
         }
 
         private void UnregisterCallbacks(IBoatActions instance)
@@ -1711,6 +1748,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Dismount.started -= instance.OnDismount;
             @Dismount.performed -= instance.OnDismount;
             @Dismount.canceled -= instance.OnDismount;
+            @Anchor.started -= instance.OnAnchor;
+            @Anchor.performed -= instance.OnAnchor;
+            @Anchor.canceled -= instance.OnAnchor;
         }
 
         public void RemoveCallbacks(IBoatActions instance)
@@ -1805,5 +1845,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSailTurn(InputAction.CallbackContext context);
         void OnWheel(InputAction.CallbackContext context);
         void OnDismount(InputAction.CallbackContext context);
+        void OnAnchor(InputAction.CallbackContext context);
     }
 }
