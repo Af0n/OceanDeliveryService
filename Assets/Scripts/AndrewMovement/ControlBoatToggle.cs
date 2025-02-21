@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class ControlBoatToggle : MonoBehaviour
 {
-    private AndrewMovement playerMove;
+    private PlayerManager playerMan;
     private BoatControl boatControl;
 
     private bool isMounted;
 
-    void Awake()
+    private void Awake()
     {
-        playerMove = GameObject.FindWithTag("Player").GetComponent<AndrewMovement>();
+        playerMan = GameObject.FindWithTag("Player").GetComponent<PlayerManager>();
         boatControl = GetComponent<BoatControl>();
 
         // default to not mounted
         Mount(false);
     }
 
-    public void MountToggle(){
+    public void MountToggle()
+    {
         isMounted = !isMounted;
         Mount();
     }
 
     private void Mount()
     {
-        playerMove.enabled = !isMounted;
+        playerMan.SetMovement(!isMounted);
 
         boatControl.enabled = isMounted;
     }

@@ -14,18 +14,21 @@ public class BoatControl : MonoBehaviour
     public float SailFurlTime;
 
     // value between [-1, 1]
-    public float WheelTurnAmount{
-        get{ return wheelAngle / WheelTurnTime; }
+    public float WheelTurnAmount
+    {
+        get { return wheelAngle / WheelTurnTime; }
     }
 
     // value between [-1, 1]
-    public float SailTurnAmount{
-        get{ return sailAngle / SailTurnTime; }
+    public float SailTurnAmount
+    {
+        get { return sailAngle / SailTurnTime; }
     }
 
     // value between [0, 1]
-    public float SailFurlAmount{
-        get{ return sailAmount / SailFurlTime; }
+    public float SailFurlAmount
+    {
+        get { return sailAmount / SailFurlTime; }
     }
 
     private ControlBoatToggle controlBoatToggle;
@@ -41,7 +44,8 @@ public class BoatControl : MonoBehaviour
     private InputAction sailLower;
     private InputAction dismount;
 
-    private void Awake() {
+    private void Awake()
+    {
         actions = new InputSystem_Actions();
 
         controlBoatToggle = GetComponent<ControlBoatToggle>();
@@ -56,22 +60,26 @@ public class BoatControl : MonoBehaviour
         FurlSail();
     }
 
-    private void TurnWheel(){
+    private void TurnWheel()
+    {
         wheelAngle += wheelTurn.ReadValue<float>() * Time.deltaTime;
         wheelAngle = Mathf.Clamp(wheelAngle, -WheelTurnTime, WheelTurnTime);
     }
 
-    private void TurnSail(){
+    private void TurnSail()
+    {
         sailAngle += sailTurn.ReadValue<float>() * Time.deltaTime;
         sailAngle = Mathf.Clamp(sailAngle, -SailTurnTime, SailTurnTime);
     }
 
-    private void FurlSail(){
+    private void FurlSail()
+    {
         sailAmount += sailLower.ReadValue<float>() * Time.deltaTime;
         sailAmount = Mathf.Clamp(sailAmount, 0, SailFurlTime);
     }
 
-    private void Dismount(InputAction.CallbackContext context){
+    private void Dismount(InputAction.CallbackContext context)
+    {
         controlBoatToggle.MountToggle();
     }
 
