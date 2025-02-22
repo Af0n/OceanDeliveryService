@@ -472,8 +472,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2571549ff3fab414fb9fbd3816e7e3b7, type: 2}
   - {fileID: 11400000, guid: b625ccb204cc91544b6bf014bd8186fc, type: 2}
   - {fileID: 11400000, guid: 669dd3317b8bd594f8b8051353bca318, type: 2}
-  width: 10
-  height: 5
+  gridWidth: 10
+  gridHeight: 10
+  cellSize: 10
 --- !u!4 &1099928611
 Transform:
   m_ObjectHideFlags: 0

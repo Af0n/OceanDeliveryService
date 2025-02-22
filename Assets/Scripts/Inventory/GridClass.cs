@@ -84,7 +84,6 @@ public class Grid<GridObject>
         // check for invalid pos
         if(x >= 0 && y >= 0 && x < width && y < height) {
             gridArray[x,y] = value;
-            // debugTextArray[x,y].text = gridArray[x,y].ToString();
             if(OnGridValueChanged != null) {
                 OnGridValueChanged(this, new OnGridValueChangedEventArgs{x = x, y = y});
             }

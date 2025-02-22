@@ -29,4 +29,9 @@ public class PlacedObject : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public InventoryObject GetInventoryObjectFromPlaced()
+    {
+        return inventoryObject;
+    }
 }

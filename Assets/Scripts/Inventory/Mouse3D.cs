@@ -10,15 +10,6 @@ public class Mouse3D : MonoBehaviour
         Instance = this;
     }
 
-    void Update()
-    {
-       Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-       // can leave off distance and layer mask params
-        if(Physics.Raycast(ray, out RaycastHit raycastHit, 999f, mouseColliderLayerMask)) {
-            transform.position = raycastHit.point;
-        } 
-    }
-
     public static Vector3 GetMouseWorldPosition() => Instance.GetMouseWorldPosition_Instance();
 
     private Vector3 GetMouseWorldPosition_Instance()
