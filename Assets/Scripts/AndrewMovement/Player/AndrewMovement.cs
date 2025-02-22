@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
-
 public class AndrewMovement : MonoBehaviour
 {
     [Header("Movement Properties")]
@@ -26,7 +24,9 @@ public class AndrewMovement : MonoBehaviour
     private InputAction move;
     private InputAction jump;
 
-    private CharacterController controller;
+    private PlayerManager manager;
+    private DeckTargetClamp deck;
+
     private float yVelocity;
     private bool isGrounded;
     private bool checkForGround;
@@ -35,7 +35,7 @@ public class AndrewMovement : MonoBehaviour
     {
         actions = new InputSystem_Actions();
 
-        controller = GetComponent<CharacterController>();
+        manager = GetComponent<PlayerManager>();
 
         if(UsePhysicsGravity){
             GravityForce = Physics.gravity.magnitude;
@@ -45,6 +45,7 @@ public class AndrewMovement : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        deck = DeckTargetClamp.instance;
     }
 
     private void Update()
@@ -52,9 +53,25 @@ public class AndrewMovement : MonoBehaviour
         // checking for ground
         isGrounded = Physics.CheckSphere(GroundCheck.position, GroundCheckRadius, standableMask);
 
-        Move();
-
+        if(manager.IsOnBoat){
+            BoatMove();
+        }else{
+            Move();
+        }
+        
         Gravity();
+    }
+
+    private void BoatMove(){
+        Vector2 readMove = move.ReadValue<Vector2>();
+
+        Vector3 moveVec = deck.deckTarget.forward * readMove.y + deck.deckTarget.right * readMove.x;
+        moveVec *= Time.deltaTime * Speed;
+
+        deck.deckTarget.position += moveVec;
+        moveVec = deck.deckTarget.position - transform.position;
+        moveVec.y = 0;
+        manager.Move(moveVec);
     }
 
     private void Move(){
@@ -63,7 +80,7 @@ public class AndrewMovement : MonoBehaviour
         Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
         moveVec *= Time.deltaTime * Speed;
 
-        controller.Move(moveVec);
+        manager.Move(moveVec);
     }
 
     private void Gravity(){
@@ -73,7 +90,7 @@ public class AndrewMovement : MonoBehaviour
             yVelocity -= GravityForce * Time.deltaTime;
         }
 
-        controller.Move(Time.deltaTime * yVelocity * Vector3.up);
+        manager.Move(Time.deltaTime * yVelocity * Vector3.up);
     }
 
     private void Jump(InputAction.CallbackContext context){
@@ -100,7 +117,7 @@ public class AndrewMovement : MonoBehaviour
         jump.Enable();
         jump.performed += Jump;
 
-        controller.enabled = true;
+        manager.enabled = true;
     }
 
     void OnDisable()
@@ -109,7 +126,7 @@ public class AndrewMovement : MonoBehaviour
         move.Disable();
         jump.Disable();
 
-        controller.enabled = false;
+        manager.enabled = false;
     }
 
     private void OnDrawGizmosSelected()
@@ -117,5 +134,14 @@ public class AndrewMovement : MonoBehaviour
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(GroundCheck.position, GroundCheckRadius);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        switch(other.tag){
+            case "BoatTrigger":
+                deck.SetPos(transform.position);
+                break;
+        }
     }
 }

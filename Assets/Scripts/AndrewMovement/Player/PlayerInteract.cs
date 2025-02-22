@@ -7,6 +7,7 @@ public class PlayerInteract : MonoBehaviour
 
     [Header("Unity Set Up")]
     public Transform Cam;
+    public LayerMask layerMask;
 
     // input system
     private InputSystem_Actions actions;
@@ -18,7 +19,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void TryInteract(InputAction.CallbackContext context){
         //Debug.Log("Trying Interaction");
-        Physics.Raycast(Cam.position, Cam.forward, out RaycastHit hitInfo, InteractDistance);
+        Physics.Raycast(Cam.position, Cam.forward, out RaycastHit hitInfo, InteractDistance, layerMask);
         Debug.DrawRay(Cam.position, Cam.forward * InteractDistance, Color.red, 2f);
         try
         {

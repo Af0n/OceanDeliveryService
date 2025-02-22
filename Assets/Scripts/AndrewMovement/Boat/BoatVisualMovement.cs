@@ -14,8 +14,8 @@ public class BoatVisualMovement : MonoBehaviour
     [Header("Unity Set Up")]
     public Transform Mast;
     public Transform SailOrigin;
-    public Transform Wheel;
     public Transform Anchor;
+    public Transform WheelPos;
 
     private BoatControl movement;
 
@@ -41,7 +41,7 @@ public class BoatVisualMovement : MonoBehaviour
 
     private void RotateWheel(){
         float wheelAngle = movement.WheelTurnAmount * WheelTurnLimit;
-        Wheel.localRotation = Quaternion.Euler(wheelAngle, 0f, 0f);
+        WheelPos.localRotation = Quaternion.Euler(0f, 0f, -wheelAngle);
     }
 
     private void FurlSail(){

@@ -2,21 +2,36 @@ using UnityEngine;
 
 public class DeckTargetClamp : MonoBehaviour
 {
-    public float xMin;
-    public float xMax;
-    public float zMin;
-    public float zMax;
+    public Transform deckTarget;
+    public Transform origin;
 
-    private Vector3 pos;
+    public static DeckTargetClamp instance;
 
-    private void Awake()
-    {
-        pos = Vector3.zero;
+    public float YRot;
+
+    private void Awake() {
+        instance = this;
     }
 
-    private void Update()
+    void Update()
     {
-        pos.x = Mathf.Clamp(pos.x, xMin, xMax);
-        pos.z = Mathf.Clamp(pos.z, zMin, zMax);
+        SetYRotRelative(YRot);
+    }
+
+    public void SetYRotRelative(float rot){
+        float use = origin.eulerAngles.y + rot;
+        deckTarget.rotation = Quaternion.Euler(0f, use, 0f);
+    }
+
+    public void SetYRot(float rot){
+        YRot = rot;
+    }
+
+    public void AddYRot(float rot){
+        YRot += rot;
+    }
+
+    public void SetPos(Vector3 pos){
+        deckTarget.position = pos;
     }
 }

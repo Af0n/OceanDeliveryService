@@ -12,6 +12,7 @@ public class BoatControl : MonoBehaviour
     public float SailTurnTime;
     [Tooltip("How long it takes to open the sail from closed. Keep positive")]
     public float SailFurlTime;
+    public bool StartAnchored;
 
     // value between [-1, 1]
     public float WheelTurnAmount
@@ -55,6 +56,8 @@ public class BoatControl : MonoBehaviour
         actions = new InputSystem_Actions();
 
         controlBoatToggle = GetComponent<ControlBoatToggle>();
+
+        isAnchored = StartAnchored;
     }
 
     void Update()

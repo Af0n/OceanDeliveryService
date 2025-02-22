@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Interactable
+  - BoatTrigger
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Interactable
+  - InteractStand
   - 
   - 
   - 

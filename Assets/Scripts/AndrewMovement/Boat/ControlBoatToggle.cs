@@ -18,6 +18,7 @@ public class ControlBoatToggle : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         playerMan = player.GetComponent<PlayerManager>();
+
         boatControl = GetComponent<BoatControl>();
 
         // default to not mounted
