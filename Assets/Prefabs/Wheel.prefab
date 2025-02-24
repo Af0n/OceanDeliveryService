@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5704106660435978657}
   - component: {fileID: 2229803491795646531}
   - component: {fileID: 3476681196585104487}
-  m_Layer: 20
+  m_Layer: 19
   m_Name: Wheel
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
