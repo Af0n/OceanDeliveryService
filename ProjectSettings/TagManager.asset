@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Interactable
+  - BoatTrigger
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Standable
   - Water
   - UI
   - Inventory
@@ -24,8 +26,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Interactable
+  - InteractStand
   - 
   - 
   - 

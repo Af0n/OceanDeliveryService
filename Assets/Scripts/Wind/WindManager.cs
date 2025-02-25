@@ -23,6 +23,10 @@ public class WindManager : MonoBehaviour
         get { return windDir; }
         set { SetWind(value); } // uses SetWind(Vector3)
     }
+
+    public static float WindMagnitude{
+        get { return windDir.magnitude; }
+    }
     
     private void Awake() {
         windDir = new Vector3(0,0,0);

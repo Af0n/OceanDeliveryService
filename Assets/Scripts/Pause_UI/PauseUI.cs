@@ -12,8 +12,7 @@ public class PauseUI : MonoBehaviour
     public Transform PauseMenu;
     public Transform ScreenPanels;
 
-    public InputSystem_Actions actions;
-
+    private InputSystem_Actions actions;
     private InputAction pause;
 
     private bool isPaused;

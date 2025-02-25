@@ -58,16 +58,16 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""27c5f898-bc57-4ee1-8800-db469aca5fe3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -76,7 +76,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1043,6 +1043,257 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Boat"",
+            ""id"": ""6b1e6c6f-8063-4f48-97f3-9441bfe18ffc"",
+            ""actions"": [
+                {
+                    ""name"": ""SailLower"",
+                    ""type"": ""Value"",
+                    ""id"": ""d207704a-e817-4772-b935-3fbcbd39725a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SailTurn"",
+                    ""type"": ""Value"",
+                    ""id"": ""79f8f4d4-3854-4934-862b-53a634df2425"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Wheel"",
+                    ""type"": ""Value"",
+                    ""id"": ""533a4200-eba1-4f97-81f9-ad7a9859ba38"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dismount"",
+                    ""type"": ""Button"",
+                    ""id"": ""f87f9d23-07a0-4ffc-ae69-e3de5f4f80e4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Anchor"",
+                    ""type"": ""Button"",
+                    ""id"": ""5324a669-ef87-4442-b1ed-36787872abbb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""2b57c4fd-577f-46f9-85d9-0af7fe6e884a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SailLower"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""bf092d24-7172-4ef6-92a4-51d39d5dd348"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""SailLower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""7c79fabc-15e2-4a0d-a725-d1b1b393e916"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""SailLower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4cd9cc6f-0531-4ec0-8a8d-736bd61e3ac9"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""SailLower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""b393a2a3-e789-44b3-841b-c36f311e4f70"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Wheel"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""82741c4c-20a0-4779-93c0-a411c95dc220"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Wheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""976d85db-63f6-4fa8-b5f1-ccccddfd64c4"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Wheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23ee62e8-2243-4ff0-bdef-ab3b29bb48c2"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Wheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""1c76622f-109d-49e3-8872-9b40f6169658"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SailTurn"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""3fcfe904-2845-4505-9b3a-63ac3c8623db"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""SailTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""25cce908-4fd2-4730-a613-c7a1aa454839"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""SailTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""c7a23cf6-9cfb-4ad2-b3e6-2901f80aae5b"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SailTurn"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e74c3ae0-4542-46eb-9e6e-6c36c77da1bb"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""SailTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""55f83376-c761-4f3f-9bbe-514ab9e3cdcd"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""SailTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed3af35e-af9d-40de-98c7-b211f1ae8b01"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Dismount"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91170de2-8c9d-4432-94bb-0af3f829402d"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Dismount"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d169644-daf4-48f6-9830-8ba3f7ae00fd"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Anchor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""538be002-b7b6-44cd-a89e-a2f8854a4340"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Anchor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1132,12 +1383,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
+        // Boat
+        m_Boat = asset.FindActionMap("Boat", throwIfNotFound: true);
+        m_Boat_SailLower = m_Boat.FindAction("SailLower", throwIfNotFound: true);
+        m_Boat_SailTurn = m_Boat.FindAction("SailTurn", throwIfNotFound: true);
+        m_Boat_Wheel = m_Boat.FindAction("Wheel", throwIfNotFound: true);
+        m_Boat_Dismount = m_Boat.FindAction("Dismount", throwIfNotFound: true);
+        m_Boat_Anchor = m_Boat.FindAction("Anchor", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Actions.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Boat.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Boat.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -1431,6 +1690,84 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Boat
+    private readonly InputActionMap m_Boat;
+    private List<IBoatActions> m_BoatActionsCallbackInterfaces = new List<IBoatActions>();
+    private readonly InputAction m_Boat_SailLower;
+    private readonly InputAction m_Boat_SailTurn;
+    private readonly InputAction m_Boat_Wheel;
+    private readonly InputAction m_Boat_Dismount;
+    private readonly InputAction m_Boat_Anchor;
+    public struct BoatActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+        public BoatActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SailLower => m_Wrapper.m_Boat_SailLower;
+        public InputAction @SailTurn => m_Wrapper.m_Boat_SailTurn;
+        public InputAction @Wheel => m_Wrapper.m_Boat_Wheel;
+        public InputAction @Dismount => m_Wrapper.m_Boat_Dismount;
+        public InputAction @Anchor => m_Wrapper.m_Boat_Anchor;
+        public InputActionMap Get() { return m_Wrapper.m_Boat; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BoatActions set) { return set.Get(); }
+        public void AddCallbacks(IBoatActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BoatActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BoatActionsCallbackInterfaces.Add(instance);
+            @SailLower.started += instance.OnSailLower;
+            @SailLower.performed += instance.OnSailLower;
+            @SailLower.canceled += instance.OnSailLower;
+            @SailTurn.started += instance.OnSailTurn;
+            @SailTurn.performed += instance.OnSailTurn;
+            @SailTurn.canceled += instance.OnSailTurn;
+            @Wheel.started += instance.OnWheel;
+            @Wheel.performed += instance.OnWheel;
+            @Wheel.canceled += instance.OnWheel;
+            @Dismount.started += instance.OnDismount;
+            @Dismount.performed += instance.OnDismount;
+            @Dismount.canceled += instance.OnDismount;
+            @Anchor.started += instance.OnAnchor;
+            @Anchor.performed += instance.OnAnchor;
+            @Anchor.canceled += instance.OnAnchor;
+        }
+
+        private void UnregisterCallbacks(IBoatActions instance)
+        {
+            @SailLower.started -= instance.OnSailLower;
+            @SailLower.performed -= instance.OnSailLower;
+            @SailLower.canceled -= instance.OnSailLower;
+            @SailTurn.started -= instance.OnSailTurn;
+            @SailTurn.performed -= instance.OnSailTurn;
+            @SailTurn.canceled -= instance.OnSailTurn;
+            @Wheel.started -= instance.OnWheel;
+            @Wheel.performed -= instance.OnWheel;
+            @Wheel.canceled -= instance.OnWheel;
+            @Dismount.started -= instance.OnDismount;
+            @Dismount.performed -= instance.OnDismount;
+            @Dismount.canceled -= instance.OnDismount;
+            @Anchor.started -= instance.OnAnchor;
+            @Anchor.performed -= instance.OnAnchor;
+            @Anchor.canceled -= instance.OnAnchor;
+        }
+
+        public void RemoveCallbacks(IBoatActions instance)
+        {
+            if (m_Wrapper.m_BoatActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IBoatActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BoatActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BoatActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public BoatActions @Boat => new BoatActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1501,5 +1838,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IBoatActions
+    {
+        void OnSailLower(InputAction.CallbackContext context);
+        void OnSailTurn(InputAction.CallbackContext context);
+        void OnWheel(InputAction.CallbackContext context);
+        void OnDismount(InputAction.CallbackContext context);
+        void OnAnchor(InputAction.CallbackContext context);
     }
 }
