@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &433739090
 RectTransform:
   m_ObjectHideFlags: 0
@@ -231,6 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 549995541}
+  - component: {fileID: 549995542}
   m_Layer: 0
   m_Name: DialogueUI
   m_TagString: Untagged
@@ -254,6 +255,23 @@ Transform:
   - {fileID: 433739090}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &549995542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549995540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 019d8cbaf85c5d2459c11631c72cca50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 433739090}
+  CharName: {fileID: 761392599}
+  Dialogue: {fileID: 2034110202}
+  CopyStr: '"'
+  testChain: {fileID: 11400000, guid: 31d75a3464b2dd345a95e6cf49e9e830, type: 2}
 --- !u!1 &604898942
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +484,7 @@ GameObject:
   - component: {fileID: 683581538}
   - component: {fileID: 683581537}
   m_Layer: 5
-  m_Name: DialogueBG (1)
+  m_Name: CharNameBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,7 +560,7 @@ GameObject:
   - component: {fileID: 761392600}
   - component: {fileID: 761392599}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: CharNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -848,7 +866,7 @@ GameObject:
   - component: {fileID: 2034110203}
   - component: {fileID: 2034110202}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
