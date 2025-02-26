@@ -7,6 +7,7 @@ public class DialogueManager : MonoBehaviour
     public Transform Canvas;
     public TextMeshProUGUI CharName;
     public TextMeshProUGUI Dialogue;
+    [Tooltip("If a text is populated with this string, it will not be changed.")]
     public string CopyStr;
 
     public DialogueChain testChain;

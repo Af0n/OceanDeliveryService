@@ -12,12 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
+  Label: Will not be Seen
   Dialogues:
   - CharName: Test Character
     Text: This is some test dialogue that I am saying right now
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
   - CharName: '"'
     Text: This is some new dialogue with the same character talking.
-  - CharName: New Character
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+  - CharName: Hateful Guy
     Text: I am a new character butting into this conversation
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
   - CharName: '"'
     Text: New dialogue with this same new character
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+  - CharName: '"'
+    Text: What do you want to do?
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
