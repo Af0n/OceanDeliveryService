@@ -35,8 +35,8 @@ MonoBehaviour:
     DoesJump: 1
     JumpChain: {fileID: 11400000}
     JumpIndex: 4
-  - CharName: '"'
-    Text: This should not be displayed
+  - CharName: Secret Menu Guy
+    Text: This should only be displayed after a menu selection
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
@@ -49,6 +49,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5af1ba8295b2b874f93abc7a45b477bd, type: 2}
     - {fileID: 11400000, guid: 90b5b9f8ecf30204da9f5ee120cb1488, type: 2}
     - {fileID: 11400000, guid: 2f8e5939c560e0d4bbcb86f575741079, type: 2}
+    - {fileID: 11400000, guid: 5b72e89d56f94244d8b103f30af42df1, type: 2}
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0

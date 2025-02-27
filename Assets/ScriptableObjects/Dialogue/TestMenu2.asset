@@ -18,5 +18,6 @@ MonoBehaviour:
     Text: Oh! Well... Sure?
     HasMenu: 0
     MenuOptions: []
-    DoesJump: 0
-    JumpChain: {fileID: 0}
+    DoesJump: 1
+    JumpChain: {fileID: 11400000, guid: 31d75a3464b2dd345a95e6cf49e9e830, type: 2}
+    JumpIndex: 3

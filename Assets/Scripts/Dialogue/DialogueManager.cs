@@ -65,6 +65,10 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void JumpTo(DialogueChain c, int i){
+        if(i >= c.Dialogues.Length){
+            // sanity checking
+            i=0;
+        }
         SetChain(c, i);
         SetDialogue(chain.Dialogues[index]);
     }
