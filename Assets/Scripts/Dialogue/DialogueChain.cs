@@ -19,6 +19,7 @@ public class DialogueChain : ScriptableObject
         [Header("Jump Settings")]
         public bool DoesJump;
         public DialogueChain JumpChain;
+        public int JumpIndex;
     }
 
     [Tooltip("Used for populating menus")]
