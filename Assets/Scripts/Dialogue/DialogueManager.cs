@@ -8,7 +8,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI CharName;
     public TextMeshProUGUI Dialogue;
     public Transform menu;
-    [Tooltip("If a text is populated with this string, it will not be changed.")]
+    [Tooltip("If a text is populated with this string, it will not update what is currently in the box.")]
     public string CopyStr;
 
     public DialogueChain testChain;
