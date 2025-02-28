@@ -66,6 +66,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5501722495761007448}
   - {fileID: 381344833131612701}
   - {fileID: 4695198187370569555}
   - {fileID: 8202755915589465311}
@@ -86,6 +87,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 5
   JumpHeight: 1
+  isSwimming: 0
+  isFloating: 0
+  verticalWaterSpeed: 5
   UsePhysicsGravity: 0
   GravityForce: 20
   SettlingForce: -2
@@ -95,6 +99,12 @@ MonoBehaviour:
     m_Bits: 8
   GroundCheckRadius: 0.49
   GroundedGracePeriod: 0.25
+  isGrounded: 0
+  depthBeforeSubmerged: 1
+  displacementAmount: 3
+  floaterCount: 1
+  waterDrag: 0.99
+  waterAngularDrag: 0.5
 --- !u!114 &8871792669245609129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOnBoat: 0
+  onSurfaceDepth: -1
+  playerFloater: {fileID: 8596158877227434374}
 --- !u!143 &1297599465580270826
 CharacterController:
   m_ObjectHideFlags: 0
@@ -420,6 +432,56 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &8596158877227434374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5501722495761007448}
+  - component: {fileID: 5691005319873233159}
+  m_Layer: 0
+  m_Name: PlayerFloater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5501722495761007448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596158877227434374}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8848811257863190894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5691005319873233159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596158877227434374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daf2d8bfc07e1d7439211b49c9881da0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 1297599465580270826}
+  depthBeforeSubmerged: 1
+  displacementAmount: 3
+  floaterCount: 1
+  waterDrag: 0.99
+  waterAngularDrag: 0.5
 --- !u!1001 &948980373081115128
 PrefabInstance:
   m_ObjectHideFlags: 0

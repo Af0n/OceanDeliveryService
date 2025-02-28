@@ -85,7 +85,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Previous"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -107,6 +107,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WaterVertical"",
+                    ""type"": ""Value"",
+                    ""id"": ""279c11a7-6bdc-4e19-baac-310016abef62"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -487,13 +496,46 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""36e52cba-0905-478e-a818-f4bfcb9f3b9a"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""843321d0-e984-4d9f-817a-f1afaa5e9152"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterVertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""a0d9d8ab-0e47-4c8f-8e7a-b3d75aa47560"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""47f1ce83-79d2-4b67-8186-88d6896b8ba2"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1092,6 +1134,33 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WaterVertical"",
+                    ""type"": ""Value"",
+                    ""id"": ""c125d5f4-59d1-4918-af9a-e0c589a5eaf1"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""WaterForwardBackward"",
+                    ""type"": ""Value"",
+                    ""id"": ""98e004dc-212e-4caf-b1e1-92ac50badc51"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Submarine"",
+                    ""type"": ""Button"",
+                    ""id"": ""56889d42-4486-4800-9fca-c503bf72bc05"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1138,6 +1207,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""SailLower"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""7e533317-0a45-423f-a267-f2e2d89b4329"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterForwardBackward"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""9db07068-f7f2-4fde-bf3f-dc83307ecb90"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterForwardBackward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""be78a500-4e9e-450c-9ac0-018ff33f14c7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterForwardBackward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""WASD"",
@@ -1292,6 +1394,50 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Anchor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""6be124bc-1916-4b58-81e4-ea325c2a8e39"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterVertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""6bd96e73-7bfc-41c1-a230-40e4ccb82124"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""fa8b3009-f216-4254-9a3b-4371bca2b275"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WaterVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f59b539-ab53-4b57-895a-98fd71d22eaa"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submarine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1370,6 +1516,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_WaterVertical = m_Player.FindAction("WaterVertical", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1390,6 +1537,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Boat_Wheel = m_Boat.FindAction("Wheel", throwIfNotFound: true);
         m_Boat_Dismount = m_Boat.FindAction("Dismount", throwIfNotFound: true);
         m_Boat_Anchor = m_Boat.FindAction("Anchor", throwIfNotFound: true);
+        m_Boat_WaterVertical = m_Boat.FindAction("WaterVertical", throwIfNotFound: true);
+        m_Boat_WaterForwardBackward = m_Boat.FindAction("WaterForwardBackward", throwIfNotFound: true);
+        m_Boat_Submarine = m_Boat.FindAction("Submarine", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1467,6 +1617,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Previous;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_WaterVertical;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1480,6 +1631,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Previous => m_Wrapper.m_Player_Previous;
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @WaterVertical => m_Wrapper.m_Player_WaterVertical;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1516,6 +1668,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @WaterVertical.started += instance.OnWaterVertical;
+            @WaterVertical.performed += instance.OnWaterVertical;
+            @WaterVertical.canceled += instance.OnWaterVertical;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1547,6 +1702,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @WaterVertical.started -= instance.OnWaterVertical;
+            @WaterVertical.performed -= instance.OnWaterVertical;
+            @WaterVertical.canceled -= instance.OnWaterVertical;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1699,6 +1857,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Boat_Wheel;
     private readonly InputAction m_Boat_Dismount;
     private readonly InputAction m_Boat_Anchor;
+    private readonly InputAction m_Boat_WaterVertical;
+    private readonly InputAction m_Boat_WaterForwardBackward;
+    private readonly InputAction m_Boat_Submarine;
     public struct BoatActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1708,6 +1869,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Wheel => m_Wrapper.m_Boat_Wheel;
         public InputAction @Dismount => m_Wrapper.m_Boat_Dismount;
         public InputAction @Anchor => m_Wrapper.m_Boat_Anchor;
+        public InputAction @WaterVertical => m_Wrapper.m_Boat_WaterVertical;
+        public InputAction @WaterForwardBackward => m_Wrapper.m_Boat_WaterForwardBackward;
+        public InputAction @Submarine => m_Wrapper.m_Boat_Submarine;
         public InputActionMap Get() { return m_Wrapper.m_Boat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1732,6 +1896,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Anchor.started += instance.OnAnchor;
             @Anchor.performed += instance.OnAnchor;
             @Anchor.canceled += instance.OnAnchor;
+            @WaterVertical.started += instance.OnWaterVertical;
+            @WaterVertical.performed += instance.OnWaterVertical;
+            @WaterVertical.canceled += instance.OnWaterVertical;
+            @WaterForwardBackward.started += instance.OnWaterForwardBackward;
+            @WaterForwardBackward.performed += instance.OnWaterForwardBackward;
+            @WaterForwardBackward.canceled += instance.OnWaterForwardBackward;
+            @Submarine.started += instance.OnSubmarine;
+            @Submarine.performed += instance.OnSubmarine;
+            @Submarine.canceled += instance.OnSubmarine;
         }
 
         private void UnregisterCallbacks(IBoatActions instance)
@@ -1751,6 +1924,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Anchor.started -= instance.OnAnchor;
             @Anchor.performed -= instance.OnAnchor;
             @Anchor.canceled -= instance.OnAnchor;
+            @WaterVertical.started -= instance.OnWaterVertical;
+            @WaterVertical.performed -= instance.OnWaterVertical;
+            @WaterVertical.canceled -= instance.OnWaterVertical;
+            @WaterForwardBackward.started -= instance.OnWaterForwardBackward;
+            @WaterForwardBackward.performed -= instance.OnWaterForwardBackward;
+            @WaterForwardBackward.canceled -= instance.OnWaterForwardBackward;
+            @Submarine.started -= instance.OnSubmarine;
+            @Submarine.performed -= instance.OnSubmarine;
+            @Submarine.canceled -= instance.OnSubmarine;
         }
 
         public void RemoveCallbacks(IBoatActions instance)
@@ -1824,6 +2006,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnPrevious(InputAction.CallbackContext context);
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnWaterVertical(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1846,5 +2029,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnWheel(InputAction.CallbackContext context);
         void OnDismount(InputAction.CallbackContext context);
         void OnAnchor(InputAction.CallbackContext context);
+        void OnWaterVertical(InputAction.CallbackContext context);
+        void OnWaterForwardBackward(InputAction.CallbackContext context);
+        void OnSubmarine(InputAction.CallbackContext context);
     }
 }
