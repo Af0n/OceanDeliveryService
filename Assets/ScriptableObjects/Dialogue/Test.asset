@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  Label: Will not be Seen
+  Dialogues:
+  - CharName: Test Character
+    Text: This is some test dialogue that I am saying right now
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Test Character
+    Text: This is some new dialogue with the same character talking.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Hateful Guy
+    Text: I am a new character butting into this conversation
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 1
+    JumpChain: {fileID: 11400000}
+    JumpIndex: 4
+  - CharName: Secret Menu Guy
+    Text: This should only be displayed after a menu selection
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: '"'
+    Text: What do you want to do?
+    HasMenu: 1
+    MenuOptions:
+    - {fileID: 11400000, guid: 5af1ba8295b2b874f93abc7a45b477bd, type: 2}
+    - {fileID: 11400000, guid: 90b5b9f8ecf30204da9f5ee120cb1488, type: 2}
+    - {fileID: 11400000, guid: 2f8e5939c560e0d4bbcb86f575741079, type: 2}
+    - {fileID: 11400000, guid: 5b72e89d56f94244d8b103f30af42df1, type: 2}
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
