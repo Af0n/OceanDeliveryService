@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BoatMovement : MonoBehaviour
 {
@@ -13,22 +14,71 @@ public class BoatMovement : MonoBehaviour
     private BoatControl control;
     private Rigidbody rb;
 
+    [Header("Submarine Movement")] 
+    private float onSurfaceDepth;
+    public bool areFloatersActive;
+    public bool isSubmarine;
+    public float verticalWaterSpeed;
+    public float horizontalWaterSpeed;
+    public float submarineTurnEffectiveness;
+    private Vector3 moveVerticalVector;
+    private Vector3 moveHorizontalVector;
+    
+    public List<GameObject> floaters = new List<GameObject>();
+
     private void Awake()
     {
         control = GetComponent<BoatControl>();
         rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate() {
-        ForwardMovement();
-
-        Turn();
+    private void FixedUpdate()
+    {
+        if (transform.position.y > -onSurfaceDepth)
+        {
+            TurnOnFloaters();
+        }
+        if (isSubmarine)
+        {
+            SubMovement();
+            WaterTurn();
+        }
+        else
+        {
+            ForwardMovement();
+            Turn();
+        }
     }
 
     private void Turn(){
         float turnForce = control.WheelTurnAmount * TurnEffectiveness;
         Vector3 force = transform.up * turnForce;
         rb.AddTorque(force);
+    }
+
+    private void WaterTurn()
+    {
+        float turnForce = control.WheelTurnAmount * submarineTurnEffectiveness;
+        Vector3 force = transform.up * turnForce;
+        rb.AddTorque(force);
+    }
+
+    public void TurnOffFloaters()
+    {
+        areFloatersActive = false;
+        for (int i = 0; i < floaters.Count; i++)
+        {
+            floaters[i].SetActive(false);
+        }
+    }
+    
+    public void TurnOnFloaters()
+    {
+        areFloatersActive = true;
+        for (int i = 0; i < floaters.Count; i++)
+        {
+            floaters[i].SetActive(true);
+        }
     }
 
     private void ForwardMovement(){
@@ -54,5 +104,28 @@ public class BoatMovement : MonoBehaviour
         dotProd *= control.SailFurlAmount;
 
         rb.AddForce(transform.forward * dotProd);
+    }
+    
+    private void SubMovement(){
+        moveVerticalVector = control.GetMoveVerticalVector();
+        rb.AddForce(moveVerticalVector * verticalWaterSpeed);
+            
+        moveHorizontalVector = control.GetMoveHorizontalVector();
+        rb.AddForce(moveHorizontalVector * horizontalWaterSpeed);
+    }
+
+    public void ToggleSurface(float surfaced)
+    {
+        onSurfaceDepth = surfaced;
+    }
+
+    void Start()
+    {
+        Floater.OnSurfacedBoat += ToggleSurface;
+    }
+
+    void OnDestroy()
+    {
+        Floater.OnSurfacedBoat -= ToggleSurface;
     }
 }

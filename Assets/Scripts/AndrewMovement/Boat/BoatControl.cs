@@ -50,6 +50,15 @@ public class BoatControl : MonoBehaviour
     private InputAction sailLower;
     private InputAction anchor;
     private InputAction dismount;
+    private InputAction waterVertical;
+    private InputAction waterForwardBackward;
+    private InputAction submarine;
+    
+    
+    
+    private Vector3 moveVerticalVector;
+    private Vector3 moveHorizontalVector;
+    private BoatMovement boatMovement;
 
     private void Awake()
     {
@@ -58,6 +67,7 @@ public class BoatControl : MonoBehaviour
         controlBoatToggle = GetComponent<ControlBoatToggle>();
 
         isAnchored = StartAnchored;
+        boatMovement = GetComponent<BoatMovement>();
     }
 
     void Update()
@@ -67,6 +77,10 @@ public class BoatControl : MonoBehaviour
         TurnSail();
 
         FurlSail();
+        
+        WaterVertical();
+        
+        WaterForwardBackward();
     }
 
     private void TurnWheel()
@@ -83,6 +97,10 @@ public class BoatControl : MonoBehaviour
 
     private void FurlSail()
     {
+        if (boatMovement.isSubmarine)
+        {
+            return;
+        }
         sailAmount += sailLower.ReadValue<float>() * Time.deltaTime;
         sailAmount = Mathf.Clamp(sailAmount, 0, SailFurlTime);
     }
@@ -92,8 +110,65 @@ public class BoatControl : MonoBehaviour
         controlBoatToggle.MountToggle();
     }
 
+    private void TurnToSub(InputAction.CallbackContext context)
+    {
+        if (boatMovement.isSubmarine && boatMovement.areFloatersActive)
+        {
+            boatMovement.isSubmarine = false;
+            Debug.Log("The vehicle is now a Ship");
+        }
+        else if (!boatMovement.isSubmarine)
+        {
+            boatMovement.isSubmarine = true;
+            isAnchored = false;
+            Debug.Log("The vehicle is now a Submarine");
+        }
+    }
+
     private void AnchorToggle(InputAction.CallbackContext context){
+        if (boatMovement.isSubmarine)
+        {
+            isAnchored = false;
+            return;
+        }
         isAnchored = !isAnchored;
+    }
+    
+    private void WaterVertical(){
+        if (!boatMovement.isSubmarine)
+        {
+            return;
+        }
+        float direction = waterVertical.ReadValue<float>();
+        if (boatMovement.isSubmarine && direction == -1)
+        {
+            boatMovement.TurnOffFloaters();
+        }
+        moveVerticalVector = new Vector3(0, direction, 0);
+    }
+    
+    private void WaterForwardBackward(){
+        if (!boatMovement.isSubmarine)
+        {
+            return;
+        }
+        float direction = waterForwardBackward.ReadValue<float>();
+        moveHorizontalVector = transform.forward * direction;
+    }
+
+    public Vector3 GetMoveVerticalVector()
+    {
+        return moveVerticalVector;
+    }
+
+    public Vector3 GetMoveHorizontalVector()
+    {
+        return moveHorizontalVector;
+    }
+
+    public void AlterAnchor()
+    {
+        isAnchored = false;
     }
 
     void OnEnable()
@@ -115,6 +190,16 @@ public class BoatControl : MonoBehaviour
         anchor = actions.Boat.Anchor;
         anchor.Enable();
         anchor.performed += AnchorToggle;
+        
+        waterVertical = actions.Boat.WaterVertical;
+        waterVertical.Enable();
+        
+        waterForwardBackward = actions.Boat.WaterForwardBackward;
+        waterForwardBackward.Enable();
+        
+        submarine = actions.Boat.Submarine;
+        submarine.Enable();
+        submarine.performed += TurnToSub;
     }
 
     void OnDisable()

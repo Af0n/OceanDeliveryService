@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     private CharacterController controller;
     
     public bool IsOnBoat;
+    public float onSurfaceDepth = -1f;
+    public GameObject playerFloater;
 
     private void Awake()
     {
@@ -15,6 +17,27 @@ public class PlayerManager : MonoBehaviour
         look = GetComponent<AndrewLook>();
         interaction = GetComponent<PlayerInteract>();
         controller = GetComponent<CharacterController>();
+    }
+    
+    private void FixedUpdate()
+    {
+        if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
+        {
+            movement.isSwimming = false;
+            movement.isFloating = true;
+            playerFloater.SetActive(true);
+        } else if (playerFloater.transform.position.y < onSurfaceDepth)
+        {
+            movement.isSwimming = true;
+            movement.isFloating = false;
+            playerFloater.SetActive(false);
+        }
+        else if (playerFloater.transform.position.y > 0)
+        {
+            movement.isSwimming = false;
+            movement.isFloating = false;
+            playerFloater.SetActive(false);
+        }
     }
 
     public void SetMovement(bool b)
@@ -63,5 +86,22 @@ public class PlayerManager : MonoBehaviour
                 IsOnBoat = false;
                 break;
         }
+    }
+    
+    
+    
+    public void ToggleSurface(float surfaced)
+    {
+        // onSurfaceDepth = surfaced;
+    }
+
+    void Start()
+    {
+        PlayerFloater.OnSurfacedPlayer += ToggleSurface;
+    }
+
+    void OnDestroy()
+    {
+        PlayerFloater.OnSurfacedPlayer -= ToggleSurface;
     }
 }

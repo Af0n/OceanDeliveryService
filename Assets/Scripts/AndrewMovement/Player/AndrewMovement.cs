@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,9 @@ public class AndrewMovement : MonoBehaviour
     [Header("Movement Properties")]
     public float Speed;
     public float JumpHeight;
+    public bool isSwimming;
+    public bool isFloating;
+    public float verticalWaterSpeed;
 
     [Header("Gravity Properties")]
     public bool UsePhysicsGravity;
@@ -23,16 +27,22 @@ public class AndrewMovement : MonoBehaviour
     private InputSystem_Actions actions;
     private InputAction move;
     private InputAction jump;
+    private InputAction waterVertical;
 
     private PlayerManager manager;
     private DeckTargetClamp deck;
 
     private float yVelocity;
-    private bool isGrounded;
+    public bool isGrounded;
     private bool checkForGround;
+    
+    private Camera MainCamera;
+    private bool raisingInWater;
+    private bool loweringInWater;
 
     private void Awake()
     {
+        MainCamera = Camera.main;
         actions = new InputSystem_Actions();
 
         manager = GetComponent<PlayerManager>();
@@ -52,7 +62,7 @@ public class AndrewMovement : MonoBehaviour
     {
         // checking for ground
         isGrounded = Physics.CheckSphere(GroundCheck.position, GroundCheckRadius, standableMask);
-
+        
         if(manager.IsOnBoat){
             BoatMove();
         }else{
@@ -77,13 +87,36 @@ public class AndrewMovement : MonoBehaviour
     private void Move(){
         Vector2 readMove = move.ReadValue<Vector2>();
 
-        Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
-        moveVec *= Time.deltaTime * Speed;
+        if (isSwimming)
+        {
+            WaterVertical();
+            Vector3 moveVec = MainCamera.transform.forward * readMove.y + MainCamera.transform.right * readMove.x;
+            moveVec *= Time.deltaTime * Speed;
 
-        manager.Move(moveVec);
+            manager.Move(moveVec);
+        } 
+        else if (isFloating)
+        {
+            WaterVertical();
+            Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
+            moveVec *= Time.deltaTime * Speed;
+
+            manager.Move(moveVec);
+        }
+        else
+        {
+            Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
+            moveVec *= Time.deltaTime * Speed;
+
+            manager.Move(moveVec);
+        }
     }
 
     private void Gravity(){
+        if (isSwimming || isFloating)
+        {
+            return;
+        }
         if(isGrounded && checkForGround){
             yVelocity = SettlingForce;
         }else{
@@ -94,12 +127,37 @@ public class AndrewMovement : MonoBehaviour
     }
 
     private void Jump(InputAction.CallbackContext context){
+        if (isSwimming || isFloating)
+        {
+            return;
+        }
         if(!isGrounded){
             return;
         }
         yVelocity = Mathf.Sqrt(JumpHeight * 2 * GravityForce);
         checkForGround = false;
         StartCoroutine(nameof(JumpGracePeriod));
+    }
+    private void WaterVertical(){
+        float direction = waterVertical.ReadValue<float>();
+        if (isSwimming)
+        {
+            Vector3 moveVec = new Vector3(0, direction, 0);
+            moveVec *= Time.deltaTime * verticalWaterSpeed;
+            manager.Move(moveVec);
+        }
+        if (isFloating)
+        {
+            if (direction == -1)
+            {
+                manager.playerFloater.SetActive(false);
+                Vector3 moveVec = new Vector3(0, direction, 0);
+                moveVec *= Time.deltaTime * verticalWaterSpeed;
+                manager.Move(moveVec);
+                isFloating = false;
+                isSwimming = true;
+            }
+        }
     }
 
     private IEnumerator JumpGracePeriod(){
@@ -112,6 +170,9 @@ public class AndrewMovement : MonoBehaviour
         // input system boilerplate
         move = actions.Player.Move;
         move.Enable();
+        
+        waterVertical = actions.Player.WaterVertical;
+        waterVertical.Enable();
 
         jump = actions.Player.Jump;
         jump.Enable();
