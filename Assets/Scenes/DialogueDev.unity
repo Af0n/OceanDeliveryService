@@ -470,9 +470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622e2acc1a33ec940979154455bd8bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: Press Space to advance through dialogue and click on menu options to select
-    them. This dialogue system uses scriptable object dialogue sets called DialogueChains.
-    Each piece of dialogue has individual options for menus and jumps.
+  info: Walk up to the ball and press E to interact. Press Space to advance through
+    dialogue and click on menu options to select them. This dialogue system uses
+    scriptable object dialogue sets called DialogueChains. Each piece of dialogue
+    has individual options for menus and jumps.
 --- !u!4 &633490379
 Transform:
   m_ObjectHideFlags: 0
