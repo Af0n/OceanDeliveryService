@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -11,21 +12,27 @@ public class DialogueManager : MonoBehaviour
     [Tooltip("If a text is populated with this string, it will not update what is currently in the box.")]
     public string CopyStr;
 
-    public DialogueChain testChain;
+    // public DialogueChain testChain;
+    public static DialogueManager instance;
 
     private DialogueChain chain;
     private DialogueChain[] menuOptions;
     private int index;
+    private bool menuWait;
 
-    void Update()
+    private InputSystem_Actions actions;
+    private InputAction advance;
+    private PlayerManager playerMan;
+
+    void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            if(!Canvas.gameObject.activeSelf){
-                StartDialogue(testChain);
-            }else{
-                Next();
-            }
-        }
+        actions = new InputSystem_Actions();
+        instance = this;
+    }
+
+    void Start()
+    {
+        playerMan = GameObject.FindWithTag("Player").GetComponent<PlayerManager>();
     }
 
     private void SetDialogue(DialogueChain.Dialogue d){
@@ -38,6 +45,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         if(d.HasMenu){
+            menuWait = true;
             menuOptions = d.MenuOptions;
             MenuPopulation();
         }
@@ -48,7 +56,17 @@ public class DialogueManager : MonoBehaviour
         index = i;
     }
 
-    private void Next(){
+    private void Next(InputAction.CallbackContext context){
+        // since i cant disable this script, just putting in a check for actual dialogue
+        if(!Canvas.gameObject.activeSelf){
+            return;
+        }
+
+        // disable nexting while waiting for menu
+        if(menuWait){
+            return;
+        }
+        
         if(chain.Dialogues[index].DoesJump){
             JumpTo(chain.Dialogues[index].JumpChain, chain.Dialogues[index].JumpIndex);
             return;
@@ -75,12 +93,16 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue(){
         Canvas.gameObject.SetActive(false);
+        playerMan.SetAll(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void StartDialogue(DialogueChain d){
+    public void StartDialogue(DialogueChain d){
+        playerMan.SetAll(false);
         SetChain(d, 0);
         SetDialogue(chain.Dialogues[index]);
         Canvas.gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void MenuPopulation(){
@@ -106,5 +128,17 @@ public class DialogueManager : MonoBehaviour
         {
             menu.GetChild(c).gameObject.SetActive(false);
         }
+        menuWait = false;
+    }
+
+    private void OnEnable() {
+        advance = actions.UI.Advance;
+        advance.Enable();
+        advance.performed += Next;
+    }
+
+    void OnDisable()
+    {
+        advance.Disable();
     }
 }
