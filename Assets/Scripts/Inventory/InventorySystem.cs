@@ -104,23 +104,23 @@ public class InventorySystem : MonoBehaviour
             UtilsClass.CreateWorldTextPopup("" + dir, Mouse3D.GetMouseWorldPosition());
         }
 
-        if(Input.GetKeyDown(KeyCode.E)) {
-            if(objectToMove == null) {
-                Debug.Log("switched box");
-                index++;
-                if(index >= inventoryObjects.Count) {
-                    index = 0;
-                }
-                inventoryObject = inventoryObjects[index];
-            }
-        }
+        // if(Input.GetKeyDown(KeyCode.T)) {
+        //     if(objectToMove == null) {
+        //         Debug.Log("switched box");
+        //         index++;
+        //         if(index >= inventoryObjects.Count) {
+        //             index = 0;
+        //         }
+        //         inventoryObject = inventoryObjects[index];
+        //     }
+        // }
 
-        if(Input.GetKeyDown(KeyCode.Q)) {
-            AddObjectToInventory(inventoryObject);
-        }
+        // if(Input.GetKeyDown(KeyCode.Q)) {
+        //     AddObjectToInventory(inventoryObject);
+        // }
     }
 
-    private void AddObjectToInventory(InventoryObject inventoryObject) 
+    public void AddObjectToInventory(InventoryObject inventoryObject) 
     {
         for(int x = 0; x < gridWidth; x++) {
             for(int y = 0; y < gridHeight; y++) {
