@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -6,12 +7,13 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("How long the player takes to auto-respawn")]
     public float RespawnTime;
     public Transform RespawnPoint;
+    public float RespawnDistCheck;
 
     private AndrewMovement movement;
     private AndrewLook look;
     private PlayerInteract interaction;
     private CharacterController controller;
-    
+
     public bool IsOnBoat;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
@@ -23,7 +25,15 @@ public class PlayerManager : MonoBehaviour
         interaction = GetComponent<PlayerInteract>();
         controller = GetComponent<CharacterController>();
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Die();
+        }
+    }
+
     private void FixedUpdate()
     {
         if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
@@ -31,7 +41,8 @@ public class PlayerManager : MonoBehaviour
             movement.isSwimming = false;
             movement.isFloating = true;
             playerFloater.SetActive(true);
-        } else if (playerFloater.transform.position.y < onSurfaceDepth)
+        }
+        else if (playerFloater.transform.position.y < onSurfaceDepth)
         {
             movement.isSwimming = true;
             movement.isFloating = false;
@@ -66,18 +77,21 @@ public class PlayerManager : MonoBehaviour
         interaction.enabled = b;
     }
 
-    public void SetAll(bool b){
+    public void SetAll(bool b)
+    {
         SetMoveLook(b);
         SetInteraction(b);
     }
 
-    public void Move(Vector3 vec){
+    public void Move(Vector3 vec)
+    {
         controller.Move(vec);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        switch(other.tag){
+        switch (other.tag)
+        {
             case "BoatTrigger":
                 IsOnBoat = true;
                 break;
@@ -86,36 +100,46 @@ public class PlayerManager : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        switch(other.tag){
+        switch (other.tag)
+        {
             case "BoatTrigger":
                 IsOnBoat = false;
                 break;
         }
     }
-    
-    public void Die(){
+
+    public void Die()
+    {
         Debug.Log("Player has Died!");
         SetAll(false);
         StartCoroutine(nameof(RespawnTimer));
     }
 
-    public void Die(string cause){
+    public void Die(string cause)
+    {
         Debug.Log($"Player has died from {cause}!");
         SetAll(false);
         StartCoroutine(nameof(RespawnTimer));
     }
 
-    public void Respawn(){
+    public IEnumerator Respawn()
+    {
         Debug.Log("Respawning player at respawn point...");
+
         transform.SetPositionAndRotation(RespawnPoint.position, RespawnPoint.rotation);
+
+        // wait for next frame
+        yield return 0;
+
         SetAll(true);
     }
 
-    private IEnumerator RespawnTimer(){
+    private IEnumerator RespawnTimer()
+    {
         yield return new WaitForSeconds(RespawnTime);
-        Respawn();
+        StartCoroutine(nameof(Respawn));
     }
-    
+
     public void ToggleSurface(float surfaced)
     {
         // onSurfaceDepth = surfaced;

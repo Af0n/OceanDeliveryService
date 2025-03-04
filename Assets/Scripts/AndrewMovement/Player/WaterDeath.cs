@@ -12,11 +12,6 @@ public class WaterDeath : MonoBehaviour
         playerMan = GetComponent<PlayerManager>();
     }
 
-    void Start()
-    {
-        StartDrowning();
-    }
-
     public void StartDrowning(){
         StartCoroutine(nameof(DrownTimer));
     }
