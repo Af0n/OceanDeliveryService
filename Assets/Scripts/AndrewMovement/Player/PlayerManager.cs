@@ -1,7 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [Tooltip("How long the player takes to auto-respawn")]
+    public float RespawnTime;
+    public Transform RespawnPoint;
+
     private AndrewMovement movement;
     private AndrewLook look;
     private PlayerInteract interaction;
@@ -88,7 +93,28 @@ public class PlayerManager : MonoBehaviour
         }
     }
     
-    
+    public void Die(){
+        Debug.Log("Player has Died!");
+        SetAll(false);
+        StartCoroutine(nameof(RespawnTimer));
+    }
+
+    public void Die(string cause){
+        Debug.Log($"Player has died from {cause}!");
+        SetAll(false);
+        StartCoroutine(nameof(RespawnTimer));
+    }
+
+    public void Respawn(){
+        Debug.Log("Respawning player at respawn point...");
+        transform.SetPositionAndRotation(RespawnPoint.position, RespawnPoint.rotation);
+        SetAll(true);
+    }
+
+    private IEnumerator RespawnTimer(){
+        yield return new WaitForSeconds(RespawnTime);
+        Respawn();
+    }
     
     public void ToggleSurface(float surfaced)
     {
