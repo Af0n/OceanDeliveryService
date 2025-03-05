@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     public float RespawnTime;
     public Transform RespawnPoint;
     public float RespawnDistCheck;
+    [Tooltip("Temporary Exclude Layers for CharacterController")]
+    public LayerMask ExcludeLayersTemp;
 
     private AndrewMovement movement;
     private AndrewLook look;
@@ -125,13 +127,16 @@ public class PlayerManager : MonoBehaviour
     public IEnumerator Respawn()
     {
         Debug.Log("Respawning player at respawn point...");
+        SetAll(true);
 
-        transform.SetPositionAndRotation(RespawnPoint.position, RespawnPoint.rotation);
+        controller.excludeLayers = ExcludeLayersTemp;
+        controller.Move(RespawnPoint.position - transform.position);
+        transform.rotation = RespawnPoint.rotation;
 
-        // wait for next frame
+        // wait for a frame
         yield return 0;
 
-        SetAll(true);
+        controller.excludeLayers = 0;
     }
 
     private IEnumerator RespawnTimer()

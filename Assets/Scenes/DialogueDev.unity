@@ -770,6 +770,10 @@ PrefabInstance:
       propertyPath: RespawnDistCheck
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9022312280740826084, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+      propertyPath: ExcludeLayersTemp.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
