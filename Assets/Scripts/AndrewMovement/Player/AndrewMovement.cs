@@ -31,6 +31,7 @@ public class AndrewMovement : MonoBehaviour
 
     private PlayerManager manager;
     private DeckTargetClamp deck;
+    private PlayerUpgradeManager upgradeManager;
 
     private float yVelocity;
     public bool isGrounded;
@@ -46,6 +47,7 @@ public class AndrewMovement : MonoBehaviour
         actions = new InputSystem_Actions();
 
         manager = GetComponent<PlayerManager>();
+        upgradeManager = GetComponent<PlayerUpgradeManager>();
 
         if(UsePhysicsGravity){
             GravityForce = Physics.gravity.magnitude;
@@ -91,7 +93,7 @@ public class AndrewMovement : MonoBehaviour
         {
             WaterVertical();
             Vector3 moveVec = MainCamera.transform.forward * readMove.y + MainCamera.transform.right * readMove.x;
-            moveVec *= Time.deltaTime * Speed;
+            moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
 
             manager.Move(moveVec);
         } 
@@ -99,7 +101,7 @@ public class AndrewMovement : MonoBehaviour
         {
             WaterVertical();
             Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
-            moveVec *= Time.deltaTime * Speed;
+            moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
 
             manager.Move(moveVec);
         }
