@@ -16,6 +16,8 @@ public class InventorySystem : MonoBehaviour
     public int gridHeight;
     public float cellSize; 
 
+    public Transform gridOrigin;
+
     private PlacedObject objectToMove;
 
     void Awake()
@@ -35,7 +37,7 @@ public class InventorySystem : MonoBehaviour
             Vector3 pos = grid.GetNearestGridSegment(Mouse3D.GetMouseWorldPosition());
 
             // need to divide by grid cell size to avoid error (note: this is bc grid starts at 0,0)
-            List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int((int)pos.x/10, (int)pos.y/10), dir); 
+            List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int((int)pos.x/(int)cellSize, (int)pos.y/(int)cellSize), dir); 
 
             // test build area
             bool canPlace = true;
@@ -56,7 +58,7 @@ public class InventorySystem : MonoBehaviour
                 Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
                 Vector3 placedPos = pos + new Vector3(rotationOffset.x, rotationOffset.y, 0) * grid.GetCellSize();
 
-                PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int((int)pos.x/10, (int)pos.y/10), dir, inventoryObject);
+                PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int((int)pos.x/(int)cellSize, (int)pos.y/(int)cellSize), dir, inventoryObject);
                 
                 foreach(Vector2Int gridPos in gridPosList) {
                     grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
@@ -132,7 +134,7 @@ public class InventorySystem : MonoBehaviour
                         break;
                     }
                     if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
-                        canPlace = false;
+                        canPlace = false; // overlap check
                         break;
                     }
                 }
@@ -151,6 +153,41 @@ public class InventorySystem : MonoBehaviour
                 }
             }
         }
+    }
+
+    // for placing objects at specific inventory positions instead of next available
+    public void AddObjectToSpecific(InventoryObject inventoryObject, int x, int y, InventoryObject.Dir dir) 
+    {
+        List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int(x, y), dir);
+        bool canPlace = true;
+        foreach(Vector2Int gridPos in gridPosList) {
+            if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
+                canPlace = false; // out of bounds check
+                break;
+            }
+            if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
+                canPlace = false; // overlap check
+                break;
+            }
+        }
+
+        if(canPlace) {
+            Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
+            Vector3 placedPos = new Vector3(x*10, y*10, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * grid.GetCellSize();
+
+            PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
+            
+            foreach(Vector2Int gridPos in gridPosList) {
+                grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
+            }
+
+            return;
+        }
+    }
+
+    public float GetCellSize()
+    {
+        return cellSize;
     }
 
 

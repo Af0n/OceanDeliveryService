@@ -5,8 +5,12 @@ public class PlacedObject : MonoBehaviour
 {
     public static PlacedObject Create(Vector3 worldPos, Vector2Int origin, InventoryObject.Dir dir, InventoryObject inventoryObject)
     {
+        InventorySystem inventorySystem = FindAnyObjectByType<InventorySystem>();
+
         Transform placedObjTransform = Instantiate(inventoryObject.prefab, worldPos, Quaternion.Euler(0, 0, inventoryObject.GetRotationAngle(dir)));
-        
+        // rescale prefab based on invenetory cell size
+        placedObjTransform.localScale = new Vector3(inventoryObject.width * inventorySystem.GetCellSize(), inventoryObject.height * inventorySystem.GetCellSize(), 1);
+
         PlacedObject placedObject = placedObjTransform.GetComponent<PlacedObject>();
 
         placedObject.inventoryObject = inventoryObject;
