@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6656f6392f27e246b48597e3675353e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 20
   JumpHeight: 1
   isSwimming: 0
   isFloating: 0
@@ -868,6 +868,10 @@ PrefabInstance:
     - target: {fileID: 3504839131026582263, guid: f65b9cdd3f32cb042afb6c1b220878d8, type: 3}
       propertyPath: m_Name
       value: DialogueUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504839131026582263, guid: f65b9cdd3f32cb042afb6c1b220878d8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
