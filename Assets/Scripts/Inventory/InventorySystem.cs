@@ -23,7 +23,7 @@ public class InventorySystem : MonoBehaviour
     void Awake()
     {
         // create the grid for the inventory
-        grid = new Grid<GridObject>(gridWidth, gridHeight, cellSize, Vector3.zero, (Grid<GridObject> g, int x, int y) => new GridObject(g, x,  y));
+        grid = new Grid<GridObject>(gridWidth, gridHeight, cellSize, gridOrigin.position, (Grid<GridObject> g, int x, int y) => new GridObject(g, x,  y));
 
         inventoryObject = inventoryObjects[0];
         index = 0;
@@ -56,8 +56,9 @@ public class InventorySystem : MonoBehaviour
             if(canPlace && objectToMove != null) {
                 // place copy of selected obj
                 Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
-                Vector3 placedPos = pos + new Vector3(rotationOffset.x, rotationOffset.y, 0) * grid.GetCellSize();
+                Vector3 placedPos = pos + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
 
+                // TODO: will need to offset position based on origin (for visual purposes -- functionally it's fine)
                 PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int((int)pos.x/(int)cellSize, (int)pos.y/(int)cellSize), dir, inventoryObject);
                 
                 foreach(Vector2Int gridPos in gridPosList) {
@@ -141,7 +142,7 @@ public class InventorySystem : MonoBehaviour
 
                 if(canPlace) {
                     Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
-                    Vector3 placedPos = new Vector3(x*10, y*10, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * grid.GetCellSize();
+                    Vector3 placedPos = new Vector3(x*cellSize, y*cellSize, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
 
                     PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
                     
@@ -173,7 +174,7 @@ public class InventorySystem : MonoBehaviour
 
         if(canPlace) {
             Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
-            Vector3 placedPos = new Vector3(x*10, y*10, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * grid.GetCellSize();
+            Vector3 placedPos = new Vector3(x*10, y*10, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
 
             PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
             
