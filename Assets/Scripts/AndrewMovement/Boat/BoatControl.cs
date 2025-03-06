@@ -13,7 +13,7 @@ public class BoatControl : MonoBehaviour
     [Tooltip("How long it takes to open the sail from closed. Keep positive")]
     public float SailFurlTime;
     public bool StartAnchored;
-
+    
     // value between [-1, 1]
     public float WheelTurnAmount
     {
@@ -59,6 +59,7 @@ public class BoatControl : MonoBehaviour
     private Vector3 moveVerticalVector;
     private Vector3 moveHorizontalVector;
     private BoatMovement boatMovement;
+    private BoatUpgradeManager boatUpgradeManager;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public class BoatControl : MonoBehaviour
 
         isAnchored = StartAnchored;
         boatMovement = GetComponent<BoatMovement>();
+        boatUpgradeManager = GetComponent<BoatUpgradeManager>();
     }
 
     void Update()
@@ -112,16 +114,19 @@ public class BoatControl : MonoBehaviour
 
     private void TurnToSub(InputAction.CallbackContext context)
     {
-        if (boatMovement.isSubmarine && boatMovement.areFloatersActive)
+        if (boatUpgradeManager.submersible)
         {
-            boatMovement.isSubmarine = false;
-            Debug.Log("The vehicle is now a Ship");
-        }
-        else if (!boatMovement.isSubmarine)
-        {
-            boatMovement.isSubmarine = true;
-            isAnchored = false;
-            Debug.Log("The vehicle is now a Submarine");
+            if (boatMovement.isSubmarine && boatMovement.areFloatersActive)
+            {
+                boatMovement.isSubmarine = false;
+                Debug.Log("The vehicle is now a Ship");
+            }
+            else if (!boatMovement.isSubmarine)
+            {
+                boatMovement.isSubmarine = true;
+                isAnchored = false;
+                Debug.Log("The vehicle is now a Submarine");
+            }
         }
     }
 

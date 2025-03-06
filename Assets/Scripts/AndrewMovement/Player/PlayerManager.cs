@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
     private AndrewLook look;
     private PlayerInteract interaction;
     private CharacterController controller;
+    private PlayerUpgradeManager upgradeManager;
     
     public bool IsOnBoat;
     public float onSurfaceDepth = -1f;
@@ -17,20 +18,28 @@ public class PlayerManager : MonoBehaviour
         look = GetComponent<AndrewLook>();
         interaction = GetComponent<PlayerInteract>();
         controller = GetComponent<CharacterController>();
+        upgradeManager = GetComponent<PlayerUpgradeManager>();
     }
     
     private void FixedUpdate()
     {
         if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
         {
-            movement.isSwimming = false;
-            movement.isFloating = true;
-            playerFloater.SetActive(true);
-        } else if (playerFloater.transform.position.y < onSurfaceDepth)
+            if(upgradeManager.swimAbilityUpgrade)
+            {
+                movement.isSwimming = false;
+                movement.isFloating = true;
+                playerFloater.SetActive(true);
+            }
+        } 
+        else if (playerFloater.transform.position.y < onSurfaceDepth)
         {
-            movement.isSwimming = true;
-            movement.isFloating = false;
-            playerFloater.SetActive(false);
+            if(upgradeManager.swimAbilityUpgrade)
+            {
+                movement.isSwimming = true;
+                movement.isFloating = false;
+                playerFloater.SetActive(false);
+            }
         }
         else if (playerFloater.transform.position.y > 0)
         {
