@@ -14,9 +14,11 @@ public class PlayerManager : MonoBehaviour
     private AndrewMovement movement;
     private AndrewLook look;
     private PlayerInteract interaction;
+    private WaterDeath waterDeath;
     private CharacterController controller;
 
     public bool IsOnBoat;
+    public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
 
@@ -26,6 +28,7 @@ public class PlayerManager : MonoBehaviour
         look = GetComponent<AndrewLook>();
         interaction = GetComponent<PlayerInteract>();
         controller = GetComponent<CharacterController>();
+        waterDeath = GetComponent<WaterDeath>();
     }
 
     private void Update()
@@ -41,18 +44,24 @@ public class PlayerManager : MonoBehaviour
         if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
         {
             movement.isSwimming = false;
+            IsUnderwater = false;
+            waterDeath.StopDrowning();
             movement.isFloating = true;
             playerFloater.SetActive(true);
         }
         else if (playerFloater.transform.position.y < onSurfaceDepth)
         {
             movement.isSwimming = true;
+            IsUnderwater = true;
+            waterDeath.StartDrowning();
             movement.isFloating = false;
             playerFloater.SetActive(false);
         }
         else if (playerFloater.transform.position.y > 0)
         {
             movement.isSwimming = false;
+            IsUnderwater = false;
+            waterDeath.StopDrowning();
             movement.isFloating = false;
             playerFloater.SetActive(false);
         }
