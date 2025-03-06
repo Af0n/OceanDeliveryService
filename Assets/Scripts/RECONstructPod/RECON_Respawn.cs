@@ -1,15 +1,27 @@
+using TMPro;
 using UnityEngine;
 
 public class RECON_Respawn : Interactable
 {
     
     [Header("Colors")]
-    public Gradient Locked;
-    public Gradient Unlocked;
-    public Gradient Respawn;
+    public Gradient LockedGrad;
+    public Gradient UnlockedGrad;
+    public Gradient RespawnGrad;
+    public Gradient OppLockedGrad;
+    public Gradient OppUnlockedGrad;
+    public Gradient OppRespawnGrad;
+    [Header("Text Displays")]
+    [TextArea]
+    public string LockedMessage;
+    [TextArea]
+    public string UnlockedMessage;
+    [TextArea]
+    public string RespawnMessage;
     [Header("Unity Set Up")]
-    public ParticleSystem particles;
-    public ParticleSystem oppParticles;
+    public ParticleSystem Particles;
+    public ParticleSystem OppParticles;
+    public TextMeshProUGUI TextBox;
     public bool StartLocked;
 
     public delegate void SetRespawnEvent();
@@ -28,33 +40,40 @@ public class RECON_Respawn : Interactable
     void Start()
     {
         if(isLocked){
-            SetParticleGradient(Locked);
+            SetParticleGradient(LockedGrad, OppLockedGrad);
+            TextBox.text = LockedMessage;
             return;
         }
 
         if(isRespawn){
-            SetParticleGradient(Respawn);
+            SetParticleGradient(RespawnGrad, OppRespawnGrad);
+            TextBox.text = RespawnMessage;
             return;
         }
 
-        SetParticleGradient(Unlocked);
+        SetParticleGradient(UnlockedGrad, OppUnlockedGrad);
+        TextBox.text = UnlockedMessage;
     }
 
-    private void SetParticleGradient(Gradient g){
-        ParticleSystem.MainModule ma = particles.main;
+    private void SetParticleGradient(Gradient g, Gradient og){
+        ParticleSystem.MainModule ma = Particles.main;
         ma.startColor = g;
 
-        ma = oppParticles.main;
-        ma.startColor = g;
+        ma = OppParticles.main;
+        ma.startColor = og;
     }
 
     public override void Interact()
     {
         isLocked = false;
         OnSetRespawn();
+
         isRespawn = true;
-        SetParticleGradient(Respawn);
+        SetParticleGradient(RespawnGrad, OppRespawnGrad);
+        TextBox.text = RespawnMessage;
+
         Debug.Log("Setting Spawnpoint");
+
         GameObject.FindWithTag("Player").GetComponent<PlayerManager>().RespawnPoint = transform.GetChild(0);
     }
 
@@ -62,9 +81,11 @@ public class RECON_Respawn : Interactable
         isRespawn = false;
 
         if(isLocked){
+            TextBox.text = LockedMessage;
             return;
         }
 
-        SetParticleGradient(Unlocked);
+        SetParticleGradient(UnlockedGrad,OppUnlockedGrad);
+        TextBox.text = UnlockedMessage;
     }
 }
