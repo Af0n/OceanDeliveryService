@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 4474278542521445094}
   - component: {fileID: 9022312280740826084}
   - component: {fileID: 7783446691075827928}
+  - component: {fileID: 141960404385030522}
   - component: {fileID: 1297599465580270826}
   m_Layer: 0
   m_Name: Player
@@ -181,7 +182,7 @@ MonoBehaviour:
   - 50
   - 100
   - 150
-  swimAbilityUpgrade: 0
+  swimAbilityUpgrade: 1
   inventoryCapacityUpgrade: 4
   inventoryCapacity: 050000000600000007000000
   swimSpeedUpgrade: 5
@@ -194,6 +195,20 @@ MonoBehaviour:
   - 7.5
   - 10
   - 12.5
+--- !u!114 &141960404385030522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694818090973091056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6c0b1fc79c76b4692fe13cc115ddf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DrownTime: 5
+  WaterVisual: {fileID: 3634681844385100245}
 --- !u!143 &1297599465580270826
 CharacterController:
   m_ObjectHideFlags: 0
@@ -277,7 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -58,9 +58,14 @@ public class PlayerManager : MonoBehaviour
         {
             movement.isSwimming = false;
             IsUnderwater = false;
-            waterDeath.StopDrowning();
             movement.isFloating = false;
             playerFloater.SetActive(false);
+        }
+
+        if(IsUnderwater){
+            waterDeath.StartDrowning();
+        }else{
+            waterDeath.StopDrowning();
         }
     }
 
