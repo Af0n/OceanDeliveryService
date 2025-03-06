@@ -15,7 +15,8 @@ public class PlayerManager : MonoBehaviour
     private PlayerInteract interaction;
     private WaterDeath waterDeath;
     private CharacterController controller;
-
+    private PlayerUpgradeManager upgradeManager;
+    
     public bool IsOnBoat;
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
@@ -28,33 +29,30 @@ public class PlayerManager : MonoBehaviour
         interaction = GetComponent<PlayerInteract>();
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Die();
-        }
+        upgradeManager = GetComponent<PlayerUpgradeManager>();
     }
 
     private void FixedUpdate()
     {
         if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
         {
-            movement.isSwimming = false;
-            IsUnderwater = false;
-            waterDeath.StopDrowning();
-            movement.isFloating = true;
-            playerFloater.SetActive(true);
-        }
+            if(upgradeManager.swimAbilityUpgrade)
+            {
+                movement.isSwimming = false;
+                IsUnderwater = false;
+                movement.isFloating = true;
+                playerFloater.SetActive(true);
+            }
+        } 
         else if (playerFloater.transform.position.y < onSurfaceDepth)
         {
-            movement.isSwimming = true;
-            IsUnderwater = true;
-            waterDeath.StartDrowning();
-            movement.isFloating = false;
-            playerFloater.SetActive(false);
+            if(upgradeManager.swimAbilityUpgrade)
+            {
+                movement.isSwimming = true;
+                IsUnderwater = true;
+                movement.isFloating = false;
+                playerFloater.SetActive(false);
+            }
         }
         else if (playerFloater.transform.position.y > 0)
         {
