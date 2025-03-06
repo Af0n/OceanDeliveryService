@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class TestTalker : Interactable
 {
     public DialogueChain DialogueChain;
