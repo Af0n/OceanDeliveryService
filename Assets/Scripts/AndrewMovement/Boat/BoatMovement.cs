@@ -13,6 +13,7 @@ public class BoatMovement : MonoBehaviour
 
     private BoatControl control;
     private Rigidbody rb;
+    private BoatUpgradeManager upgradeManager;
 
     [Header("Submarine Movement")] 
     private float onSurfaceDepth;
@@ -30,6 +31,7 @@ public class BoatMovement : MonoBehaviour
     {
         control = GetComponent<BoatControl>();
         rb = GetComponent<Rigidbody>();
+        upgradeManager = GetComponent<BoatUpgradeManager>();
     }
 
     private void FixedUpdate()
@@ -51,14 +53,18 @@ public class BoatMovement : MonoBehaviour
     }
 
     private void Turn(){
-        float turnForce = control.WheelTurnAmount * TurnEffectiveness;
+        if (control.IsAnchored && !upgradeManager.motorUpgrade)
+        {
+            return;
+        }
+        float turnForce = control.WheelTurnAmount * upgradeManager.turnEffectiveness;
         Vector3 force = transform.up * turnForce;
         rb.AddTorque(force);
     }
 
     private void WaterTurn()
     {
-        float turnForce = control.WheelTurnAmount * submarineTurnEffectiveness;
+        float turnForce = control.WheelTurnAmount * upgradeManager.turnEffectiveness;
         Vector3 force = transform.up * turnForce;
         rb.AddTorque(force);
     }
@@ -102,6 +108,8 @@ public class BoatMovement : MonoBehaviour
         dotProd *= WindManager.WindMagnitude;
 
         dotProd *= control.SailFurlAmount;
+
+        dotProd *= upgradeManager.sailSpeedAndSize;
 
         rb.AddForce(transform.forward * dotProd);
     }

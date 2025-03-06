@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8871792669245609129}
   - component: {fileID: 4474278542521445094}
   - component: {fileID: 9022312280740826084}
-  - component: {fileID: 735130274033673028}
+  - component: {fileID: 7783446691075827928}
   - component: {fileID: 1297599465580270826}
   m_Layer: 0
   m_Name: Player
@@ -159,7 +159,7 @@ MonoBehaviour:
   IsUnderwater: 0
   onSurfaceDepth: -1
   playerFloater: {fileID: 8596158877227434374}
---- !u!114 &735130274033673028
+--- !u!114 &7783446691075827928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,11 +168,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 2694818090973091056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c6c0b1fc79c76b4692fe13cc115ddf2, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f532575a4765a34581770ddfb115af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DrownTime: 10
-  WaterVisual: {fileID: 3634681844385100245}
+  waterResistanceUpgrade: 0
+  waterResistance:
+  - 10
+  - 30
+  - 90
+  depthUpgrade: 0
+  depthResistance:
+  - 50
+  - 100
+  - 150
+  swimAbilityUpgrade: 0
+  inventoryCapacityUpgrade: 4
+  inventoryCapacity: 050000000600000007000000
+  swimSpeedUpgrade: 5
+  swimSpeed:
+  - 7.5
+  - 10
+  - 12.5
+  eyeLightUpgrade: 5
+  eyeLight:
+  - 7.5
+  - 10
+  - 12.5
 --- !u!143 &1297599465580270826
 CharacterController:
   m_ObjectHideFlags: 0
