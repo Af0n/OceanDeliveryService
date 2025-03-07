@@ -21,17 +21,8 @@ public class PlayerInteract : MonoBehaviour
         //Debug.Log("Trying Interaction");
         Physics.Raycast(Cam.position, Cam.forward, out RaycastHit hitInfo, InteractDistance, layerMask);
         Debug.DrawRay(Cam.position, Cam.forward * InteractDistance, Color.red, 2f);
-        try
-        {
-            // checks tag of hit object
-            if(!hitInfo.transform.CompareTag("Interactable")){
-                // if not interactable, just do nothing
-                return;
-            }
-        }
-        catch (System.Exception)
-        {
-            // handles non-hits if hitInfo has no transform
+        
+        if(!hitInfo.transform){
             return;
         }
 
