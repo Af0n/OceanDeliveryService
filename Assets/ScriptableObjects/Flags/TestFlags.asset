@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8fd5003e0f1e7748b93500578366996, type: 3}
-  m_Name: Flags
+  m_Name: TestFlags
   m_EditorClassIdentifier: 
   FlagList:
   - FlagName: TestFlag
+    IsSet: 0
+  - FlagName: OtherTestFlag
     IsSet: 0
