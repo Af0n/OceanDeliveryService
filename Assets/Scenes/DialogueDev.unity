@@ -604,6 +604,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6179030702222579961, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+      propertyPath: GroundCheckRadius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8848811257863190894, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -644,7 +648,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9022312280740826084, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+    - target: {fileID: 9195602199445231648, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
       propertyPath: RespawnPoint
       value: 
       objectReference: {fileID: 27593247}

@@ -41,13 +41,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8848811257863190894}
-  - component: {fileID: 4021793492150029569}
-  - component: {fileID: 8871792669245609129}
-  - component: {fileID: 4474278542521445094}
-  - component: {fileID: 9022312280740826084}
+  - component: {fileID: 9195602199445231648}
   - component: {fileID: 7783446691075827928}
   - component: {fileID: 141960404385030522}
   - component: {fileID: 1297599465580270826}
+  - component: {fileID: 6608804252475583097}
+  - component: {fileID: 6179030702222579961}
+  - component: {fileID: 7616409772823938809}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -78,67 +78,7 @@ Transform:
   - {fileID: 4172636074245356896}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4021793492150029569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2694818090973091056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6656f6392f27e246b48597e3675353e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 20
-  JumpHeight: 1
-  isSwimming: 0
-  isFloating: 0
-  verticalWaterSpeed: 5
-  UsePhysicsGravity: 0
-  GravityForce: 20
-  SettlingForce: -2
-  GroundCheck: {fileID: 8202755915589465311}
-  standableMask:
-    serializedVersion: 2
-    m_Bits: 8
-  GroundCheckRadius: 0.49
-  GroundedGracePeriod: 0.25
-  isGrounded: 0
---- !u!114 &8871792669245609129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2694818090973091056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 642374ff2cffdf8458cc10c0bbe16168, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Sens: 10
-  MinLookAngle: -89
-  MaxLookAngle: 89
-  Cam: {fileID: 4695198187370569555}
---- !u!114 &4474278542521445094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2694818090973091056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fd34fcb19585ea499d7f764ed62c174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InteractDistance: 2
-  Cam: {fileID: 4695198187370569555}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1572864
---- !u!114 &9022312280740826084
+--- !u!114 &9195602199445231648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,6 +174,66 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &6608804252475583097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694818090973091056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 642374ff2cffdf8458cc10c0bbe16168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sens: 10
+  MinLookAngle: -89
+  MaxLookAngle: 89
+  Cam: {fileID: 4695198187370569555}
+--- !u!114 &6179030702222579961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694818090973091056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6656f6392f27e246b48597e3675353e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 5
+  JumpHeight: 1
+  isSwimming: 0
+  isFloating: 0
+  verticalWaterSpeed: 3
+  UsePhysicsGravity: 1
+  GravityForce: 0
+  SettlingForce: -2
+  GroundCheck: {fileID: 8202755915589465311}
+  standableMask:
+    serializedVersion: 2
+    m_Bits: 1048584
+  GroundCheckRadius: 0.475
+  GroundedGracePeriod: 0.2
+  isGrounded: 0
+--- !u!114 &7616409772823938809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694818090973091056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd34fcb19585ea499d7f764ed62c174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractDistance: 2
+  Cam: {fileID: 4695198187370569555}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1572864
 --- !u!1 &3498720962508067971
 GameObject:
   m_ObjectHideFlags: 0
