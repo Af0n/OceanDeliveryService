@@ -22,7 +22,7 @@ public class PlayerInteract : MonoBehaviour
         Physics.Raycast(Cam.position, Cam.forward, out RaycastHit hitInfo, InteractDistance, layerMask);
         Debug.DrawRay(Cam.position, Cam.forward * InteractDistance, Color.red, 2f);
         
-        if(hitInfo.transform == null){
+        if(!hitInfo.transform){
             return;
         }
 
