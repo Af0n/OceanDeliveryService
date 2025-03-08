@@ -150,6 +150,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &269372760 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9195602199445231648, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+  m_PrefabInstance: {fileID: 985653719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454449ff57439b04abb75ad464622d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &604898942
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,6 +625,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1833143085308057107, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+      propertyPath: playerMan
+      value: 
+      objectReference: {fileID: 269372760}
+    - target: {fileID: 2010045966549549610, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2694818090973091056, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
       propertyPath: m_Name
       value: Player
@@ -621,6 +640,10 @@ PrefabInstance:
     - target: {fileID: 6179030702222579961, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
       propertyPath: GroundCheckRadius
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7256572981978078566, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8848811257863190894, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
       propertyPath: m_LocalPosition.x
