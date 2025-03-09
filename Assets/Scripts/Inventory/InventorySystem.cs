@@ -2,15 +2,23 @@ using UnityEngine;
 using CodeMonkey.Utils;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class InventorySystem : MonoBehaviour
 {
     public List<InventoryObject> inventoryObjects;
-    private InventoryObject inventoryObject;
+    public InventoryObject inventoryObject;
     private int index;
 
     private Grid<GridObject> grid;
     private InventoryObject.Dir dir = InventoryObject.Dir.Down;
+
+    [Header("for ui attempt")]
+    private GridUI gridUI;
+    public GameObject panel;
+    public GameObject cellPrefab;
+    private List<GameObject> inventorySlots = new List<GameObject>(); // for storing UI elements 
 
     public int gridWidth;
     public int gridHeight;
@@ -18,94 +26,153 @@ public class InventorySystem : MonoBehaviour
 
     public Transform gridOrigin;
 
-    private PlacedObject objectToMove;
+    private GameObject objectToMove;
 
     void Awake()
     {
-        // create the grid for the inventory
+        // create the grid for the inventory (preserved for reference for now)
         grid = new Grid<GridObject>(gridWidth, gridHeight, cellSize, gridOrigin.position, (Grid<GridObject> g, int x, int y) => new GridObject(g, x,  y));
 
-        inventoryObject = inventoryObjects[0];
+        // inventoryObject = inventoryObjects[0];
         index = 0;
 
         objectToMove = null;
+
+        // UI version attempt
+        // gridUI = new GridUI(panel, cellPrefab, 5, 5, new Vector2(100,100));
+        GenerateInventory();
+
     }
 
+    void GenerateInventory()
+    {
+        // Initialize GridUI with panel, prefab, and grid size
+        gridUI = new GridUI(panel, cellPrefab, gridWidth, gridHeight, new Vector2(100,100));
+
+        // Store references to the generated grid cells
+        foreach (Transform child in panel.transform)
+        {
+            GameObject slot = child.gameObject;
+            inventorySlots.Add(slot);
+            // Add an onClick listener to each slot
+            slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
+        }
+    }
+
+    void OnInventorySlotClick(GameObject slot)
+    {
+        Debug.Log(slot.name + " clicked");
+
+        Cell cellComp = slot.GetComponent<Cell>();
+        Transform slotTransform = slot.transform;
+        
+        if(!cellComp.GetAvailable() && objectToMove == null) {
+            Debug.Log("slot is occupied");
+
+            objectToMove = slotTransform.GetChild(0).gameObject;
+            objectToMove.transform.SetParent(null);
+            // TODO: don't let objectToMove disappear when moving it 
+            // (could try setting its parent to the mouse or an object that follows the mouse)
+            
+            gridUI.RemoveItem(inventoryObject, slot);
+
+            return;
+        }
+
+        if(objectToMove != null) {
+            if(gridUI.CanPlaceItem(inventoryObject, slot)) {
+                objectToMove.transform.SetParent(slotTransform);
+                objectToMove.transform.localPosition = Vector3.zero;
+                
+                gridUI.PlaceItem(inventoryObject, slot);
+
+                objectToMove = null; // reset reference
+            }
+        }
+
+        if(cellComp.GetAvailable()) {
+            // if true then slot is empty
+            Debug.Log("empty slot");
+        }
+    }
+
+
+    // change all logic past here
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)) {
-            Vector3 pos = grid.GetNearestGridSegment(Mouse3D.GetMouseWorldPosition());
+        // if(Input.GetMouseButtonDown(0)) {
+        //     Vector3 pos = grid.GetNearestGridSegment(Mouse3D.GetMouseWorldPosition());
 
-            // need to divide by grid cell size to avoid error (note: this is bc grid starts at 0,0)
-            List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int((int)pos.x/(int)cellSize, (int)pos.y/(int)cellSize), dir); 
+        //     // need to divide by grid cell size to avoid error (note: this is bc grid starts at 0,0)
+        //     List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int((int)pos.x/(int)cellSize, (int)pos.y/(int)cellSize), dir); 
 
-            // test build area
-            bool canPlace = true;
-            foreach(Vector2Int gridPos in gridPosList) {
-                if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
-                    canPlace = false; // out of bounds check
-                    break;
-                }
-                if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
-                    // cannot build
-                    canPlace = false;
-                    break;
-                }
-            }
+        //     // test build area
+        //     bool canPlace = true;
+        //     foreach(Vector2Int gridPos in gridPosList) {
+        //         if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
+        //             canPlace = false; // out of bounds check
+        //             break;
+        //         }
+        //         if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
+        //             // cannot build
+        //             canPlace = false;
+        //             break;
+        //         }
+        //     }
 
-            if(canPlace && objectToMove != null) {
-                // place copy of selected obj
-                Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
-                Vector3 placedPos = pos + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
+        //     if(canPlace && objectToMove != null) {
+        //         // place copy of selected obj
+        //         Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
+        //         Vector3 placedPos = pos + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
 
-                // TODO: will need to offset position based on origin (for visual purposes -- functionally it's fine)
-                PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int((int)pos.x/(int)cellSize, (int)pos.y/(int)cellSize), dir, inventoryObject);
+        //         // TODO: will need to offset position based on origin (for visual purposes -- functionally it's fine)
+        //         PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int((int)pos.x/(int)cellSize, (int)pos.y/(int)cellSize), dir, inventoryObject);
                 
-                foreach(Vector2Int gridPos in gridPosList) {
-                    grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
-                }
+        //         foreach(Vector2Int gridPos in gridPosList) {
+        //             grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
+        //         }
 
-                // destroy old obj
-                objectToMove.DestroySelf();
-                List<Vector2Int> movedPosList = objectToMove.GetGridPositionList();
-                foreach(Vector2Int gridPos in movedPosList) {
-                    grid.GetGridObject(gridPos.x, gridPos.y).ClearPlacedObject();
-                } 
-                objectToMove = null; // reset obj bc it was moved
-            }
-            else {
-                // select an object to move
-                GridObject gridObject = grid.GetGridObject(Mouse3D.GetMouseWorldPosition());
-                if(gridObject == null) {
-                    Debug.Log("clicked outside grid");
-                    return;
-                }
+        //         // destroy old obj
+        //         objectToMove.DestroySelf();
+        //         List<Vector2Int> movedPosList = objectToMove.GetGridPositionList();
+        //         foreach(Vector2Int gridPos in movedPosList) {
+        //             grid.GetGridObject(gridPos.x, gridPos.y).ClearPlacedObject();
+        //         } 
+        //         objectToMove = null; // reset obj bc it was moved
+        //     }
+        //     else {
+        //         // select an object to move
+        //         GridObject gridObject = grid.GetGridObject(Mouse3D.GetMouseWorldPosition());
+        //         if(gridObject == null) {
+        //             Debug.Log("clicked outside grid");
+        //             return;
+        //         }
 
-                objectToMove = gridObject.GetPlacedObject();
-                if(objectToMove != null) {
-                    inventoryObject = objectToMove.GetInventoryObjectFromPlaced();
-                    Debug.Log("object selected");
-                }
-                else {
-                    Debug.Log("empty space");
-                }
+        //         objectToMove = gridObject.GetPlacedObject();
+        //         if(objectToMove != null) {
+        //             inventoryObject = objectToMove.GetInventoryObjectFromPlaced();
+        //             Debug.Log("object selected");
+        //         }
+        //         else {
+        //             Debug.Log("empty space");
+        //         }
                 
-                // UtilsClass.CreateWorldTextPopup("Cannot build here!", Mouse3D.GetMouseWorldPosition());
-            }
-        }
+        //         // UtilsClass.CreateWorldTextPopup("Cannot build here!", Mouse3D.GetMouseWorldPosition());
+        //     }
+        // }
 
-        if(Input.GetMouseButtonDown(1)) {
-            // deselect objectToMove
-            if(objectToMove != null) {
-                objectToMove = null;
-                Debug.Log("object deselected");
-            }
-        }
+        // if(Input.GetMouseButtonDown(1)) {
+        //     // deselect objectToMove
+        //     if(objectToMove != null) {
+        //         objectToMove = null;
+        //         Debug.Log("object deselected");
+        //     }
+        // }
 
-        if(Input.GetKeyDown(KeyCode.R)) {
-            dir = InventoryObject.GetNextDir(dir);
-            UtilsClass.CreateWorldTextPopup("" + dir, Mouse3D.GetMouseWorldPosition());
-        }
+        // if(Input.GetKeyDown(KeyCode.R)) {
+        //     dir = InventoryObject.GetNextDir(dir);
+        //     UtilsClass.CreateWorldTextPopup("" + dir, Mouse3D.GetMouseWorldPosition());
+        // }
 
         // if(Input.GetKeyDown(KeyCode.T)) {
         //     if(objectToMove == null) {
@@ -118,40 +185,60 @@ public class InventorySystem : MonoBehaviour
         //     }
         // }
 
-        // if(Input.GetKeyDown(KeyCode.Q)) {
-        //     AddObjectToInventory(inventoryObject);
-        // }
+        if(Input.GetKeyDown(KeyCode.Q)) {
+            AddObjectToInventory(inventoryObject);
+        }
     }
 
     public void AddObjectToInventory(InventoryObject inventoryObject) 
     {
-        for(int x = 0; x < gridWidth; x++) {
-            for(int y = 0; y < gridHeight; y++) {
-                List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int(x, y), dir);
-                bool canPlace = true;
-                foreach(Vector2Int gridPos in gridPosList) {
-                    if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
-                        canPlace = false; // out of bounds check
-                        break;
-                    }
-                    if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
-                        canPlace = false; // overlap check
-                        break;
-                    }
-                }
+        // for(int x = 0; x < gridWidth; x++) {
+        //     for(int y = 0; y < gridHeight; y++) {
+        //         List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int(x, y), dir);
+        //         bool canPlace = true;
+        //         foreach(Vector2Int gridPos in gridPosList) {
+        //             if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
+        //                 canPlace = false; // out of bounds check
+        //                 break;
+        //             }
+        //             if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
+        //                 canPlace = false; // overlap check
+        //                 break;
+        //             }
+        //         }
 
-                if(canPlace) {
-                    Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
-                    Vector3 placedPos = new Vector3(x*cellSize, y*cellSize, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
+        //         if(canPlace) {
+        //             Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
+        //             Vector3 placedPos = new Vector3(x*cellSize, y*cellSize, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
 
-                    PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
+        //             PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
                     
-                    foreach(Vector2Int gridPos in gridPosList) {
-                        grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
-                    }
+        //             foreach(Vector2Int gridPos in gridPosList) {
+        //                 grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
+        //             }
 
-                    return;
-                }
+        //             return;
+        //         }
+        //     }
+        // }
+
+        foreach(GameObject slot in inventorySlots) {
+            if(gridUI.CanPlaceItem(inventoryObject, slot)) {
+                // Cell cellComp = slot.GetComponent<Cell>();
+
+                Debug.Log(slot + " empty");
+
+                GameObject newItem = Instantiate(inventoryObject.prefab.gameObject, slot.transform);
+                newItem.transform.localPosition = Vector3.zero;
+
+                // cellComp.SetAvailable(false);
+                gridUI.PlaceItem(inventoryObject, slot);
+                Debug.Log("setting slot unavailable: " + slot.name);
+
+                return;
+            }
+            else {
+                Debug.Log(slot + " taken");
             }
         }
     }

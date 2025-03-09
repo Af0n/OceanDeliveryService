@@ -9,7 +9,7 @@ public class PlacedObject : MonoBehaviour
 
         Transform placedObjTransform = Instantiate(inventoryObject.prefab, worldPos, Quaternion.Euler(0, 0, inventoryObject.GetRotationAngle(dir)));
         // rescale prefab based on invenetory cell size
-        placedObjTransform.localScale = new Vector3(inventoryObject.width * inventorySystem.GetCellSize(), inventoryObject.height * inventorySystem.GetCellSize(), 1);
+        placedObjTransform.localScale = new Vector3(inventoryObject.height * inventorySystem.GetCellSize(), inventoryObject.width * inventorySystem.GetCellSize(), 1);
 
         PlacedObject placedObject = placedObjTransform.GetComponent<PlacedObject>();
 

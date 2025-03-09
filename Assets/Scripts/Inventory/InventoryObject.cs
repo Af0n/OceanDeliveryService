@@ -19,8 +19,8 @@ public class InventoryObject : ScriptableObject
 
     public string nameString;
     public Transform prefab;
-    public int width;
     public int height;
+    public int width;
 
     public int GetRotationAngle(Dir dir)
     {
@@ -38,9 +38,9 @@ public class InventoryObject : ScriptableObject
         switch(dir) {
             default:
             case Dir.Down: return new Vector2Int(0, 0);
-            case Dir.Left: return new Vector2Int(0, width);
-            case Dir.Up: return new Vector2Int(width, height);
-            case Dir.Right: return new Vector2Int(height, 0);
+            case Dir.Left: return new Vector2Int(0, height);
+            case Dir.Up: return new Vector2Int(height, width);
+            case Dir.Right: return new Vector2Int(width, 0);
         }
     }
 
@@ -52,8 +52,8 @@ public class InventoryObject : ScriptableObject
             default:
             case Dir.Down:
             case Dir.Up:
-                for(int x = 0; x < width; x++) {
-                    for(int y = 0; y < height; y++) {
+                for(int x = 0; x < height; x++) {
+                    for(int y = 0; y < width; y++) {
                         gridPosList.Add(offset + new Vector2Int(x, y));
                     }
                 }
@@ -61,8 +61,8 @@ public class InventoryObject : ScriptableObject
             case Dir.Left:
             case Dir.Right:
                 // swap height/width for L/R rotations
-                for(int x = 0; x < height; x++) {
-                    for(int y = 0; y < width; y++) {
+                for(int x = 0; x < width; x++) {
+                    for(int y = 0; y < height; y++) {
                         gridPosList.Add(offset + new Vector2Int(x, y));
                     }
                 }
