@@ -65,10 +65,16 @@ public class GridUI
         return new Vector2Int(-1, -1);
     }
 
-    public bool CanPlaceItem(InventoryObject inventoryObject, GameObject selectedCell)
+    public bool CanPlaceItem(InventoryObject inventoryObject, InventoryObject.Dir dir, GameObject selectedCell)
     {
         int itemHeight = inventoryObject.height;
         int itemWidth = inventoryObject.width;
+        
+        if(dir == InventoryObject.Dir.Vertical) {
+            int temp = itemHeight;
+            itemHeight = itemWidth;
+            itemWidth = temp;
+        }
 
         Vector2Int cellPos = GetCellPosition(selectedCell);
         
@@ -94,10 +100,17 @@ public class GridUI
         return true;
     }
 
-    public void PlaceItem(InventoryObject inventoryObject, GameObject selectedCell)
+    public void PlaceItem(InventoryObject inventoryObject, InventoryObject.Dir dir, GameObject selectedCell)
     {
         int itemHeight = inventoryObject.height;
         int itemWidth = inventoryObject.width;
+        
+        if(dir == InventoryObject.Dir.Vertical) {
+            int temp = itemHeight;
+            itemHeight = itemWidth;
+            itemWidth = temp;
+        }
+
         Vector2Int cellPos = GetCellPosition(selectedCell);
 
         if (cellPos.x + itemHeight > rows || cellPos.y + itemWidth > cols) {
@@ -119,10 +132,17 @@ public class GridUI
         Debug.Log($"Placed item of size {itemHeight}x{itemWidth} at ({cellPos.x}, {cellPos.y})");
     }
 
-    public void RemoveItem(InventoryObject inventoryObject, GameObject selectedCell)
+    public void RemoveItem(InventoryObject inventoryObject, InventoryObject.Dir dir, GameObject selectedCell)
     {
         int itemHeight = inventoryObject.height;
         int itemWidth = inventoryObject.width;
+
+        if(dir == InventoryObject.Dir.Vertical) {
+            int temp = itemHeight;
+            itemHeight = itemWidth;
+            itemWidth = temp;
+        }
+
         Vector2Int cellPos = GetCellPosition(selectedCell);
 
         // Mark cells as occupied by the item

@@ -3,31 +3,39 @@ using UnityEngine;
 
 public class PlacedObject : MonoBehaviour
 {
-    public static PlacedObject Create(Vector3 worldPos, Vector2Int origin, InventoryObject.Dir dir, InventoryObject inventoryObject)
+    // public static PlacedObject Create(Vector3 worldPos, Vector2Int origin, InventoryObject.Dir dir, InventoryObject inventoryObject)
+    // {
+    //     InventorySystem inventorySystem = FindAnyObjectByType<InventorySystem>();
+
+    //     Transform placedObjTransform = Instantiate(inventoryObject.prefab, worldPos, Quaternion.Euler(0, 0, inventoryObject.GetRotationAngle(dir)));
+    //     // rescale prefab based on invenetory cell size
+    //     placedObjTransform.localScale = new Vector3(inventoryObject.height * inventorySystem.GetCellSize(), inventoryObject.width * inventorySystem.GetCellSize(), 1);
+
+    //     PlacedObject placedObject = placedObjTransform.GetComponent<PlacedObject>();
+
+    //     placedObject.inventoryObject = inventoryObject;
+    //     placedObject.origin = origin;
+    //     placedObject.dir = dir;
+
+    //     return placedObject;
+    // }
+
+    public static void SetUpObject(GameObject itemSource, InventoryObject inventoryObject, InventoryObject.Dir dir) 
     {
-        InventorySystem inventorySystem = FindAnyObjectByType<InventorySystem>();
-
-        Transform placedObjTransform = Instantiate(inventoryObject.prefab, worldPos, Quaternion.Euler(0, 0, inventoryObject.GetRotationAngle(dir)));
-        // rescale prefab based on invenetory cell size
-        placedObjTransform.localScale = new Vector3(inventoryObject.height * inventorySystem.GetCellSize(), inventoryObject.width * inventorySystem.GetCellSize(), 1);
-
-        PlacedObject placedObject = placedObjTransform.GetComponent<PlacedObject>();
+        PlacedObject placedObject = itemSource.GetComponent<PlacedObject>();
 
         placedObject.inventoryObject = inventoryObject;
-        placedObject.origin = origin;
         placedObject.dir = dir;
-
-        return placedObject;
     }
 
     private InventoryObject inventoryObject;
     private Vector2Int origin;
     private InventoryObject.Dir dir;
 
-    public List<Vector2Int> GetGridPositionList()
-    {
-        return inventoryObject.GetGridPositionList(origin, dir);
-    }
+    // public List<Vector2Int> GetGridPositionList()
+    // {
+    //     return inventoryObject.GetGridPositionList(origin, dir);
+    // }
     
     public void DestroySelf()
     {
@@ -37,5 +45,10 @@ public class PlacedObject : MonoBehaviour
     public InventoryObject GetInventoryObjectFromPlaced()
     {
         return inventoryObject;
+    }
+
+    public InventoryObject.Dir GetDir()
+    {
+        return dir;
     }
 }

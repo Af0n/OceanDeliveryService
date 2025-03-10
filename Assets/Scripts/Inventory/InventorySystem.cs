@@ -12,7 +12,7 @@ public class InventorySystem : MonoBehaviour
     private int index;
 
     private Grid<GridObject> grid;
-    private InventoryObject.Dir dir = InventoryObject.Dir.Down;
+    private InventoryObject.Dir dir = InventoryObject.Dir.Horizontal;
 
     [Header("for ui attempt")]
     private GridUI gridUI;
@@ -31,7 +31,7 @@ public class InventorySystem : MonoBehaviour
     void Awake()
     {
         // create the grid for the inventory (preserved for reference for now)
-        grid = new Grid<GridObject>(gridWidth, gridHeight, cellSize, gridOrigin.position, (Grid<GridObject> g, int x, int y) => new GridObject(g, x,  y));
+        // grid = new Grid<GridObject>(gridWidth, gridHeight, cellSize, gridOrigin.position, (Grid<GridObject> g, int x, int y) => new GridObject(g, x,  y));
 
         // inventoryObject = inventoryObjects[0];
         index = 0;
@@ -67,24 +67,36 @@ public class InventorySystem : MonoBehaviour
         Transform slotTransform = slot.transform;
         
         if(!cellComp.GetAvailable() && objectToMove == null) {
-            Debug.Log("slot is occupied");
+            if(slotTransform.childCount > 0) {
+                objectToMove = slotTransform.GetChild(0).gameObject;
+                objectToMove.transform.SetParent(null);
+                Debug.Log("moving " + objectToMove.name);
+                
+                // TODO: don't let objectToMove disappear when moving it 
+                // (could try setting its parent to the mouse or an object that follows the mouse)
 
-            objectToMove = slotTransform.GetChild(0).gameObject;
-            objectToMove.transform.SetParent(null);
-            // TODO: don't let objectToMove disappear when moving it 
-            // (could try setting its parent to the mouse or an object that follows the mouse)
-            
-            gridUI.RemoveItem(inventoryObject, slot);
+                // TODO: get dir of objectToMove
+                dir = objectToMove.GetComponent<PlacedObject>().GetDir();
+                Debug.Log("dir gotten = " + dir);
+                
+                gridUI.RemoveItem(inventoryObject, dir, slot);
 
-            return;
+                return;
+            }
+            else {
+                Debug.Log("item is child of different slot");
+                return;
+            }
         }
 
         if(objectToMove != null) {
-            if(gridUI.CanPlaceItem(inventoryObject, slot)) {
+            if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 objectToMove.transform.SetParent(slotTransform);
                 objectToMove.transform.localPosition = Vector3.zero;
                 
-                gridUI.PlaceItem(inventoryObject, slot);
+                gridUI.PlaceItem(inventoryObject, dir, slot);
+
+                PlacedObject.SetUpObject(objectToMove, inventoryObject, dir);
 
                 objectToMove = null; // reset reference
             }
@@ -169,10 +181,11 @@ public class InventorySystem : MonoBehaviour
         //     }
         // }
 
-        // if(Input.GetKeyDown(KeyCode.R)) {
-        //     dir = InventoryObject.GetNextDir(dir);
-        //     UtilsClass.CreateWorldTextPopup("" + dir, Mouse3D.GetMouseWorldPosition());
-        // }
+        if(Input.GetKeyDown(KeyCode.R)) {
+            dir = InventoryObject.GetNextDir(dir);
+            Debug.Log("current dir: " + dir);
+            
+        }
 
         // if(Input.GetKeyDown(KeyCode.T)) {
         //     if(objectToMove == null) {
@@ -223,7 +236,7 @@ public class InventorySystem : MonoBehaviour
         // }
 
         foreach(GameObject slot in inventorySlots) {
-            if(gridUI.CanPlaceItem(inventoryObject, slot)) {
+            if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 // Cell cellComp = slot.GetComponent<Cell>();
 
                 Debug.Log(slot + " empty");
@@ -231,8 +244,11 @@ public class InventorySystem : MonoBehaviour
                 GameObject newItem = Instantiate(inventoryObject.prefab.gameObject, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
+                // TODO: save the dir of the object when it's created
+                PlacedObject.SetUpObject(newItem, inventoryObject, dir);
+
                 // cellComp.SetAvailable(false);
-                gridUI.PlaceItem(inventoryObject, slot);
+                gridUI.PlaceItem(inventoryObject, dir, slot);
                 Debug.Log("setting slot unavailable: " + slot.name);
 
                 return;
@@ -244,34 +260,34 @@ public class InventorySystem : MonoBehaviour
     }
 
     // for placing objects at specific inventory positions instead of next available
-    public void AddObjectToSpecific(InventoryObject inventoryObject, int x, int y, InventoryObject.Dir dir) 
-    {
-        List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int(x, y), dir);
-        bool canPlace = true;
-        foreach(Vector2Int gridPos in gridPosList) {
-            if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
-                canPlace = false; // out of bounds check
-                break;
-            }
-            if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
-                canPlace = false; // overlap check
-                break;
-            }
-        }
+    // public void AddObjectToSpecific(InventoryObject inventoryObject, int x, int y, InventoryObject.Dir dir) 
+    // {
+    //     List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int(x, y), dir);
+    //     bool canPlace = true;
+    //     foreach(Vector2Int gridPos in gridPosList) {
+    //         if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
+    //             canPlace = false; // out of bounds check
+    //             break;
+    //         }
+    //         if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
+    //             canPlace = false; // overlap check
+    //             break;
+    //         }
+    //     }
 
-        if(canPlace) {
-            Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
-            Vector3 placedPos = new Vector3(x*10, y*10, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
+    //     if(canPlace) {
+    //         Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
+    //         Vector3 placedPos = new Vector3(x*10, y*10, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
 
-            PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
+    //         PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
             
-            foreach(Vector2Int gridPos in gridPosList) {
-                grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
-            }
+    //         foreach(Vector2Int gridPos in gridPosList) {
+    //             grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
+    //         }
 
-            return;
-        }
-    }
+    //         return;
+    //     }
+    // }
 
     public float GetCellSize()
     {
