@@ -70,6 +70,7 @@ public class GridUI
         int itemHeight = inventoryObject.height;
         int itemWidth = inventoryObject.width;
         
+        // swap width and height if rotated
         if(dir == InventoryObject.Dir.Vertical) {
             int temp = itemHeight;
             itemHeight = itemWidth;
@@ -78,20 +79,19 @@ public class GridUI
 
         Vector2Int cellPos = GetCellPosition(selectedCell);
         
-        if (cellPos.x + itemHeight > rows || cellPos.y + itemWidth > cols)
-            return false; // Out of bounds
+        if (cellPos.x + itemHeight > rows || cellPos.y + itemWidth > cols) {
+            return false; // out of bounds check
+        }
 
         // Check if all required cells are free
-        for (int x = 0; x < itemHeight; x++)
-        {
-            for (int y = 0; y < itemWidth; y++)
-            {
+        for (int x = 0; x < itemHeight; x++) {
+            for (int y = 0; y < itemWidth; y++) {
                 int gridX = cellPos.x + x; 
                 int gridY = cellPos.y + y;
                 GameObject cell = gridArray[gridX, gridY];
                 if(!cell.GetComponent<Cell>().GetAvailable()) {
                     // if occupied returns false
-                    Debug.Log(cell.name + " occupied");
+                    // Debug.Log(cell.name + " occupied");
                     return false;
                 }
             }
@@ -105,6 +105,7 @@ public class GridUI
         int itemHeight = inventoryObject.height;
         int itemWidth = inventoryObject.width;
         
+        // swap width and height if rotated
         if(dir == InventoryObject.Dir.Vertical) {
             int temp = itemHeight;
             itemHeight = itemWidth;
@@ -114,7 +115,7 @@ public class GridUI
         Vector2Int cellPos = GetCellPosition(selectedCell);
 
         if (cellPos.x + itemHeight > rows || cellPos.y + itemWidth > cols) {
-            Debug.Log("cannot place out of bounds");
+            // Debug.Log("cannot place out of bounds");
             return; // Out of bounds
         }
 
@@ -129,7 +130,7 @@ public class GridUI
             }
         }
 
-        Debug.Log($"Placed item of size {itemHeight}x{itemWidth} at ({cellPos.x}, {cellPos.y})");
+        // Debug.Log($"Placed item of size {itemHeight}x{itemWidth} at ({cellPos.x}, {cellPos.y})");
     }
 
     public void RemoveItem(InventoryObject inventoryObject, InventoryObject.Dir dir, GameObject selectedCell)
@@ -154,18 +155,6 @@ public class GridUI
                 
                 cell.GetComponent<Cell>().SetAvailable(true);
             }
-        }
-    }
-
-    public void SetGridObject(int x, int y)
-    {
-        GameObject cellObj = gridArray[x,y];
-        bool available = cellObj.GetComponent<Cell>().GetAvailable();
-        if(available) {
-            Debug.Log(cellObj.name + " is empty");
-        }
-        else {
-            Debug.Log(cellObj.name + " is taken");
         }
     }
 }
