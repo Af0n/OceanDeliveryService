@@ -63,11 +63,6 @@ public class Grid<GridObject>
         
     }
 
-    public float GetCellSize()
-    {
-        return cellSize;
-    }
-
     private Vector3 GetWoldPos(int x, int y)
     {
         return new Vector3(x,y) * cellSize + originPos;

@@ -1,16 +1,30 @@
 using System;
 using System.Collections;
+using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AndrewMovement : MonoBehaviour
 {
+    public delegate void Swimming(bool isFloating);
+    public static event Swimming StartSwim;
+    public static event Swimming StopSwim;
+    public static event Swimming Vertical;
+    public static event Swimming OnLandMusic;
+    public static event Swimming WalkAbove;
+    public static event Swimming StopWalkAbove;
+    public delegate void Submerge();
+    public static event Submerge OnSubmerge;
+    public static event Submerge JumpSound;
+    public static event Submerge Landing;
+    
     [Header("Movement Properties")]
     public float Speed;
     public float JumpHeight;
     public bool isSwimming;
     public bool isFloating;
     public float verticalWaterSpeed;
+    private bool isOnLand;
 
     [Header("Gravity Properties")]
     public bool UsePhysicsGravity;
@@ -36,6 +50,7 @@ public class AndrewMovement : MonoBehaviour
     private float yVelocity;
     public bool isGrounded;
     private bool checkForGround;
+    private bool wasGrounded;
     
     private Camera MainCamera;
     private bool raisingInWater;
@@ -63,7 +78,24 @@ public class AndrewMovement : MonoBehaviour
     private void Update()
     {
         // checking for ground
+        bool wasGroundedLastFrame = wasGrounded;
         isGrounded = Physics.CheckSphere(GroundCheck.position, GroundCheckRadius, standableMask);
+
+        if (!wasGroundedLastFrame && isGrounded)
+        {
+            Landing?.Invoke();
+        }
+        wasGrounded = isGrounded;
+        
+        if (isSwimming)
+        {
+            OnLandMusic?.Invoke(false);
+        }
+        else
+        {
+            Vertical?.Invoke(false);
+            OnLandMusic?.Invoke(true);
+        }
         
         if(manager.IsOnBoat){
             BoatMove();
@@ -72,10 +104,27 @@ public class AndrewMovement : MonoBehaviour
         }
         
         Gravity();
+        
     }
 
     private void BoatMove(){
         Vector2 readMove = move.ReadValue<Vector2>();
+        if (isGrounded)
+        {
+            if (readMove.magnitude > 0)
+            {
+                WalkAbove?.Invoke(true);
+            }
+            else
+            {
+                StopWalkAbove?.Invoke(true);
+            }
+        }
+        else
+        {
+            StopWalkAbove?.Invoke(true);
+        }
+        
 
         Vector3 moveVec = deck.deckTarget.forward * readMove.y + deck.deckTarget.right * readMove.x;
         moveVec *= Time.deltaTime * Speed;
@@ -91,6 +140,14 @@ public class AndrewMovement : MonoBehaviour
 
         if (isSwimming)
         {
+            if (readMove.magnitude > 0)
+            {
+                StartSwim?.Invoke(false);
+            }
+            else
+            {
+                StopSwim?.Invoke(false);
+            }
             WaterVertical();
             Vector3 moveVec = MainCamera.transform.forward * readMove.y + MainCamera.transform.right * readMove.x;
             moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
@@ -99,6 +156,14 @@ public class AndrewMovement : MonoBehaviour
         } 
         else if (isFloating)
         {
+            if (readMove.magnitude > 0)
+            {
+                StartSwim?.Invoke(true);
+            }
+            else
+            {
+                StopSwim?.Invoke(true);
+            }
             WaterVertical();
             Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
             moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
@@ -109,6 +174,22 @@ public class AndrewMovement : MonoBehaviour
         {
             Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
             moveVec *= Time.deltaTime * Speed;
+
+            if (isGrounded)
+            {
+                if (readMove.magnitude > 0)
+                {
+                    WalkAbove?.Invoke(false);
+                }
+                else
+                {
+                    StopWalkAbove?.Invoke(false);
+                }
+            }
+            else
+            {
+                StopWalkAbove?.Invoke(false);
+            }
 
             manager.Move(moveVec);
         }
@@ -138,12 +219,21 @@ public class AndrewMovement : MonoBehaviour
         }
         yVelocity = Mathf.Sqrt(JumpHeight * 2 * GravityForce);
         checkForGround = false;
+        JumpSound?.Invoke();
         StartCoroutine(nameof(JumpGracePeriod));
     }
     private void WaterVertical(){
         float direction = waterVertical.ReadValue<float>();
         if (isSwimming)
         {
+            if (direction != 0)
+            {
+                Vertical?.Invoke(true);
+            }
+            else
+            {
+                Vertical?.Invoke(false);
+            }
             Vector3 moveVec = new Vector3(0, direction, 0);
             moveVec *= Time.deltaTime * verticalWaterSpeed;
             manager.Move(moveVec);
@@ -152,6 +242,7 @@ public class AndrewMovement : MonoBehaviour
         {
             if (direction == -1)
             {
+                OnSubmerge?.Invoke();
                 manager.playerFloater.SetActive(false);
                 Vector3 moveVec = new Vector3(0, direction, 0);
                 moveVec *= Time.deltaTime * verticalWaterSpeed;
