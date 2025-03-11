@@ -60,6 +60,12 @@ public class BoatControl : MonoBehaviour
     private Vector3 moveHorizontalVector;
     private BoatMovement boatMovement;
     private BoatUpgradeManager boatUpgradeManager;
+    
+    public delegate void BoatAudio();
+    public static event BoatAudio Anchored;
+    public static event BoatAudio ShiftedVehicle;
+    public delegate void BoatMovementAudio(bool OnOff);
+    public static event BoatMovementAudio PlayMovement;
 
     private void Awake()
     {
@@ -118,14 +124,18 @@ public class BoatControl : MonoBehaviour
         {
             if (boatMovement.isSubmarine && boatMovement.areFloatersActive)
             {
+                PlayMovement?.Invoke(false);
                 boatMovement.isSubmarine = false;
                 Debug.Log("The vehicle is now a Ship");
+                ShiftedVehicle?.Invoke();
             }
             else if (!boatMovement.isSubmarine)
             {
+                PlayMovement?.Invoke(true);
                 boatMovement.isSubmarine = true;
                 isAnchored = false;
                 Debug.Log("The vehicle is now a Submarine");
+                ShiftedVehicle?.Invoke();
             }
         }
     }
@@ -137,6 +147,15 @@ public class BoatControl : MonoBehaviour
             return;
         }
         isAnchored = !isAnchored;
+        if (isAnchored)
+        {
+            PlayMovement?.Invoke(false);
+        }
+        else
+        {
+            PlayMovement?.Invoke(true);
+        }
+        Anchored?.Invoke();
     }
     
     private void WaterVertical(){

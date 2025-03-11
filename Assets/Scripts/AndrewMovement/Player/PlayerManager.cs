@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public delegate void Emerge();
+    public static event Emerge OnEmerge;
     [Tooltip("How long the player takes to auto-respawn")]
     public float RespawnTime;
     public Transform RespawnPoint;
@@ -40,6 +42,10 @@ public class PlayerManager : MonoBehaviour
             {
                 movement.isSwimming = false;
                 IsUnderwater = false;
+                if (!movement.isFloating)
+                {
+                    OnEmerge?.Invoke();
+                }
                 movement.isFloating = true;
                 playerFloater.SetActive(true);
             }
