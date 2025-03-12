@@ -673,7 +673,7 @@ Transform:
   m_GameObject: {fileID: 4778593947831552416}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 13.612808, y: 13.234006, z: 56.519745}
+  m_LocalPosition: {x: 13.612808, y: 0, z: 56.519745}
   m_LocalScale: {x: 0.99999976, y: 1, z: 0.99999976}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -858,6 +858,7 @@ MonoBehaviour:
   SailTurnTime: 2
   SailFurlTime: 3
   StartAnchored: 1
+  audioManager: {fileID: 0}
 --- !u!114 &522094596671860951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,7 +956,8 @@ MonoBehaviour:
   - 3
   - 4
   motorUpgrade: 0
-  submersible: 0
+  submersible: 1
+  windTerminal: 0
   onboardWindTerminal: {fileID: 5516350687417399714}
 --- !u!54 &1375673272928508770
 Rigidbody:
@@ -966,7 +968,7 @@ Rigidbody:
   m_GameObject: {fileID: 6550214921599550953}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -976,7 +978,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1572864
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -1138,7 +1140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2730943041245509703, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5999994
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 2730943041245509703, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1171,6 +1173,10 @@ PrefabInstance:
     - target: {fileID: 2730943041245509703, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2951820813330587227, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3724838628516347174, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_Name
