@@ -60,15 +60,16 @@ public class BoatControl : MonoBehaviour
     private Vector3 moveHorizontalVector;
     private BoatMovement boatMovement;
     private BoatUpgradeManager boatUpgradeManager;
+    public AudioManager audioManager;
     
-    public delegate void BoatAudio();
-    public static event BoatAudio Anchored;
-    public static event BoatAudio ShiftedVehicle;
-    public delegate void BoatMovementAudio(bool OnOff);
-    public static event BoatMovementAudio PlayMovement;
 
     private void Awake()
     {
+        if (audioManager == null)
+        {
+            GameObject audioGameObject = GameObject.Find("AudioManager");
+            audioManager = audioGameObject.GetComponent<AudioManager>();
+        }
         actions = new InputSystem_Actions();
 
         controlBoatToggle = GetComponent<ControlBoatToggle>();
@@ -124,18 +125,18 @@ public class BoatControl : MonoBehaviour
         {
             if (boatMovement.isSubmarine && boatMovement.areFloatersActive)
             {
-                PlayMovement?.Invoke(false);
+                audioManager.BoatMovement(false);
                 boatMovement.isSubmarine = false;
                 Debug.Log("The vehicle is now a Ship");
-                ShiftedVehicle?.Invoke();
+                audioManager.SwitchVehicles();
             }
             else if (!boatMovement.isSubmarine)
             {
-                PlayMovement?.Invoke(true);
+                audioManager.BoatMovement(true);
                 boatMovement.isSubmarine = true;
                 isAnchored = false;
                 Debug.Log("The vehicle is now a Submarine");
-                ShiftedVehicle?.Invoke();
+                audioManager.SwitchVehicles();
             }
         }
     }
@@ -149,13 +150,13 @@ public class BoatControl : MonoBehaviour
         isAnchored = !isAnchored;
         if (isAnchored)
         {
-            PlayMovement?.Invoke(false);
+            audioManager.BoatMovement(false);
         }
         else
         {
-            PlayMovement?.Invoke(true);
+            audioManager.BoatMovement(true);
         }
-        Anchored?.Invoke();
+        audioManager.Anchor();
     }
     
     private void WaterVertical(){

@@ -21,47 +21,6 @@ public class AudioManager : MonoBehaviour
     public AudioSource boatMovement;
     public AudioSource anchoring;
     public AudioSource shiftingVehicle;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        AndrewMovement.OnLandMusic += PlayMusic;
-        AndrewMovement.WalkAbove += StartWalking;
-        AndrewMovement.StopWalkAbove += StopWalking;
-        AndrewMovement.StartSwim += StartSwimming;
-        AndrewMovement.StopSwim += StopSwimming;
-        AndrewMovement.OnSubmerge += Submerge;
-        AndrewMovement.Vertical += Vertical;
-        AndrewMovement.JumpSound += Jump;
-        AndrewMovement.Landing += Landing;
-        PlayerManager.OnEmerge += Emerge;
-        BoatControl.Anchored += Anchor;
-        BoatControl.PlayMovement += BoatMovement;
-        BoatControl.ShiftedVehicle += SwitchVehicles;
-    }
-
-    void OnDestroy()
-    {
-        AndrewMovement.OnLandMusic -= PlayMusic;
-        AndrewMovement.WalkAbove -= StartWalking;
-        AndrewMovement.StopWalkAbove -= StopWalking;
-        AndrewMovement.StartSwim -= StartSwimming;
-        AndrewMovement.StopSwim -= StopSwimming;
-        AndrewMovement.OnSubmerge -= Submerge;
-        AndrewMovement.Vertical -= Vertical;
-        AndrewMovement.JumpSound -= Jump;
-        AndrewMovement.Landing -= Landing;
-        PlayerManager.OnEmerge -= Emerge;
-        BoatControl.Anchored -= Anchor;
-        BoatControl.PlayMovement -= BoatMovement;
-        BoatControl.ShiftedVehicle -= SwitchVehicles;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void PlayMusic(bool isLand)
     {
