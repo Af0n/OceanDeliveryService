@@ -214,7 +214,7 @@ MonoBehaviour:
   standableMask:
     serializedVersion: 2
     m_Bits: 1048584
-  GroundCheckRadius: 0.475
+  GroundCheckRadius: 0.5
   GroundedGracePeriod: 0.2
   isGrounded: 0
 --- !u!114 &7616409772823938809
