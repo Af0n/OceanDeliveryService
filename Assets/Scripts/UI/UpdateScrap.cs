@@ -9,14 +9,18 @@ public class UpdateScrap : MonoBehaviour
 
     private TextMeshProUGUI textBox;
 
-    private void Start() {
+    private void Start()
+    {
         textBox = GetComponent<TextMeshProUGUI>();
         StartCoroutine(nameof(UpdateLoop));
     }
 
-    private IEnumerator UpdateLoop(){
-        yield return new WaitForSeconds(UpdateDelay);
-
-        textBox.text = Economy.Scrap.ToString();
+    private IEnumerator UpdateLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(UpdateDelay);
+            textBox.text = Economy.Scrap.ToString();
+        }
     }
 }
