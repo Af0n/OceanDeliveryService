@@ -11,6 +11,7 @@ public class UpdateScrap : MonoBehaviour
 
     private void Start() {
         textBox = GetComponent<TextMeshProUGUI>();
+        StartCoroutine(nameof(UpdateLoop));
     }
 
     private IEnumerator UpdateLoop(){
