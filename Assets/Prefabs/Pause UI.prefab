@@ -2781,7 +2781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2191067814578046280
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2881,8 +2881,9 @@ MonoBehaviour:
   DefaultPanel: 2
   PauseMenu: {fileID: 4770151206500349331}
   ScreenPanels: {fileID: 8487689704823469472}
-  systemIndex: 0
-  optionsIndex: 0
+  playerMan: {fileID: 0}
+  systemIndex: 4
+  optionsIndex: 5
 --- !u!1 &6976312439340440806
 GameObject:
   m_ObjectHideFlags: 0
