@@ -61,12 +61,14 @@ public class PauseUI : MonoBehaviour
         {
             StopCoroutine(nameof(ResetActiveWindow));
             playerMan.SetAll(false);
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
 
         // starts coroutine to reset screen if not paused
         StartCoroutine(nameof(ResetActiveWindow));
         playerMan.SetAll(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void DoPause(InputAction.CallbackContext context)

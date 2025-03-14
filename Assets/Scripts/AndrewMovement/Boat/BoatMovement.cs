@@ -36,7 +36,7 @@ public class BoatMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (transform.position.y > -onSurfaceDepth)
+        if (transform.position.y > onSurfaceDepth)
         {
             TurnOnFloaters();
         }
@@ -89,8 +89,8 @@ public class BoatMovement : MonoBehaviour
 
     private void ForwardMovement(){
         if(control.IsAnchored){
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            // rb.linearVelocity = Vector3.zero;
+            // rb.angularVelocity = Vector3.zero;
             return;
         }
 
