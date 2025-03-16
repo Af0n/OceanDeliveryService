@@ -33,7 +33,40 @@ public class PlayerManager : MonoBehaviour
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
     }
+    
+    private void OnEnable()
+    {
+        Water.UnderWaterTrigger.OnUnderWaterStateChange += HandleUnderWaterState;
+    }
 
+    private void OnDisable()
+    {
+        Water.UnderWaterTrigger.OnUnderWaterStateChange -= HandleUnderWaterState;
+    }
+    
+    private void HandleUnderWaterState(bool isUnderwater)
+    {
+        IsUnderwater = isUnderwater;
+
+        if (upgradeManager.swimAbilityUpgrade)
+        {
+            movement.isSwimming = isUnderwater;
+            movement.isFloating = !isUnderwater;
+            playerFloater.SetActive(!isUnderwater);
+        }
+
+        if (isUnderwater)
+        {
+            waterDeath.StartDrowning();
+        }
+        else
+        {
+            waterDeath.StopDrowning();
+            OnEmerge?.Invoke(); // Fire emerge event when leaving water
+        }
+    }
+        
+    /*
     private void FixedUpdate()
     {
         if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
@@ -74,6 +107,8 @@ public class PlayerManager : MonoBehaviour
             waterDeath.StopDrowning();
         }
     }
+    
+    */
 
     public void SetMovement(bool b)
     {
