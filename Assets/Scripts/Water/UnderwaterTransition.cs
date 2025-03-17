@@ -19,12 +19,12 @@ namespace Water
 
         private void OnEnable()
         {
-            UnderWaterTrigger.OnUnderWaterStateChange += HandleUnderWaterStateChange;
+            UnderWaterTrigger.OnUnderWaterSurfaceChange += HandleUnderWaterStateChange;
         }
 
         private void OnDisable()
         {
-            UnderWaterTrigger.OnUnderWaterStateChange -= HandleUnderWaterStateChange;
+            UnderWaterTrigger.OnUnderWaterSurfaceChange -= HandleUnderWaterStateChange;
         }
 
         private void HandleUnderWaterStateChange(bool isUnderwater)

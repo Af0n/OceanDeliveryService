@@ -37,32 +37,60 @@ public class PlayerManager : MonoBehaviour
     private void OnEnable()
     {
         Water.UnderWaterTrigger.OnUnderWaterStateChange += HandleUnderWaterState;
+        Water.UnderWaterTrigger.OnUnderWaterSurfaceChange += HandleUnderWaterSurface;
     }
 
     private void OnDisable()
     {
         Water.UnderWaterTrigger.OnUnderWaterStateChange -= HandleUnderWaterState;
+        Water.UnderWaterTrigger.OnUnderWaterSurfaceChange -= HandleUnderWaterSurface;
     }
-    
+
     private void HandleUnderWaterState(bool isUnderwater)
     {
         IsUnderwater = isUnderwater;
 
-        if (upgradeManager.swimAbilityUpgrade)
-        {
-            movement.isSwimming = isUnderwater;
-            movement.isFloating = !isUnderwater;
-            playerFloater.SetActive(!isUnderwater);
-        }
-
         if (isUnderwater)
         {
+            // Only start drowning if the head is submerged too
+            if (movement.isSwimming) 
+            {
+                waterDeath.StartDrowning();
+            }
+        }
+        else
+        {
+            // If the body is out of the water, stop drowning and floating
+            waterDeath.StopDrowning();
+            movement.isFloating = false;
+            movement.isSwimming = false;
+            playerFloater.SetActive(false);
+            OnEmerge?.Invoke();
+        }
+    }
+
+    private void HandleUnderWaterSurface(bool headSubmerged)
+    {
+        if (headSubmerged)
+        {
+            // If the head goes under, start drowning & disable floating
+            Debug.Log("Player head is submerged!");
+            movement.isSwimming = true;
+            movement.isFloating = false;
+            playerFloater.SetActive(false);
             waterDeath.StartDrowning();
         }
         else
         {
-            waterDeath.StopDrowning();
-            OnEmerge?.Invoke(); // Fire emerge event when leaving water
+            // If head resurfaces but body is still underwater, stop drowning & enable floating
+            if (IsUnderwater)
+            {
+                Debug.Log("Player head is above water, but body is submerged!");
+                movement.isSwimming = false;
+                movement.isFloating = true;
+                playerFloater.SetActive(true);
+                waterDeath.StopDrowning();
+            }
         }
     }
         
