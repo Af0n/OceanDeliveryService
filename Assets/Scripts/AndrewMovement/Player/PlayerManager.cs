@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public float RespawnDistCheck;
     [Tooltip("Temporary Exclude Layers for CharacterController")]
     public LayerMask ExcludeLayersTemp;
+    public bool IsThirdPerson;
+    public Transform Cam;
 
     private AndrewMovement movement;
     private AndrewLook look;
@@ -16,6 +19,7 @@ public class PlayerManager : MonoBehaviour
     private WaterDeath waterDeath;
     private CharacterController controller;
     private PlayerUpgradeManager upgradeManager;
+    public CinemachineCamera cinemachineCamera;
     
     public bool IsOnBoat;
     public bool IsUnderwater;
@@ -30,6 +34,8 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
+
+        ToggleThirdPerson(IsThirdPerson);
     }
     
     private void OnEnable()
@@ -63,7 +69,8 @@ public class PlayerManager : MonoBehaviour
             movement.isFloating = false;
             movement.isSwimming = false;
             playerFloater.SetActive(false);
-            OnEmerge?.Invoke();
+            //OnEmerge?.Invoke();
+            movement.audioManager.Emerge();
         }
     }
 
@@ -90,6 +97,23 @@ public class PlayerManager : MonoBehaviour
                 waterDeath.StopDrowning();
             }
         }
+    }
+
+    public void ToggleThirdPerson(bool b){
+        IsThirdPerson = b;
+
+        if(IsThirdPerson){
+            SetLook(false);
+            cinemachineCamera.enabled = true;
+            return;
+        }
+
+        SetLook(true);
+        cinemachineCamera.enabled = false;
+
+        Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
+
+        return;
     }
         
     /*
