@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class PlayerManager : MonoBehaviour
     private CharacterController controller;
     private PlayerUpgradeManager upgradeManager;
     public CinemachineCamera cinemachineCamera;
-    
+    public Image Reticle;
+
     public bool IsOnBoat;
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
@@ -37,7 +39,7 @@ public class PlayerManager : MonoBehaviour
 
         ToggleThirdPerson(IsThirdPerson);
     }
-    
+
     private void OnEnable()
     {
         Water.UnderWaterTrigger.OnUnderWaterStateChange += HandleUnderWaterState;
@@ -57,7 +59,7 @@ public class PlayerManager : MonoBehaviour
         if (isUnderwater)
         {
             // Only start drowning if the head is submerged too
-            if (movement.isSwimming) 
+            if (movement.isSwimming)
             {
                 waterDeath.StartDrowning();
             }
@@ -99,23 +101,26 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void ToggleThirdPerson(bool b){
+    public void ToggleThirdPerson(bool b)
+    {
         IsThirdPerson = b;
 
-        if(IsThirdPerson){
+        if (IsThirdPerson)
+        {
             SetLook(false);
             cinemachineCamera.enabled = true;
+            Reticle.enabled = false;
             return;
         }
 
         SetLook(true);
         cinemachineCamera.enabled = false;
-
+        Reticle.enabled = true;
         Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
 
         return;
     }
-        
+
     /*
     private void FixedUpdate()
     {
