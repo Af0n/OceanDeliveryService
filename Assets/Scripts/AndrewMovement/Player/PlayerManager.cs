@@ -117,8 +117,6 @@ public class PlayerManager : MonoBehaviour
         cinemachineCamera.enabled = false;
         Reticle.enabled = true;
         Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
-
-        return;
     }
 
     /*
