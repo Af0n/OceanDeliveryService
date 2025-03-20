@@ -15,9 +15,10 @@ public class InventorySystem : MonoBehaviour
 
     public int gridWidth;
     public int gridHeight;
-    public float cellSize; 
 
     private GameObject objectToMove;
+
+    public GameObject tempCell; // for holding objectToMove when applicable
 
     void Awake()
     {
@@ -51,7 +52,8 @@ public class InventorySystem : MonoBehaviour
         if(!cellComp.GetAvailable() && objectToMove == null) {
             if(slotTransform.childCount > 0) {
                 objectToMove = slotTransform.GetChild(0).gameObject;
-                objectToMove.transform.SetParent(null);
+                objectToMove.transform.SetParent(tempCell.transform);
+                objectToMove.transform.localPosition = Vector3.zero;
                 // Debug.Log("moving " + objectToMove.name);
                 
                 // TODO: don't let objectToMove disappear when moving it 
@@ -164,10 +166,6 @@ public class InventorySystem : MonoBehaviour
     //     }
     // }
 
-    public float GetCellSize()
-    {
-        return cellSize;
-    }
 }
 
 
