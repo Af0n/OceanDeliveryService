@@ -17,14 +17,31 @@ public class InventorySystem : MonoBehaviour
     public int gridHeight;
 
     private GameObject objectToMove;
-
     public GameObject tempCell; // for holding objectToMove when applicable
+
+    public CanvasGroup canvasGroup;
 
     void Awake()
     {
         objectToMove = null;
 
+        // make sure inventory is created but uninteractable
+        canvasGroup = GetComponent<CanvasGroup>();
+        DisplayInventory(false);
+
         GenerateInventory();
+    }
+
+    public void DisplayInventory(bool toDisplay)
+    {
+        if(toDisplay) {
+            canvasGroup.alpha = 1f; // error here
+            canvasGroup.interactable = true;
+        }
+        else {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+        }
     }
 
     void GenerateInventory()
