@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour
             movement.isFloating = false;
             movement.isSwimming = false;
             playerFloater.SetActive(false);
-            OnEmerge?.Invoke();
+            movement.audioManager.Emerge();
         }
     }
 
