@@ -5,20 +5,26 @@ public class BoatUpgradeManager : MonoBehaviour
 {
     public float turnEffectiveness;
     public List<float> turnEffectivenessList = new List<float>();
-    private int currentTurnEffectivenessIndex = 0;
+    public int currentTurnEffectivenessIndex = 0;
+    public int turnCost;
 
     public float sailSpeedAndSize;
     public List<float> sailSpeedAndSizeList = new List<float>();
-    private int currentSailSpeedAndSizeIndex = 0;
+    public int currentSailSpeedAndSizeIndex = 0;
+    public int sailCost;
 
     public bool motorUpgrade;
+    public int motorCost;
 
     public bool submersible;
+    public int subCost;
 
     public bool windTerminal;
     public GameObject onboardWindTerminal;
+    public int terminalCost;
 
     public bool hasFinalUpgrade;
+    public int finalCost;
     
     public void GiveTurnEffectivenessUpgrade()
     {
@@ -50,6 +56,7 @@ public class BoatUpgradeManager : MonoBehaviour
 
     public void GiveOnboardWindTerminalUpgrade()
     {
+        windTerminal = true;
         onboardWindTerminal.SetActive(windTerminal);
     }
     

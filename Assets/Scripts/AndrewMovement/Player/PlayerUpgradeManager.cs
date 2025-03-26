@@ -8,30 +8,34 @@ public class PlayerUpgradeManager : MonoBehaviour
     [Header("Water Resistance Upgrades")]
     public float waterResistanceUpgrade;
     public List<float> waterResistance = new List<float>();
-    private int currentWaterIndex = 0;
+    public int currentWaterIndex = 0;
+    public int resistanceCost;
     
     [Header("Depth Resistance Upgrades")]
     public float depthUpgrade;
     public List<float> depthResistance = new List<float>();
-    private int currentDepthIndex = 0;
+    public int currentDepthIndex = 0;
+    public int depthCost;
 
     [Header("Swim Ability Upgrades")]
     public bool swimAbilityUpgrade;
+    public int floatieCost;
 
     [Header("Inventory Capacity Upgrades")]
     public int inventoryCapacityUpgrade;
     public List<int> inventoryCapacity = new List<int>();
-    private int currentInventoryCapacityIndex = 0;
+    public int currentInventoryCapacityIndex = 0;
+    public int inventoryCost;
     
     [Header("Swimming Speeds Upgrades")]
     public float swimSpeedUpgrade;
     public List<float> swimSpeed = new List<float>();
-    private int currentSwimSpeedIndex = 0;
+    public int currentSwimSpeedIndex = 0;
+    public int speedCost;
 
-    [Header("Eye Light Power Upgrades")]
-    public float eyeLightUpgrade;
-    public List<float> eyeLight = new List<float>();
-    private int currentEyeLightIndex = 0;
+    [Header("Goggles Upgrades")] 
+    public bool hasGoggles;
+    public int goggleCost;
 
     public void GiveWaterResistanceUpgrade()
     {
@@ -39,6 +43,7 @@ public class PlayerUpgradeManager : MonoBehaviour
         {
             waterResistanceUpgrade = waterResistance[currentWaterIndex];
             currentWaterIndex++;
+            
         }
     }
 
@@ -74,12 +79,8 @@ public class PlayerUpgradeManager : MonoBehaviour
         }
     }
 
-    public void GiveEyeLightUpgrade()
+    public void GiveGoggleUpgrade()
     {
-        if (currentEyeLightIndex < eyeLight.Count)
-        {
-            eyeLightUpgrade = eyeLight[currentEyeLightIndex];
-            currentEyeLightIndex++;
-        }
+        hasGoggles = true;
     }
 }
