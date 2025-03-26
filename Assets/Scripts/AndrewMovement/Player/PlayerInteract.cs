@@ -49,8 +49,8 @@ public class PlayerInteract : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(ThirdPersonCheckDelay);
-            Debug.Log("Checking");
             detectedInteractables = Physics.SphereCastAll(ThirdPersonInteractCenter.position, ThirdPersonInteractionRadius, Vector3.forward, ThirdPersonInteractionRadius, layerMask);
+            Debug.Log(detectedInteractables.Length);
         }
 
     }

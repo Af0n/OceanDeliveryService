@@ -32,11 +32,25 @@ public class AndrewLook : MonoBehaviour
 
     private void Update()
     {
+        if(manager.IsThirdPerson){
+            ThirdPersonBody();
+            return;
+        }
+        
         if(manager.IsOnBoat){
             BoatLook();
             return;
         }
+
         Look();
+    }
+
+    private void ThirdPersonBody(){
+        Vector3 dir = Cam.forward;
+        dir.y = 0;
+        dir.Normalize();
+
+        transform.forward = dir;
     }
 
     private void BoatLook()
