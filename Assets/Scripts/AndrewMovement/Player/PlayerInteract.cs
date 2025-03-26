@@ -50,7 +50,6 @@ public class PlayerInteract : MonoBehaviour
         {
             yield return new WaitForSeconds(ThirdPersonCheckDelay);
             detectedInteractables = Physics.SphereCastAll(ThirdPersonInteractCenter.position, ThirdPersonInteractionRadius, Vector3.forward, ThirdPersonInteractionRadius, layerMask);
-            Debug.Log(detectedInteractables.Length);
         }
 
     }
@@ -84,5 +83,9 @@ public class PlayerInteract : MonoBehaviour
     {
         // input system boilerplate
         interact.Disable();
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(ThirdPersonInteractCenter.position, ThirdPersonInteractionRadius);
     }
 }
