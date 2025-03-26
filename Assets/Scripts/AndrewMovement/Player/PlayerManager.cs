@@ -110,6 +110,7 @@ public class PlayerManager : MonoBehaviour
             SetLook(false);
             cinemachineCamera.enabled = true;
             Reticle.enabled = false;
+            interaction.StartThirdPersonCheck();
             return;
         }
 
@@ -117,6 +118,7 @@ public class PlayerManager : MonoBehaviour
         cinemachineCamera.enabled = false;
         Reticle.enabled = true;
         Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
+        interaction.StopThirdPersonCheck();
     }
 
     /*

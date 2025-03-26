@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1317768433442896968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7352371539151699848}
+  m_Layer: 0
+  m_Name: InteractionCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7352371539151699848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317768433442896968}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8848811257863190894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1642328424194800790
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,8 +92,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927450679278593590}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.253116, y: -0.045897104, z: 0.012022799, w: -0.9662718}
-  m_LocalPosition: {x: -0.37913793, y: 2.25, z: -3.9819913}
+  m_LocalRotation: {x: 0.25340134, y: -0.0000000013650638, z: 3.5757997e-10, w: 0.9673613}
+  m_LocalPosition: {x: 0, y: 2.25, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -258,7 +289,7 @@ MonoBehaviour:
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
-      InputValue: 0
+      InputValue: -0
       Driver:
         AccelTime: 0.2
         DecelTime: 0.2
@@ -271,7 +302,7 @@ MonoBehaviour:
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
-      InputValue: 0
+      InputValue: -0
       Driver:
         AccelTime: 0
         DecelTime: 0
@@ -320,6 +351,7 @@ Transform:
   - {fileID: 381344833131612701}
   - {fileID: 4695198187370569555}
   - {fileID: 8202755915589465311}
+  - {fileID: 7352371539151699848}
   - {fileID: 4172636074245356896}
   - {fileID: 8535333934977569536}
   - {fileID: 5581407800230224163}
@@ -343,6 +375,10 @@ MonoBehaviour:
   ExcludeLayersTemp:
     serializedVersion: 2
     m_Bits: 4294967295
+  IsThirdPerson: 0
+  Cam: {fileID: 0}
+  cinemachineCamera: {fileID: 0}
+  Reticle: {fileID: 0}
   IsOnBoat: 0
   IsUnderwater: 0
   onSurfaceDepth: -1
@@ -458,6 +494,8 @@ MonoBehaviour:
   UsePhysicsGravity: 1
   GravityForce: 0
   SettlingForce: -2
+  Cam: {fileID: 0}
+  CamTarget: {fileID: 0}
   GroundCheck: {fileID: 8202755915589465311}
   standableMask:
     serializedVersion: 2
@@ -478,10 +516,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractDistance: 2
+  ThirdPersonCheckDelay: 0.1
+  ThirdPersonInteractionRadius: 1.5
   Cam: {fileID: 4695198187370569555}
   layerMask:
     serializedVersion: 2
     m_Bits: 1572864
+  ThirdPersonInteractCenter: {fileID: 7352371539151699848}
 --- !u!1 &3498720962508067971
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,8 +1034,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7207059378534130328}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.253116, y: -0.045897104, z: 0.0120228, w: -0.9662718}
-  m_LocalPosition: {x: -0.37913793, y: 2.25, z: -3.9819913}
+  m_LocalRotation: {x: 0.2534013, y: 0.000000003213943, z: -8.4189583e-10, w: 0.9673613}
+  m_LocalPosition: {x: 200.3, y: 242.67, z: 546.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1033,7 +1074,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
