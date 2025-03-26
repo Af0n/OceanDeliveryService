@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 7_Circuit_Board
   m_EditorClassIdentifier: 
   nameString: Circuit Board
-  prefab: {fileID: 669378938364025140, guid: 16f8e136a52730a44861666661c06b98, type: 3}
+  worldPrefab: {fileID: 0}
+  uiPrefab: {fileID: 0}
   height: 1
   width: 2

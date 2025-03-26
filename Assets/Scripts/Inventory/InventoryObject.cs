@@ -12,14 +12,15 @@ public class InventoryObject : ScriptableObject
     }
 
     public string nameString;
-    public Transform prefab;
+    public GameObject worldPrefab;
+    public GameObject uiPrefab;
     public int height;
     public int width;
     private Dir dir;
 
     public int GetRotationAngle(Dir dir)
     {
-        return dir == Dir.Horizontal ? 0 : 90;
+        return dir == Dir.Horizontal ? 0 : -90;
     }
 
     public void SetDir(Dir dir)

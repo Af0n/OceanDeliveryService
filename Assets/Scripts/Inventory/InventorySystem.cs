@@ -153,7 +153,7 @@ public class InventorySystem : MonoBehaviour
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 // Debug.Log(slot + " empty");
 
-                GameObject newItem = Instantiate(inventoryObject.prefab.gameObject, slot.transform);
+                GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
                 float rotation = inventoryObject.GetRotationAngle(dir);
