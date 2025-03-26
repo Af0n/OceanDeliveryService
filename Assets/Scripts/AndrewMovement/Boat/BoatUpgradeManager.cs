@@ -18,12 +18,8 @@ public class BoatUpgradeManager : MonoBehaviour
     public bool windTerminal;
     public GameObject onboardWindTerminal;
 
-    void Update()
-    {
-        GiveOnboardWindTerminalUpgrade();
-    }
-
-
+    public bool hasFinalUpgrade;
+    
     public void GiveTurnEffectivenessUpgrade()
     {
         if (currentTurnEffectivenessIndex < turnEffectivenessList.Count)
@@ -55,5 +51,10 @@ public class BoatUpgradeManager : MonoBehaviour
     public void GiveOnboardWindTerminalUpgrade()
     {
         onboardWindTerminal.SetActive(windTerminal);
+    }
+    
+    public void GiveFinalBoatUpgrade()
+    {
+        hasFinalUpgrade = true;
     }
 }

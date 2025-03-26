@@ -956,9 +956,10 @@ MonoBehaviour:
   - 3
   - 4
   motorUpgrade: 0
-  submersible: 1
+  submersible: 0
   windTerminal: 0
   onboardWindTerminal: {fileID: 5516350687417399714}
+  hasFinalUpgrade: 0
 --- !u!54 &1375673272928508770
 Rigidbody:
   m_ObjectHideFlags: 0
