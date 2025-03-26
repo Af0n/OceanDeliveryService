@@ -12,22 +12,26 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Temporary Exclude Layers for CharacterController")]
     public LayerMask ExcludeLayersTemp;
     public bool IsThirdPerson;
-    public Transform Cam;
 
-    private AndrewMovement movement;
-    private AndrewLook look;
-    private PlayerInteract interaction;
-    private WaterDeath waterDeath;
-    private CharacterController controller;
-    private PlayerUpgradeManager upgradeManager;
-    public CinemachineCamera cinemachineCamera;
+    public AndrewMovement movement;
+    public AndrewLook look;
+    public PlayerInteract interaction;
+    public WaterDeath waterDeath;
+    public CharacterController controller;
+    public PlayerUpgradeManager upgradeManager;
     public Image Reticle;
 
     public bool IsOnBoat;
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
-    public bool HasThirdPersonInteractable;
+    public bool HasThirdPersonInteractable, HasMultipleTPI;
+
+    [Header("Unity Set Up")]
+    public Transform ThirdPersonDisplay;
+    public UpdateThirdPersonInteractUI TPIUpdater;
+    public CinemachineCamera cinemachineCamera;
+    public Transform Cam;
 
     private void Awake()
     {
@@ -37,6 +41,8 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
+
+        ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
         ToggleThirdPerson(IsThirdPerson);
     }
@@ -112,6 +118,7 @@ public class PlayerManager : MonoBehaviour
             cinemachineCamera.enabled = true;
             Reticle.enabled = false;
             interaction.StartThirdPersonCheck();
+            ThirdPersonDisplay.gameObject.SetActive(true);
             return;
         }
 
@@ -120,6 +127,7 @@ public class PlayerManager : MonoBehaviour
         Reticle.enabled = true;
         interaction.StopThirdPersonCheck();
         Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
+        ThirdPersonDisplay.gameObject.SetActive(true);
     }
 
     /*
@@ -174,6 +182,9 @@ public class PlayerManager : MonoBehaviour
     public void SetLook(bool b)
     {
         look.enabled = b;
+        if(IsThirdPerson){
+            cinemachineCamera.enabled = b;
+        }
     }
 
     public void SetMoveLook(bool b)
@@ -185,6 +196,7 @@ public class PlayerManager : MonoBehaviour
     public void SetInteraction(bool b)
     {
         interaction.enabled = b;
+        ThirdPersonDisplay.gameObject.SetActive(b);
     }
 
     public void SetAll(bool b)

@@ -23,10 +23,12 @@ public class PlayerInteract : MonoBehaviour
     private int selectedInteractable;
     private Coroutine checkRoutine;
 
-    public Transform SelectedInteractable{
-        get{
-            manager.HasThirdPersonInteractable = detectedInteractables.Length == 0;
-            if(manager.HasThirdPersonInteractable){
+    public Transform SelectedInteractable
+    {
+        get
+        {
+            if (!manager.HasThirdPersonInteractable)
+            {
                 return null;
             }
             return detectedInteractables[selectedInteractable].transform;
@@ -43,6 +45,7 @@ public class PlayerInteract : MonoBehaviour
 
     public void StartThirdPersonCheck()
     {
+        Debug.Log("Checking");
         checkRoutine = StartCoroutine(nameof(DoInteractCheck));
     }
 
@@ -52,6 +55,7 @@ public class PlayerInteract : MonoBehaviour
         {
             return;
         }
+        Debug.Log("No More Checking");
         StopCoroutine(checkRoutine);
     }
 
@@ -61,12 +65,28 @@ public class PlayerInteract : MonoBehaviour
         {
             yield return new WaitForSeconds(ThirdPersonCheckDelay);
             detectedInteractables = Physics.SphereCastAll(ThirdPersonInteractCenter.position, ThirdPersonInteractionRadius, Vector3.forward, ThirdPersonInteractionRadius, layerMask);
+            manager.HasThirdPersonInteractable = detectedInteractables.Length != 0;
+            manager.HasMultipleTPI = detectedInteractables.Length > 1;
+
+            if (selectedInteractable > detectedInteractables.Length - 1)
+            {
+                selectedInteractable = 0;
+            }
+
+            if (selectedInteractable < 0)
+            {
+                selectedInteractable = detectedInteractables.Length - 1;
+            }
         }
 
     }
 
     private void TryInteract(InputAction.CallbackContext context)
     {
+        if(manager.IsThirdPerson){
+            detectedInteractables[selectedInteractable].transform.GetComponent<Interactable>().Interact();
+            return;
+        }
         //Debug.Log("Trying Interaction");
         Physics.Raycast(Cam.position, Cam.forward, out RaycastHit hitInfo, InteractDistance, layerMask);
         Debug.DrawRay(Cam.position, Cam.forward * InteractDistance, Color.red, 2f);
@@ -80,20 +100,32 @@ public class PlayerInteract : MonoBehaviour
         hitInfo.transform.GetComponent<Interactable>().Interact();
     }
 
-    private void ScrollSelected(InputAction.CallbackContext context){
+    private void ScrollSelected(InputAction.CallbackContext context)
+    {
         // dont even try if no interactables nearby
-        if(detectedInteractables.Length == 0){
+        if (detectedInteractables.Length == 0)
+        {
             return;
         }
 
         float value = swap.ReadValue<float>();
 
-        if(value < 0){
+        if (value < 0)
+        {
             selectedInteractable--;
-            return;
+        }
+        else
+        {
+            selectedInteractable++;
         }
 
-        selectedInteractable++;
+        if(selectedInteractable > detectedInteractables.Length-1){
+            selectedInteractable = 0;
+        }
+
+        if(selectedInteractable < 0){
+            selectedInteractable = detectedInteractables.Length-1;
+        }
     }
 
     void OnEnable()
@@ -105,7 +137,7 @@ public class PlayerInteract : MonoBehaviour
 
         swap = actions.Player.ScrollInteractTarget;
         swap.Enable();
-        swap.started += ScrollSelected;
+        swap.performed += ScrollSelected;
     }
 
     void OnDisable()
@@ -114,7 +146,8 @@ public class PlayerInteract : MonoBehaviour
         interact.Disable();
     }
 
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmosSelected()
+    {
         Gizmos.DrawWireSphere(ThirdPersonInteractCenter.position, ThirdPersonInteractionRadius);
     }
 }

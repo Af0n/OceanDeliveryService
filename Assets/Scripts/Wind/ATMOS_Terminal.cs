@@ -24,7 +24,7 @@ public class ATMOS_Terminal : Interactable
         // save this for later;
         defaultCam = mainCam.transform.localPosition;
 
-        playerMan.SetMoveLook(false);
+        playerMan.SetAll(false);
 
         mainCam.SetPositionAndRotation(CamPos.position, CamPos.rotation); // [TODO] smoother transition
         Cursor.lockState = CursorLockMode.None; // Unlock cursor
@@ -33,7 +33,7 @@ public class ATMOS_Terminal : Interactable
 
     public void Cancel()
     {
-        playerMan.SetMoveLook(true);
+        playerMan.SetAll(true);
         mainCam.SetLocalPositionAndRotation(defaultCam, Quaternion.identity); // [TODO] smoother transition
         Cursor.lockState = CursorLockMode.Locked; // lock cursor
         TerminalUI.gameObject.SetActive(false); // hide UI
