@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
+    public bool HasThirdPersonInteractable;
 
     private void Awake()
     {
@@ -117,8 +118,8 @@ public class PlayerManager : MonoBehaviour
         SetLook(true);
         cinemachineCamera.enabled = false;
         Reticle.enabled = true;
-        Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
         interaction.StopThirdPersonCheck();
+        Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
     }
 
     /*

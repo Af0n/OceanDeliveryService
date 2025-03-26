@@ -15,12 +15,23 @@ public class PlayerInteract : MonoBehaviour
 
     // input system
     private InputSystem_Actions actions;
-    private InputAction interact;
+    private InputAction interact, swap;
 
     private PlayerManager manager;
 
     private RaycastHit[] detectedInteractables;
+    private int selectedInteractable;
     private Coroutine checkRoutine;
+
+    public Transform SelectedInteractable{
+        get{
+            manager.HasThirdPersonInteractable = detectedInteractables.Length == 0;
+            if(manager.HasThirdPersonInteractable){
+                return null;
+            }
+            return detectedInteractables[selectedInteractable].transform;
+        }
+    }
 
     private void Awake()
     {
@@ -56,8 +67,6 @@ public class PlayerInteract : MonoBehaviour
 
     private void TryInteract(InputAction.CallbackContext context)
     {
-
-
         //Debug.Log("Trying Interaction");
         Physics.Raycast(Cam.position, Cam.forward, out RaycastHit hitInfo, InteractDistance, layerMask);
         Debug.DrawRay(Cam.position, Cam.forward * InteractDistance, Color.red, 2f);
@@ -71,12 +80,32 @@ public class PlayerInteract : MonoBehaviour
         hitInfo.transform.GetComponent<Interactable>().Interact();
     }
 
+    private void ScrollSelected(InputAction.CallbackContext context){
+        // dont even try if no interactables nearby
+        if(detectedInteractables.Length == 0){
+            return;
+        }
+
+        float value = swap.ReadValue<float>();
+
+        if(value < 0){
+            selectedInteractable--;
+            return;
+        }
+
+        selectedInteractable++;
+    }
+
     void OnEnable()
     {
         // input system boilerplate
         interact = actions.Player.Interact;
         interact.Enable();
         interact.performed += TryInteract;
+
+        swap = actions.Player.ScrollInteractTarget;
+        swap.Enable();
+        swap.started += ScrollSelected;
     }
 
     void OnDisable()
