@@ -83,4 +83,58 @@ public class PlayerUpgradeManager : MonoBehaviour
     {
         hasGoggles = true;
     }
+
+    public int ListCosts(string name)
+    {
+        switch (name)
+        {
+            case "Water Resistance":
+                return resistanceCost;
+
+            case "Depth Resistance":
+                return depthCost;
+
+            case "Movement Speed":
+                return speedCost;
+
+            case "Floatie":
+                return floatieCost;
+            
+            case "Goggles":
+                return goggleCost;
+            
+            case "Inventory Size":
+                return inventoryCost;
+
+            default:
+                return -1;
+        }
+    }
+
+    public float ListCurrent(string name)
+    {
+        switch (name)
+        {
+            case "Water Resistance":
+                return waterResistanceUpgrade;
+
+            case "Depth Resistance":
+                return depthUpgrade;
+
+            case "Movement Speed":
+                return swimSpeedUpgrade;
+
+            case "Floatie":
+                return -1;
+            
+            case "Goggles":
+                return -1;
+            
+            case "Inventory Size":
+                return inventoryCapacityUpgrade;
+
+            default:
+                return -1;
+        }
+    }
 }

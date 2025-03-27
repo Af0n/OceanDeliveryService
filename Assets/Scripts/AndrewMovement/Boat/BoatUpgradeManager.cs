@@ -32,6 +32,7 @@ public class BoatUpgradeManager : MonoBehaviour
         {
             turnEffectiveness = turnEffectivenessList[currentTurnEffectivenessIndex];
             currentTurnEffectivenessIndex++;
+            turnCost += turnCost / 2;
         }
     }
 
@@ -41,6 +42,7 @@ public class BoatUpgradeManager : MonoBehaviour
         {
             sailSpeedAndSize = sailSpeedAndSizeList [currentSailSpeedAndSizeIndex];
             currentSailSpeedAndSizeIndex++;
+            sailCost += sailCost / 2;
         }
     }
 
@@ -63,5 +65,59 @@ public class BoatUpgradeManager : MonoBehaviour
     public void GiveFinalBoatUpgrade()
     {
         hasFinalUpgrade = true;
+    }
+    
+    public int ListCosts(string name)
+    {
+        switch (name)
+        {
+            case "Turn Effectiveness":
+                return turnCost;
+
+            case "Sail Size and Speed":
+                return sailCost;
+
+            case "Motor":
+                return motorCost;
+
+            case "Wind Terminal":
+                return terminalCost;
+            
+            case "Final":
+                return finalCost;
+            
+            case "Submersible":
+                return subCost;
+
+            default:
+                return -1;
+        }
+    }
+
+    public float ListCurrent(string name)
+    {
+        switch (name)
+        {
+            case "Turn Effectiveness":
+                return turnEffectiveness;
+
+            case "Sail Size and Speed":
+                return sailSpeedAndSize;
+
+            case "Motor":
+                return -1;
+
+            case "Wind Terminal":
+                return -1;
+            
+            case "Final":
+                return -1;
+            
+            case "Submersible":
+                return -1;
+
+            default:
+                return -1;
+        }
     }
 }
