@@ -7,9 +7,7 @@ public class Scrap : Interactable
 
     public override void Interact()
     {
-        // Debug.Log("Here is where we would put the scrap into the inventory to then bring home\nFor now, auto processes");
-        InventorySystem inventory = FindAnyObjectByType<InventorySystem>();
-        inventory.AddObjectToInventory(InventoryObject);
+        Debug.Log("Here is where we would put the scrap into the inventory to then bring home\nFor now, auto processes");
         Process();
     }
 

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class AndrewMovement : MonoBehaviour
 {
     public AudioManager audioManager;
-    
+
     [Header("Movement Properties")]
     public float Speed;
     public float JumpHeight;
@@ -22,6 +22,8 @@ public class AndrewMovement : MonoBehaviour
     public float SettlingForce;
 
     [Header("Unity Set Up")]
+    public Transform Cam;
+    public Transform CamTarget;
     public Transform GroundCheck;
     public LayerMask standableMask;
     public float GroundCheckRadius;
@@ -41,7 +43,7 @@ public class AndrewMovement : MonoBehaviour
     public bool isGrounded;
     private bool checkForGround;
     private bool wasGrounded;
-    
+
     private Camera MainCamera;
     private bool raisingInWater;
     private bool loweringInWater;
@@ -59,7 +61,8 @@ public class AndrewMovement : MonoBehaviour
             GameObject audioGameObject = GameObject.Find("AudioManager");
             audioManager = audioGameObject.GetComponent<AudioManager>();
         }
-        if(UsePhysicsGravity){
+        if (UsePhysicsGravity)
+        {
             GravityForce = Physics.gravity.magnitude;
         }
     }
@@ -81,7 +84,7 @@ public class AndrewMovement : MonoBehaviour
             audioManager.Landing();
         }
         wasGrounded = isGrounded;
-        
+
         if (isSwimming)
         {
             audioManager.PlayMusic(false);
@@ -91,18 +94,22 @@ public class AndrewMovement : MonoBehaviour
             audioManager.Vertical(false);
             audioManager.PlayMusic(true);
         }
-        
-        if(manager.IsOnBoat){
+
+        if (manager.IsOnBoat)
+        {
             BoatMove();
-        }else{
+        }
+        else
+        {
             Move();
         }
-        
+
         Gravity();
-        
+
     }
 
-    private void BoatMove(){
+    private void BoatMove()
+    {
         Vector2 readMove = move.ReadValue<Vector2>();
         if (isGrounded)
         {
@@ -119,9 +126,19 @@ public class AndrewMovement : MonoBehaviour
         {
             audioManager.StopWalking(true);
         }
-        
 
-        Vector3 moveVec = deck.deckTarget.forward * readMove.y + deck.deckTarget.right * readMove.x;
+        Vector3 moveVec;
+        if (manager.IsThirdPerson)
+        {
+            Vector3 temp = CalculateCameraForward();
+            CamTarget.forward = temp;
+            moveVec = CamTarget.forward * readMove.y + CamTarget.right * readMove.x;
+        }
+        else
+        {
+            moveVec = deck.deckTarget.forward * readMove.y + deck.deckTarget.right * readMove.x;
+        }
+
         moveVec *= Time.deltaTime * Speed;
 
         deck.deckTarget.position += moveVec;
@@ -130,8 +147,21 @@ public class AndrewMovement : MonoBehaviour
         manager.Move(moveVec);
     }
 
-    private void Move(){
+    private void Move()
+    {
         Vector2 readMove = move.ReadValue<Vector2>();
+
+        Vector3 moveVec;
+        if (manager.IsThirdPerson)
+        {
+            Vector3 temp = CalculateCameraForward();
+            CamTarget.forward = temp;
+            moveVec = CamTarget.forward * readMove.y + CamTarget.right * readMove.x;
+        }
+        else
+        {
+            moveVec = transform.forward * readMove.y + transform.right * readMove.x;
+        }
 
         if (isSwimming)
         {
@@ -144,11 +174,10 @@ public class AndrewMovement : MonoBehaviour
                 audioManager.StopSwimming(false);
             }
             WaterVertical();
-            Vector3 moveVec = MainCamera.transform.forward * readMove.y + MainCamera.transform.right * readMove.x;
             moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
 
             manager.Move(moveVec);
-        } 
+        }
         else if (isFloating)
         {
             if (readMove.magnitude > 0)
@@ -160,14 +189,12 @@ public class AndrewMovement : MonoBehaviour
                 audioManager.StopSwimming(true);
             }
             WaterVertical();
-            Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
             moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
 
             manager.Move(moveVec);
         }
         else
         {
-            Vector3 moveVec = transform.forward * readMove.y + transform.right * readMove.x;
             moveVec *= Time.deltaTime * Speed;
 
             if (isGrounded)
@@ -190,26 +217,40 @@ public class AndrewMovement : MonoBehaviour
         }
     }
 
-    private void Gravity(){
+    public Vector3 CalculateCameraForward()
+    {
+        Vector3 temp = Cam.forward;
+        temp.y = 0;
+        temp.Normalize();
+        return temp;
+    }
+
+    private void Gravity()
+    {
         if (isSwimming || isFloating)
         {
             return;
         }
-        if(isGrounded && checkForGround){
+        if (isGrounded && checkForGround)
+        {
             yVelocity = SettlingForce;
-        }else{
+        }
+        else
+        {
             yVelocity -= GravityForce * Time.deltaTime;
         }
 
         manager.Move(Time.deltaTime * yVelocity * Vector3.up);
     }
 
-    private void Jump(InputAction.CallbackContext context){
+    private void Jump(InputAction.CallbackContext context)
+    {
         if (isSwimming || isFloating)
         {
             return;
         }
-        if(!isGrounded){
+        if (!isGrounded)
+        {
             return;
         }
         yVelocity = Mathf.Sqrt(JumpHeight * 2 * GravityForce);
@@ -217,7 +258,8 @@ public class AndrewMovement : MonoBehaviour
         audioManager.Jump();
         StartCoroutine(nameof(JumpGracePeriod));
     }
-    private void WaterVertical(){
+    private void WaterVertical()
+    {
         float direction = waterVertical.ReadValue<float>();
         if (isSwimming)
         {
@@ -248,7 +290,8 @@ public class AndrewMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator JumpGracePeriod(){
+    private IEnumerator JumpGracePeriod()
+    {
         yield return new WaitForSeconds(GroundedGracePeriod);
         checkForGround = true;
     }
@@ -258,7 +301,7 @@ public class AndrewMovement : MonoBehaviour
         // input system boilerplate
         move = actions.Player.Move;
         move.Enable();
-        
+
         waterVertical = actions.Player.WaterVertical;
         waterVertical.Enable();
 
@@ -287,7 +330,8 @@ public class AndrewMovement : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        switch(other.tag){
+        switch (other.tag)
+        {
             case "BoatTrigger":
                 deck.SetPos(transform.position);
                 break;

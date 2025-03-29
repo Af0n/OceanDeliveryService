@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 7_Motor
   m_EditorClassIdentifier: 
   nameString: Motor
-  prefab: {fileID: 669378938364025140, guid: 17bf955410841b646a1f3bd66adb3f15, type: 3}
+  prefab: {fileID: 0}
   height: 2
   width: 2
