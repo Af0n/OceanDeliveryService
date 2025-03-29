@@ -950,15 +950,24 @@ MonoBehaviour:
   - 2
   - 3
   - 4
+  currentTurnEffectivenessIndex: 0
+  turnCost: 10
   sailSpeedAndSize: 1
   sailSpeedAndSizeList:
   - 2
   - 3
   - 4
-  motorUpgrade: 0
-  submersible: 1
+  currentSailSpeedAndSizeIndex: 0
+  sailCost: 15
+  motorUpgrade: 1
+  motorCost: 30
+  submersible: 0
+  subCost: 50
   windTerminal: 0
   onboardWindTerminal: {fileID: 5516350687417399714}
+  terminalCost: 25
+  hasFinalUpgrade: 0
+  finalCost: 100
 --- !u!54 &1375673272928508770
 Rigidbody:
   m_ObjectHideFlags: 0

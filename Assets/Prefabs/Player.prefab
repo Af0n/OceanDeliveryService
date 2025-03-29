@@ -118,24 +118,30 @@ MonoBehaviour:
   - 10
   - 30
   - 90
+  currentWaterIndex: 0
+  resistanceCost: 5
   depthUpgrade: 0
   depthResistance:
   - 50
   - 100
   - 150
-  swimAbilityUpgrade: 1
+  currentDepthIndex: 0
+  depthCost: 7
+  swimAbilityUpgrade: 0
+  floatieCost: 2
   inventoryCapacityUpgrade: 4
   inventoryCapacity: 050000000600000007000000
+  currentInventoryCapacityIndex: 0
+  inventoryCost: 5
   swimSpeedUpgrade: 5
   swimSpeed:
   - 7.5
   - 10
   - 12.5
-  eyeLightUpgrade: 5
-  eyeLight:
-  - 7.5
-  - 10
-  - 12.5
+  currentSwimSpeedIndex: 0
+  speedCost: 10
+  hasGoggles: 0
+  goggleCost: 4
 --- !u!114 &141960404385030522
 MonoBehaviour:
   m_ObjectHideFlags: 0
