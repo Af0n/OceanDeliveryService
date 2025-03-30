@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerManager : MonoBehaviour
     public bool IsOnBoat;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
+    public switchCam cameraSwitcher;
+    public GameObject inventorySystem;
+    public float inventoryVisibility = 1f;
 
     private void Awake()
     {
@@ -76,6 +80,15 @@ public class PlayerManager : MonoBehaviour
             case "BoatTrigger":
                 IsOnBoat = true;
                 break;
+            case "DeliveryZone":
+                SetLook(false);
+                Debug.Log("Entered Delivery Zone");
+                
+                cameraSwitcher.ChangeCamera();
+                cameraSwitcher.ManagerCamera();
+                // inventorySystem.SetActive(true);
+                StartCoroutine(DelayedInventory());
+                break;
         }
     }
 
@@ -85,10 +98,26 @@ public class PlayerManager : MonoBehaviour
             case "BoatTrigger":
                 IsOnBoat = false;
                 break;
+            case "DeliveryZone":
+                Debug.Log("Exited Delivery Zone");
+                SetLook(true);
+                
+                cameraSwitcher.ChangeCamera();
+                cameraSwitcher.ManagerCamera();
+                // inventorySystem.SetActive(false);
+                StartCoroutine(DelayedInventory());
+                break;
         }
     }
-    
-    
+    private IEnumerator DelayedInventory()
+    {
+        yield return new WaitForSeconds(inventoryVisibility);
+        if (inventorySystem.activeSelf == true){
+            inventorySystem.SetActive(false);
+        }else{
+            inventorySystem.SetActive(true);
+        }
+    }
     
     public void ToggleSurface(float surfaced)
     {

@@ -100,11 +100,6 @@ MonoBehaviour:
   GroundCheckRadius: 0.49
   GroundedGracePeriod: 0.25
   isGrounded: 0
-  depthBeforeSubmerged: 1
-  displacementAmount: 3
-  floaterCount: 1
-  waterDrag: 0.99
-  waterAngularDrag: 0.5
 --- !u!114 &8871792669245609129
 MonoBehaviour:
   m_ObjectHideFlags: 0
