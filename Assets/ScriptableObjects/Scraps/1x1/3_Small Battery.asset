@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 3_Small Battery
   m_EditorClassIdentifier: 
   nameString: Small Battery
-  prefab: {fileID: 669378938364025140, guid: f74c77aae5f101b448b60c1a12dbdf5d, type: 3}
+  prefab: {fileID: 0}
   height: 1
   width: 1

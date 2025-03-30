@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,18 +11,27 @@ public class PlayerManager : MonoBehaviour
     public float RespawnDistCheck;
     [Tooltip("Temporary Exclude Layers for CharacterController")]
     public LayerMask ExcludeLayersTemp;
+    public bool IsThirdPerson;
 
-    private AndrewMovement movement;
-    private AndrewLook look;
-    private PlayerInteract interaction;
-    private WaterDeath waterDeath;
-    private CharacterController controller;
-    private PlayerUpgradeManager upgradeManager;
-    
+    public AndrewMovement movement;
+    public AndrewLook look;
+    public PlayerInteract interaction;
+    public WaterDeath waterDeath;
+    public CharacterController controller;
+    public PlayerUpgradeManager upgradeManager;
+    public Image Reticle;
+
     public bool IsOnBoat;
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
+    public bool HasThirdPersonInteractable, HasMultipleTPI;
+
+    [Header("Unity Set Up")]
+    public Transform ThirdPersonDisplay;
+    public UpdateThirdPersonInteractUI TPIUpdater;
+    public CinemachineCamera cinemachineCamera;
+    public Transform Cam;
 
     private void Awake()
     {
@@ -30,8 +41,12 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
+
+        ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
+
+        ToggleThirdPerson(IsThirdPerson);
     }
-    
+
     private void OnEnable()
     {
         Water.UnderWaterTrigger.OnUnderWaterStateChange += HandleUnderWaterState;
@@ -51,7 +66,7 @@ public class PlayerManager : MonoBehaviour
         if (isUnderwater)
         {
             // Only start drowning if the head is submerged too
-            if (movement.isSwimming) 
+            if (movement.isSwimming)
             {
                 waterDeath.StartDrowning();
             }
@@ -63,6 +78,7 @@ public class PlayerManager : MonoBehaviour
             movement.isFloating = false;
             movement.isSwimming = false;
             playerFloater.SetActive(false);
+            //OnEmerge?.Invoke();
             movement.audioManager.Emerge();
         }
     }
@@ -91,7 +107,29 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
-        
+
+    public void ToggleThirdPerson(bool b)
+    {
+        IsThirdPerson = b;
+
+        if (IsThirdPerson)
+        {
+            SetLook(false);
+            cinemachineCamera.enabled = true;
+            Reticle.enabled = false;
+            interaction.StartThirdPersonCheck();
+            ThirdPersonDisplay.gameObject.SetActive(true);
+            return;
+        }
+
+        SetLook(true);
+        cinemachineCamera.enabled = false;
+        Reticle.enabled = true;
+        interaction.StopThirdPersonCheck();
+        Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
+        ThirdPersonDisplay.gameObject.SetActive(true);
+    }
+
     /*
     private void FixedUpdate()
     {
@@ -144,6 +182,9 @@ public class PlayerManager : MonoBehaviour
     public void SetLook(bool b)
     {
         look.enabled = b;
+        if(IsThirdPerson){
+            cinemachineCamera.enabled = b;
+        }
     }
 
     public void SetMoveLook(bool b)
@@ -155,6 +196,7 @@ public class PlayerManager : MonoBehaviour
     public void SetInteraction(bool b)
     {
         interaction.enabled = b;
+        ThirdPersonDisplay.gameObject.SetActive(b);
     }
 
     public void SetAll(bool b)

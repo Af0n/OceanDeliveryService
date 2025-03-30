@@ -116,6 +116,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ScrollInteractTarget"",
+                    ""type"": ""Value"",
+                    ""id"": ""dca4987f-006d-446d-b63f-1570e3da4a62"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -536,6 +545,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""WaterVertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a320fa23-c058-4a1c-b2da-ecb6790aab32"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ScrollInteractTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94d979de-303d-400b-aad3-40cd96360147"",
+                    ""path"": ""<Gamepad>/dpad/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollInteractTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1548,6 +1579,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_WaterVertical = m_Player.FindAction("WaterVertical", throwIfNotFound: true);
+        m_Player_ScrollInteractTarget = m_Player.FindAction("ScrollInteractTarget", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1650,6 +1682,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_WaterVertical;
+    private readonly InputAction m_Player_ScrollInteractTarget;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1664,6 +1697,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @WaterVertical => m_Wrapper.m_Player_WaterVertical;
+        public InputAction @ScrollInteractTarget => m_Wrapper.m_Player_ScrollInteractTarget;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1703,6 +1737,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @WaterVertical.started += instance.OnWaterVertical;
             @WaterVertical.performed += instance.OnWaterVertical;
             @WaterVertical.canceled += instance.OnWaterVertical;
+            @ScrollInteractTarget.started += instance.OnScrollInteractTarget;
+            @ScrollInteractTarget.performed += instance.OnScrollInteractTarget;
+            @ScrollInteractTarget.canceled += instance.OnScrollInteractTarget;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1737,6 +1774,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @WaterVertical.started -= instance.OnWaterVertical;
             @WaterVertical.performed -= instance.OnWaterVertical;
             @WaterVertical.canceled -= instance.OnWaterVertical;
+            @ScrollInteractTarget.started -= instance.OnScrollInteractTarget;
+            @ScrollInteractTarget.performed -= instance.OnScrollInteractTarget;
+            @ScrollInteractTarget.canceled -= instance.OnScrollInteractTarget;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -2047,6 +2087,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnWaterVertical(InputAction.CallbackContext context);
+        void OnScrollInteractTarget(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
