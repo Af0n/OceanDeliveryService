@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
-    public InventoryObject inventoryObject;
+    private InventoryObject inventoryObject;
 
     private InventoryObject.Dir dir = InventoryObject.Dir.Horizontal;
 
@@ -102,9 +102,6 @@ public class InventorySystem : MonoBehaviour
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 objectToMove.transform.SetParent(slotTransform);
                 objectToMove.transform.localPosition = Vector3.zero;
-
-                float rotation = inventoryObject.GetRotationAngle(dir);
-                objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
                 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
 
@@ -136,9 +133,11 @@ public class InventorySystem : MonoBehaviour
             tempCell.transform.position = canvas.transform.TransformPoint(pos);
         }
 
-        if(Input.GetKeyDown(KeyCode.R)) {
+        // to rotate objects when moving them
+        if(Input.GetKeyDown(KeyCode.R) && objectToMove != null) {
             dir = InventoryObject.GetNextDir(dir);
-            Debug.Log("current dir: " + dir);
+            float rotation = inventoryObject.GetRotationAngle(dir);
+            objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
         }
 
         // used for testing
