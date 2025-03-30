@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 3_Metal_Panel
   m_EditorClassIdentifier: 
   nameString: Bulb
-  worldPrefab: {fileID: 0}
-  uiPrefab: {fileID: 0}
+  worldPrefab: {fileID: 1292219873356503187, guid: f1c1b1dc12d60f741b92dc712af8b3aa, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: a42f985601bca3f4ba5995d713a37ce7, type: 3}
   height: 1
   width: 2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1_Metal_Scrap
   m_EditorClassIdentifier: 
   nameString: Scrap Metal
-  worldPrefab: {fileID: 0}
-  uiPrefab: {fileID: 0}
+  worldPrefab: {fileID: 5044608593650105427, guid: 85cb55bca2d00f2418958ce506f4acf6, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: 96d9743b20b5b92469356aad26c67fe2, type: 3}
   height: 1
   width: 1
