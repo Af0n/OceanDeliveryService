@@ -19,6 +19,8 @@ public class InventorySystem : MonoBehaviour
     private GameObject objectToMove;
     public GameObject tempCell; // for holding objectToMove when applicable
 
+    public Transform objDropPoint;
+
     private CanvasGroup canvasGroup;
     private Canvas canvas;
 
@@ -140,10 +142,16 @@ public class InventorySystem : MonoBehaviour
             objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
         }
 
-        // used for testing
-        // if(Input.GetKeyDown(KeyCode.Q)) {
-        //     AddObjectToInventory(inventoryObject);
-        // }
+        // to drop selected objects
+        if(Input.GetKeyDown(KeyCode.Q) && objectToMove != null) {
+            PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
+            InventoryObject newObject = placedObject.GetInventoryObject();
+            Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+
+            // reset inventory movement stuff
+            Destroy(objectToMove);
+            objectToMove = null; 
+        }
     }
 
     public void AddObjectToInventory(InventoryObject inventoryObject) 
