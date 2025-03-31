@@ -26,7 +26,6 @@ public class PlayerManager : MonoBehaviour
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
-    public SwitchCam cameraSwitch;
     public float inventoryVisibility = 1f;
     public bool HasThirdPersonInteractable, HasMultipleTPI;
 
@@ -35,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     public UpdateThirdPersonInteractUI TPIUpdater;
     public CinemachineCamera cinemachineCamera;
     public Transform Cam;
+    public SwitchCam cameraSwitch;
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
-        cameraSwitch = GetComponent<SwitchCam>();
+        //cameraSwitch = GetComponent<SwitchCam>();
 
         ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
