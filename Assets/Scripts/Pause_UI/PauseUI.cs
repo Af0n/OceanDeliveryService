@@ -11,6 +11,7 @@ public class PauseUI : MonoBehaviour
     [Header("Unity Setup")]
     public Transform PauseMenu;
     public Transform ScreenPanels;
+    public PlayerManager playerMan;
 
     private InputSystem_Actions actions;
     private InputAction pause;
@@ -59,11 +60,15 @@ public class PauseUI : MonoBehaviour
         if (isPaused)
         {
             StopCoroutine(nameof(ResetActiveWindow));
+            playerMan.SetAll(false);
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
 
         // starts coroutine to reset screen if not paused
         StartCoroutine(nameof(ResetActiveWindow));
+        playerMan.SetAll(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void DoPause(InputAction.CallbackContext context)

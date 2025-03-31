@@ -26,7 +26,7 @@ public class deliveryZone : MonoBehaviour
     private void NotifyPlayer()
     {   
         Debug.Log("The quest attached to this Delivery Zone is: " + QuestName);
-        Debug.Log("The quests attached to this Delivery Zone: " + string.Join(", ", packages));
+        Debug.Log("The item requirements attached to this Delivery Zone: " + string.Join(", ", packages));
         // You can add more code here to display the information in the UI
     }
     public enum QuestList{
