@@ -77,32 +77,28 @@ public class InventorySystem : MonoBehaviour
         // Debug.Log(slot.name + " clicked");
 
         Cell cellComp = slot.GetComponent<Cell>();
-        Transform slotTransform = slot.transform;
         
+        // pick up an inventory object
         if(!cellComp.GetAvailable() && objectToMove == null) {
-            if(slotTransform.childCount > 0) {
-                objectToMove = slotTransform.GetChild(0).gameObject;
-                objectToMove.transform.SetParent(tempCell.transform);
-                objectToMove.transform.localPosition = Vector3.zero;
+            Transform rootCell = cellComp.GetRoot();
 
-                PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
-                dir = placedObject.GetDir();
-                inventoryObject = placedObject.GetInventoryObject();
-                
-                gridUI.RemoveItem(inventoryObject, dir, slot);
+            PlacedObject placedObject = rootCell.GetComponentInChildren<PlacedObject>();
+            dir = placedObject.GetDir();
+            inventoryObject = placedObject.GetInventoryObject();
 
-                return;
-            }
-            else {
-                // TODO: figure out how to select the object anyway??
-                Debug.Log("item is child of different slot");
-                return;
-            }
+            objectToMove = placedObject.gameObject;
+            objectToMove.transform.SetParent(tempCell.transform);
+            objectToMove.transform.localPosition = Vector3.zero;
+            
+            gridUI.RemoveItem(inventoryObject, dir, slot);
+
+            return;
         }
 
+        // place an inventory object
         if(objectToMove != null) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
-                objectToMove.transform.SetParent(slotTransform);
+                objectToMove.transform.SetParent(slot.transform);
                 objectToMove.transform.localPosition = Vector3.zero;
                 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
@@ -112,15 +108,8 @@ public class InventorySystem : MonoBehaviour
                 objectToMove = null; // reset reference
             }
         }
-
-        // if(cellComp.GetAvailable()) {
-        //     // if true then slot is empty
-        //     Debug.Log("empty slot");
-        // }
     }
 
-
-    // change all logic past here
     void Update()
     {
         // so objectToMove follows the mouse when selected
