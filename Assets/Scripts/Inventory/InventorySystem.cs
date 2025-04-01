@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -23,11 +24,16 @@ public class InventorySystem : MonoBehaviour
 
     private CanvasGroup canvasGroup;
     private Canvas canvas;
+    private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
+
+    // input system stuff
+    private InputSystem_Actions actions;
+    private InputAction rotate, drop; 
 
     void Awake()
     {
+        actions = new InputSystem_Actions();
         objectToMove = null;
-
         GenerateInventory();
     }
 
@@ -50,10 +56,12 @@ public class InventorySystem : MonoBehaviour
         if(toDisplay) {
             canvasGroup.alpha = 1f; // error here
             canvasGroup.interactable = true;
+            isDisplayed = true;
         }
         else {
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = false;
+            isDisplayed = false;
         }
     }
 
@@ -123,24 +131,6 @@ public class InventorySystem : MonoBehaviour
             );
             tempCell.transform.position = canvas.transform.TransformPoint(pos);
         }
-
-        // to rotate objects when moving them
-        if(Input.GetKeyDown(KeyCode.R) && objectToMove != null) {
-            dir = InventoryObject.GetNextDir(dir);
-            float rotation = inventoryObject.GetRotationAngle(dir);
-            objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
-        }
-
-        // to drop selected objects
-        if(Input.GetKeyDown(KeyCode.Q) && objectToMove != null) {
-            PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
-            InventoryObject newObject = placedObject.GetInventoryObject();
-            Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
-
-            // reset inventory movement stuff
-            Destroy(objectToMove);
-            objectToMove = null; 
-        }
     }
 
     public void AddObjectToInventory(InventoryObject inventoryObject) 
@@ -167,6 +157,47 @@ public class InventorySystem : MonoBehaviour
                 Debug.Log(slot + " taken");
             }
         }
+    }
+
+    private void Rotate(InputAction.CallbackContext context)
+    {
+        if(objectToMove != null && isDisplayed) {
+            dir = InventoryObject.GetNextDir(dir);
+            float rotation = inventoryObject.GetRotationAngle(dir);
+            objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+        }
+    }
+
+    private void Drop(InputAction.CallbackContext context)
+    {
+        if(objectToMove != null && isDisplayed) {
+            PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
+            InventoryObject newObject = placedObject.GetInventoryObject();
+            Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+
+            // reset inventory movement stuff
+            Destroy(objectToMove);
+            objectToMove = null; 
+        }
+    }
+
+    void OnEnable()
+    {
+        // input system boilerplate
+        rotate = actions.UI.RotateInventory;
+        rotate.Enable();
+        rotate.performed += Rotate;
+
+        drop = actions.UI.DropInventory;
+        drop.Enable();
+        drop.performed += Drop;
+    }
+
+    void OnDisable()
+    {
+        // input system boilerplate
+        rotate.Disable(); // null reference here
+        drop.Disable();
     }
 
     // for placing objects at specific inventory positions instead of next available
