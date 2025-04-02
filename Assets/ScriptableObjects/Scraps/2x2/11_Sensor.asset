@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42537be433c08394aab55c86875c8eae, type: 3}
   m_Name: 11_Sensor
   m_EditorClassIdentifier: 
-  nameString: Sensor
   worldPrefab: {fileID: 3993769810132161784, guid: 79525432fb97af045942bfd99cd077f2, type: 3}
   uiPrefab: {fileID: 2162241689682632981, guid: 97fa9211b3881234db55ced2da955f12, type: 3}
   height: 2
   width: 2
+  dontRotate: 1

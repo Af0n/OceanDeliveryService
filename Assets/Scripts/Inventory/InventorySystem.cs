@@ -54,7 +54,7 @@ public class InventorySystem : MonoBehaviour
         }
 
         if(toDisplay) {
-            canvasGroup.alpha = 1f; // error here
+            canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
             isDisplayed = true;
         }
@@ -123,17 +123,27 @@ public class InventorySystem : MonoBehaviour
         // so objectToMove follows the mouse when selected
         if(objectToMove != null) {
             Vector2 pos;
+            RectTransform inventoryPanelRect = panel.GetComponent<RectTransform>();
+
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 (RectTransform)canvas.transform,
                 Input.mousePosition,
                 canvas.worldCamera,
                 out pos
             );
+
+            Vector2 minPosition = inventoryPanelRect.rect.min + (Vector2)objectToMove.transform.localScale * 0.5f;
+            Vector2 maxPosition = inventoryPanelRect.rect.max - (Vector2)objectToMove.transform.localScale * 0.5f;
+
+            // clamp position to inventory menu (makes it look nicer)
+            pos.x = Mathf.Clamp(pos.x, minPosition.x, maxPosition.x);
+            pos.y = Mathf.Clamp(pos.y, minPosition.y, maxPosition.y);
+
             tempCell.transform.position = canvas.transform.TransformPoint(pos);
         }
     }
 
-    public void AddObjectToInventory(InventoryObject inventoryObject) 
+    public bool AddObjectToInventory(InventoryObject inventoryObject) 
     {
         foreach(GameObject slot in inventorySlots) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
@@ -151,12 +161,14 @@ public class InventorySystem : MonoBehaviour
                 gridUI.PlaceItem(inventoryObject, dir, slot);
                 // Debug.Log("setting slot unavailable: " + slot.name);
 
-                return;
+                return true;
             }
             else {
                 Debug.Log(slot + " taken");
             }
         }
+
+        return false;
     }
 
     private void Rotate(InputAction.CallbackContext context)
@@ -176,9 +188,23 @@ public class InventorySystem : MonoBehaviour
             Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
 
             // reset inventory movement stuff
-            Destroy(objectToMove);
-            objectToMove = null; 
+            ResetObjectToMove();
         }
+    }
+
+    // will place objectToMove back in first available pos in inventory (for pause menu logic)
+    public void CheckIfMoving()
+    {
+        if(objectToMove != null) {
+            AddObjectToInventory(inventoryObject);
+            ResetObjectToMove();
+        }
+    }
+
+    private void ResetObjectToMove()
+    {
+        Destroy(objectToMove);
+        objectToMove = null; 
     }
 
     void OnEnable()
