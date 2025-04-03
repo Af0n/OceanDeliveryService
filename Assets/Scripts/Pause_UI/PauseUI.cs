@@ -56,6 +56,9 @@ public class PauseUI : MonoBehaviour
 
         // actually pause/unpause happens here
 
+        // check to make sure no items are being moved
+        inventory.CheckIfMoving();
+
         isPaused = !isPaused;
         PauseMenu.gameObject.SetActive(isPaused);
 
@@ -103,6 +106,9 @@ public class PauseUI : MonoBehaviour
     public void SetActiveMenu(int index)
     {
         index = Mathf.Clamp(index, 0, ScreenPanels.childCount - 1);
+
+        // check to make sure no items are being moved
+        inventory.CheckIfMoving();
 
         // disable currently active menu
         ScreenPanels.GetChild(activeMenu).gameObject.SetActive(false);

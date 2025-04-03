@@ -7,8 +7,14 @@ public class Package : Interactable
     public override void Interact()
     {        
         InventorySystem inventory = FindAnyObjectByType<InventorySystem>();
-        inventory.AddObjectToInventory(packageType);
+        bool successful = inventory.AddObjectToInventory(packageType);
+        
+        // cancel interaction if there's no inventory space
+        if(!successful) {
+            Debug.Log("inventory full!"); 
+            return;
+        }
 
-        Destroy(gameObject); // might want to do something else based on what the game needs
+        Destroy(gameObject);
     }
 }

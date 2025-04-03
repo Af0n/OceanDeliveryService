@@ -681,6 +681,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c8602f1-b204-4b68-95b8-deb68a7152b7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c7916a5-b24b-4887-8bd3-1aa3d6d35d57"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1145,6 +1163,61 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Advance"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9645fd9e-969c-4afe-9c6a-6284a78da4db"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""RotateInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f626881e-539c-4e67-9f2e-fc03dd41bd5d"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""RotateInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57a2f388-4e7b-4d10-ae0f-53f6c78da502"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RotateInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c412ab6-38e8-48c9-850e-fa28010fa040"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""DropInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65d16569-24ce-4c42-88c0-d90fd180b6ea"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DropInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1594,6 +1667,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Advance = m_UI.FindAction("Advance", throwIfNotFound: true);
+        m_UI_RotateInventory = m_UI.FindAction("RotateInventory", throwIfNotFound: true);
+        m_UI_DropInventory = m_UI.FindAction("DropInventory", throwIfNotFound: true);
         // Boat
         m_Boat = asset.FindActionMap("Boat", throwIfNotFound: true);
         m_Boat_SailLower = m_Boat.FindAction("SailLower", throwIfNotFound: true);
@@ -1810,6 +1885,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_Advance;
+    private readonly InputAction m_UI_RotateInventory;
+    private readonly InputAction m_UI_DropInventory;
     public struct UIActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1826,6 +1903,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @Advance => m_Wrapper.m_UI_Advance;
+        public InputAction @RotateInventory => m_Wrapper.m_UI_RotateInventory;
+        public InputAction @DropInventory => m_Wrapper.m_UI_DropInventory;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1871,6 +1950,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Advance.started += instance.OnAdvance;
             @Advance.performed += instance.OnAdvance;
             @Advance.canceled += instance.OnAdvance;
+            @RotateInventory.started += instance.OnRotateInventory;
+            @RotateInventory.performed += instance.OnRotateInventory;
+            @RotateInventory.canceled += instance.OnRotateInventory;
+            @DropInventory.started += instance.OnDropInventory;
+            @DropInventory.performed += instance.OnDropInventory;
+            @DropInventory.canceled += instance.OnDropInventory;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1911,6 +1996,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Advance.started -= instance.OnAdvance;
             @Advance.performed -= instance.OnAdvance;
             @Advance.canceled -= instance.OnAdvance;
+            @RotateInventory.started -= instance.OnRotateInventory;
+            @RotateInventory.performed -= instance.OnRotateInventory;
+            @RotateInventory.canceled -= instance.OnRotateInventory;
+            @DropInventory.started -= instance.OnDropInventory;
+            @DropInventory.performed -= instance.OnDropInventory;
+            @DropInventory.canceled -= instance.OnDropInventory;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -2103,6 +2194,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnAdvance(InputAction.CallbackContext context);
+        void OnRotateInventory(InputAction.CallbackContext context);
+        void OnDropInventory(InputAction.CallbackContext context);
     }
     public interface IBoatActions
     {

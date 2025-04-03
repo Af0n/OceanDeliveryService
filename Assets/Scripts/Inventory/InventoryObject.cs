@@ -11,16 +11,21 @@ public class InventoryObject : ScriptableObject
         Horizontal, Vertical, 
     }
 
-    public string nameString;
     public GameObject worldPrefab;
     public GameObject uiPrefab;
     public int height;
     public int width;
+    public bool dontRotate;
     private Dir dir;
 
     public int GetRotationAngle(Dir dir)
     {
-        return dir == Dir.Horizontal ? 0 : -90;
+        if(dontRotate) {
+            return 0; // prevents 2x2 objects from rotating bc they don't need to and it screws up the visual
+        }
+        else {
+            return dir == Dir.Horizontal ? 0 : -90;
+        }
     }
 
     public void SetDir(Dir dir)

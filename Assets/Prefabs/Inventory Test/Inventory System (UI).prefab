@@ -216,12 +216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77cfa171695090469161eff57000583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryObject: {fileID: 11400000, guid: 2571549ff3fab414fb9fbd3816e7e3b7, type: 2}
   panel: {fileID: 386865006558384336}
   cellPrefab: {fileID: 6746247221314836654, guid: 8383bd6027ff8574f9cfa3aa5cb94ce5, type: 3}
   gridWidth: 5
   gridHeight: 5
   tempCell: {fileID: 8220345165330974420}
+  objDropPoint: {fileID: 0}
 --- !u!1001 &3426100519537008250
 PrefabInstance:
   m_ObjectHideFlags: 0
