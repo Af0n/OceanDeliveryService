@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 15_Hard_Drive
   m_EditorClassIdentifier: 
   nameString: Hard Drive
-  prefab: {fileID: 0}
+  worldPrefab: {fileID: 4992968199569628148, guid: 001fa2cb51eb66840b9ae5750b02b11d, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: 97fa9211b3881234db55ced2da955f12, type: 3}
   height: 2
   width: 2

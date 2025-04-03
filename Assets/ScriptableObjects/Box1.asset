@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Box1
   m_EditorClassIdentifier: 
   nameString: Box1
-  prefab: {fileID: 669378938364025140, guid: 96d9743b20b5b92469356aad26c67fe2, type: 3}
+  worldPrefab: {fileID: 7121847189420554255, guid: 269f6899e12199f439e855bbefadd20c, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: 96d9743b20b5b92469356aad26c67fe2, type: 3}
   height: 1
   width: 1

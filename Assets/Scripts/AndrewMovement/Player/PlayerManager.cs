@@ -19,6 +19,7 @@ public class PlayerManager : MonoBehaviour
     public WaterDeath waterDeath;
     public CharacterController controller;
     public PlayerUpgradeManager upgradeManager;
+    public PauseUI pauseUI;
     public Image Reticle;
 
     public bool IsOnBoat;
@@ -34,7 +35,6 @@ public class PlayerManager : MonoBehaviour
     public UpdateThirdPersonInteractUI TPIUpdater;
     public CinemachineCamera cinemachineCamera;
     public Transform Cam;
-    public SwitchCam cameraSwitch;
 
     private void Awake()
     {
@@ -44,7 +44,6 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
-        //cameraSwitch = GetComponent<SwitchCam>();
 
         ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
@@ -223,8 +222,11 @@ public class PlayerManager : MonoBehaviour
                 break;
             case "DeliveryZone":
                 Debug.Log("Entered Delivery Zone");
-                SetLook(false);
-                cameraSwitch.ChangeCamera();
+                IsInDeliveryZone = true;
+                if (pauseUI != null){
+                    pauseUI.Pause();
+                    pauseUI.SetActiveMenu(2); 
+                }
                 break;
         }
     }
@@ -238,8 +240,11 @@ public class PlayerManager : MonoBehaviour
                 break;
             case "DeliveryZone":
                 Debug.Log("Exited Delivery Zone");
-                SetLook(true);
-                cameraSwitch.ChangeCamera();
+                IsInDeliveryZone = false;
+                if (pauseUI != null){
+                    pauseUI.Pause(); 
+                    pauseUI.SetActiveMenu(pauseUI.systemIndex);
+                }
                 break;
         }
     }

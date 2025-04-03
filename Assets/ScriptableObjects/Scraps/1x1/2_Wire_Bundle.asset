@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 2_Wire_Bundle
   m_EditorClassIdentifier: 
   nameString: Bundle of Wires
-  prefab: {fileID: 0}
+  worldPrefab: {fileID: 403759014374795759, guid: d19ce518f635c7c449b9ace6468ddf7d, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: 96d9743b20b5b92469356aad26c67fe2, type: 3}
   height: 1
   width: 1
