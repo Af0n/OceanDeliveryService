@@ -13,13 +13,13 @@ namespace Water
         {
             if (other.CompareTag("Player"))
             {
-                //Debug.Log("Entered Water Volume!");
+                Debug.Log("Entered Water Volume!");
                 OnUnderWaterStateChange?.Invoke(true);
             }
 
             if (other.CompareTag("PlayerHead"))
             {
-                //Debug.Log("Head Submerged!");
+                Debug.Log("Head Submerged!");
                 OnUnderWaterSurfaceChange?.Invoke(true);
             }
         }
@@ -29,13 +29,13 @@ namespace Water
         {
             if (other.CompareTag("PlayerHead"))
             {
-                //Debug.Log("Head Surfaced!");
+                Debug.Log("Head Surfaced!");
                 OnUnderWaterSurfaceChange?.Invoke(false);
             }
 
             if (other.CompareTag("Player"))
             {
-                //Debug.Log("Exited Water Volume");
+                Debug.Log("Exited Water Volume");
                 OnUnderWaterStateChange?.Invoke(false);
             }
         }
