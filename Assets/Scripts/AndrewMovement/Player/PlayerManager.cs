@@ -129,50 +129,48 @@ public class PlayerManager : MonoBehaviour
         Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
         ThirdPersonDisplay.gameObject.SetActive(true);
     }
-
-    /*
-    private void FixedUpdate()
-    {
-        if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
-        {
-            if(upgradeManager.swimAbilityUpgrade)
-            {
-                movement.isSwimming = false;
-                IsUnderwater = false;
-                if (!movement.isFloating)
-                {
-                    movement.audioManager.Emerge();
-                }
-                movement.isFloating = true;
-                playerFloater.SetActive(true);
-            }
-        } 
-        else if (playerFloater.transform.position.y < onSurfaceDepth)
-        {
-            if(upgradeManager.swimAbilityUpgrade)
-            {
-                movement.isSwimming = true;
-                IsUnderwater = true;
-                movement.isFloating = false;
-                playerFloater.SetActive(false);
-            }
-        }
-        else if (playerFloater.transform.position.y > 0)
-        {
-            movement.isSwimming = false;
-            IsUnderwater = false;
-            movement.isFloating = false;
-            playerFloater.SetActive(false);
-        }
-
-        if(IsUnderwater){
-            waterDeath.StartDrowning();
-        }else{
-            waterDeath.StopDrowning();
-        }
-    }
     
-    */
+     // private void FixedUpdate()
+     // {
+     //     if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
+     //     {
+     //         if(upgradeManager.swimAbilityUpgrade)
+     //         {
+     //             movement.isSwimming = false;
+     //             IsUnderwater = false;
+     //             if (!movement.isFloating)
+     //             {
+     //                 movement.audioManager.Emerge();
+     //             }
+     //             movement.isFloating = true;
+     //             playerFloater.SetActive(true);
+     //         }
+     //     } 
+     //     else if (playerFloater.transform.position.y < onSurfaceDepth)
+     //     {
+     //         if(upgradeManager.swimAbilityUpgrade)
+     //         {
+     //             movement.isSwimming = true;
+     //             IsUnderwater = true;
+     //             movement.isFloating = false;
+     //             playerFloater.SetActive(false);
+     //         }
+     //     }
+     //     else if (playerFloater.transform.position.y > 0)
+     //     {
+     //         movement.isSwimming = false;
+     //         IsUnderwater = false;
+     //         movement.isFloating = false;
+     //         playerFloater.SetActive(false);
+     //     }
+     //
+     //     if(IsUnderwater){
+     //         waterDeath.StartDrowning();
+     //     }else{
+     //         waterDeath.StopDrowning();
+     //     }
+     // }
+     
 
     public void SetMovement(bool b)
     {
