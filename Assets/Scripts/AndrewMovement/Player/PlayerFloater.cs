@@ -21,26 +21,20 @@ public class PlayerFloater : MonoBehaviour
 
     void FixedUpdate()
     {
-        float waveHeight = depthBeforeSubmerged; // [TODO] replace with a grab on the mesh height + 15
-        Vector3 gravity = Physics.gravity;
-        Vector3 move = Vector3.zero;
-
+        velocity += Physics.gravity / floaterCount * Time.deltaTime;
+        float waveHeight = WaveManager.instance.GetWaveHeight(transform.position.x);
+    
         if (transform.position.y < waveHeight)
         {
             float displacementMultiplier = Mathf.Clamp01((waveHeight - transform.position.y) / depthBeforeSubmerged) * displacementAmount;
+            velocity.y += Mathf.Abs(Physics.gravity.y) * displacementMultiplier * Time.deltaTime;
         
-            velocity.y += Mathf.Abs(gravity.y) * displacementMultiplier * Time.fixedDeltaTime;
-
-            velocity *= Mathf.Pow(waterDrag, Time.fixedDeltaTime);
+            velocity *= (1 - waterDrag * Time.deltaTime);
+            angularVelocity *= (1 - waterAngularDrag * Time.deltaTime);
         }
-        else
-        {
-            float diff = 0.1f * (transform.position.y - waveHeight);
-            velocity += (gravity / floaterCount) * diff * Time.fixedDeltaTime;
-        }
-
-        // Apply movement
-        characterController.Move(velocity * Time.fixedDeltaTime);
+    
+        characterController.Move(velocity * Time.deltaTime);
+        transform.Rotate(angularVelocity * Time.deltaTime);
     }
 
 }

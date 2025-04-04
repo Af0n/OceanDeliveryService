@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class AndrewMovement : MonoBehaviour
 {
     public AudioManager audioManager;
-    // public GameObject floater;
 
     [Header("Movement Properties")]
     public float Speed;
@@ -16,7 +15,6 @@ public class AndrewMovement : MonoBehaviour
     public bool isFloating;
     public float verticalWaterSpeed;
     private bool isOnLand;
-    private float onSurfaceDepth;
 
     [Header("Gravity Properties")]
     public bool UsePhysicsGravity;
@@ -49,9 +47,6 @@ public class AndrewMovement : MonoBehaviour
     private Camera MainCamera;
     private bool raisingInWater;
     private bool loweringInWater;
-    
-    private Animator animator;
-    private float _animationBlend;
 
     private void Awake()
     {
@@ -60,7 +55,6 @@ public class AndrewMovement : MonoBehaviour
 
         manager = GetComponent<PlayerManager>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
-        animator = GetComponent<Animator>();
 
         if (audioManager == null)
         {
@@ -84,25 +78,12 @@ public class AndrewMovement : MonoBehaviour
         // checking for ground
         bool wasGroundedLastFrame = wasGrounded;
         isGrounded = Physics.CheckSphere(GroundCheck.position, GroundCheckRadius, standableMask);
-        animator.SetBool("Grounded", isGrounded);
-        animator.SetBool("Jump", !isGrounded);
-        animator.SetBool("FreeFall", !isGrounded);
 
         if (!wasGroundedLastFrame && isGrounded)
         {
             audioManager.Landing();
         }
         wasGrounded = isGrounded;
-
-        if (isSwimming || isFloating)
-        {
-            animator.SetBool("Water", true);
-        }
-        else
-        {
-            animator.SetBool("Water", false);
-        }
-        
 
         if (isSwimming)
         {
@@ -122,11 +103,11 @@ public class AndrewMovement : MonoBehaviour
         {
             Move();
         }
-        
 
         Gravity();
 
     }
+
     private void BoatMove()
     {
         Vector2 readMove = move.ReadValue<Vector2>();
@@ -163,16 +144,13 @@ public class AndrewMovement : MonoBehaviour
         deck.deckTarget.position += moveVec;
         moveVec = deck.deckTarget.position - transform.position;
         moveVec.y = 0;
-            
-        animator.SetFloat("Speed", readMove.magnitude * Speed);
-        animator.SetFloat("MotionSpeed", 1);
-        
         manager.Move(moveVec);
     }
 
     private void Move()
     {
         Vector2 readMove = move.ReadValue<Vector2>();
+
         Vector3 moveVec;
         if (manager.IsThirdPerson)
         {
@@ -197,8 +175,7 @@ public class AndrewMovement : MonoBehaviour
             }
             WaterVertical();
             moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
-            animator.SetFloat("Speed", readMove.magnitude * upgradeManager.swimSpeedUpgrade);
-            animator.SetFloat("MotionSpeed", 1);
+
             manager.Move(moveVec);
         }
         else if (isFloating)
@@ -213,8 +190,7 @@ public class AndrewMovement : MonoBehaviour
             }
             WaterVertical();
             moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
-            animator.SetFloat("Speed", readMove.magnitude * upgradeManager.swimSpeedUpgrade);
-            animator.SetFloat("MotionSpeed", 1);
+
             manager.Move(moveVec);
         }
         else
@@ -237,8 +213,6 @@ public class AndrewMovement : MonoBehaviour
                 audioManager.StopWalking(false);
             }
 
-            animator.SetFloat("Speed", readMove.magnitude * Speed);
-            animator.SetFloat("MotionSpeed", 1);
             manager.Move(moveVec);
         }
     }
@@ -282,7 +256,6 @@ public class AndrewMovement : MonoBehaviour
         yVelocity = Mathf.Sqrt(JumpHeight * 2 * GravityForce);
         checkForGround = false;
         audioManager.Jump();
-        animator.SetBool("Jump", true);
         StartCoroutine(nameof(JumpGracePeriod));
     }
     private void WaterVertical()
@@ -363,15 +336,5 @@ public class AndrewMovement : MonoBehaviour
                 deck.SetPos(transform.position);
                 break;
         }
-    }
-    
-    private void OnFootstep(AnimationEvent animationEvent)
-    {
-        //Leave this here to avoid errors
-    }
-
-    private void OnLand(AnimationEvent animationEvent)
-    {
-        //Leave this here to avoid errors
     }
 }
