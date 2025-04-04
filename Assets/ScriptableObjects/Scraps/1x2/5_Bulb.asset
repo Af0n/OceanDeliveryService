@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 5_Bulb
   m_EditorClassIdentifier: 
   nameString: Bulb
-  prefab: {fileID: 0}
+  worldPrefab: {fileID: 1013772121114145654, guid: f14cc4430a646424bb77b7ebe1513625, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: a42f985601bca3f4ba5995d713a37ce7, type: 3}
   height: 1
   width: 2

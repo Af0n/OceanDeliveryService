@@ -22,6 +22,8 @@ public class PauseUI : MonoBehaviour
     public int systemIndex;
     public int optionsIndex;
 
+    public InventorySystem inventory;
+
     private void Awake()
     {
         // input system boilerplate
@@ -54,6 +56,9 @@ public class PauseUI : MonoBehaviour
 
         // actually pause/unpause happens here
 
+        // check to make sure no items are being moved
+        inventory.CheckIfMoving();
+
         isPaused = !isPaused;
         PauseMenu.gameObject.SetActive(isPaused);
 
@@ -62,6 +67,12 @@ public class PauseUI : MonoBehaviour
             StopCoroutine(nameof(ResetActiveWindow));
             playerMan.SetAll(false);
             Cursor.lockState = CursorLockMode.None;
+
+            // to bring up inventory 
+            if(activeMenu == 2) {
+                inventory.DisplayInventory(true);
+            }
+
             return;
         }
 
@@ -69,6 +80,8 @@ public class PauseUI : MonoBehaviour
         StartCoroutine(nameof(ResetActiveWindow));
         playerMan.SetAll(true);
         Cursor.lockState = CursorLockMode.Locked;
+
+        inventory.DisplayInventory(false);
     }
 
     public void DoPause(InputAction.CallbackContext context)
@@ -94,6 +107,9 @@ public class PauseUI : MonoBehaviour
     {
         index = Mathf.Clamp(index, 0, ScreenPanels.childCount - 1);
 
+        // check to make sure no items are being moved
+        inventory.CheckIfMoving();
+
         // disable currently active menu
         ScreenPanels.GetChild(activeMenu).gameObject.SetActive(false);
 
@@ -102,5 +118,13 @@ public class PauseUI : MonoBehaviour
         ScreenPanels.GetChild(activeMenu).gameObject.SetActive(true);
 
         Debug.Log("Setting active menu to " + activeMenu);
+
+        // to bring up inventory 
+        if(activeMenu == 2 && isPaused) {
+            inventory.DisplayInventory(true);
+        }
+        else {
+            inventory.DisplayInventory(false);
+        }
     }
 }
