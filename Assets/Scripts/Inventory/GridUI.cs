@@ -116,17 +116,19 @@ public class GridUI
 
         if (cellPos.x + itemHeight > rows || cellPos.y + itemWidth > cols) {
             // Debug.Log("cannot place out of bounds");
-            return; // Out of bounds
+            return; // out of bounds
         }
 
-        // Mark cells as occupied by the item
+        // mark cells as occupied 
         for (int x = 0; x < itemHeight; x++) {
             for (int y = 0; y < itemWidth; y++) {
                 int gridX = cellPos.x + x; 
                 int gridY = cellPos.y + y;
                 GameObject cell = gridArray[gridX, gridY];
                 
-                cell.GetComponent<Cell>().SetAvailable(false);
+                Cell cellComp = cell.GetComponent<Cell>();
+                cellComp.SetAvailable(false);
+                cellComp.SetRoot(selectedCell.transform); // set reference to selected cell in other occupied cells
             }
         }
 
@@ -144,16 +146,24 @@ public class GridUI
             itemWidth = temp;
         }
 
+        // set selectedCell to root cell for following logic
+        Cell cellComp = selectedCell.GetComponent<Cell>();
+        Transform root = cellComp.GetRoot();
+        if(root != null) {
+            selectedCell = root.gameObject;
+        }
         Vector2Int cellPos = GetCellPosition(selectedCell);
 
-        // Mark cells as occupied by the item
+        // mark cells as unoccupied
         for (int x = 0; x < itemHeight; x++) {
             for (int y = 0; y < itemWidth; y++) {
                 int gridX = cellPos.x + x; 
                 int gridY = cellPos.y + y;
                 GameObject cell = gridArray[gridX, gridY];
                 
-                cell.GetComponent<Cell>().SetAvailable(true);
+                cellComp = cell.GetComponent<Cell>();
+                cellComp.SetAvailable(true);
+                cellComp.SetRoot(null); // reset reference when object moved
             }
         }
     }

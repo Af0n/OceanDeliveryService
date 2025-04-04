@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class InventorySystem : MonoBehaviour
 {
-    public InventoryObject inventoryObject;
+    private InventoryObject inventoryObject;
 
     private InventoryObject.Dir dir = InventoryObject.Dir.Horizontal;
 
@@ -15,15 +16,53 @@ public class InventorySystem : MonoBehaviour
 
     public int gridWidth;
     public int gridHeight;
-    public float cellSize; 
 
     private GameObject objectToMove;
+    public GameObject tempCell; // for holding objectToMove when applicable
+
+    public Transform objDropPoint;
+
+    private CanvasGroup canvasGroup;
+    private Canvas canvas;
+    private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
+
+    // input system stuff
+    private InputSystem_Actions actions;
+    private InputAction rotate, drop; 
 
     void Awake()
     {
+        actions = new InputSystem_Actions();
         objectToMove = null;
-
         GenerateInventory();
+    }
+
+    void Start()
+    {
+        canvas = GetComponent<Canvas>();
+
+        // make sure inventory is created but uninteractable
+        canvasGroup = GetComponent<CanvasGroup>();
+        DisplayInventory(false);
+    }
+
+    public void DisplayInventory(bool toDisplay)
+    {
+        // here bc call in PauseUI runs before canvasGroup is assigned
+        if(canvasGroup == null) {
+            return;
+        }
+
+        if(toDisplay) {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            isDisplayed = true;
+        }
+        else {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            isDisplayed = false;
+        }
     }
 
     void GenerateInventory()
@@ -46,39 +85,29 @@ public class InventorySystem : MonoBehaviour
         // Debug.Log(slot.name + " clicked");
 
         Cell cellComp = slot.GetComponent<Cell>();
-        Transform slotTransform = slot.transform;
         
+        // pick up an inventory object
         if(!cellComp.GetAvailable() && objectToMove == null) {
-            if(slotTransform.childCount > 0) {
-                objectToMove = slotTransform.GetChild(0).gameObject;
-                objectToMove.transform.SetParent(null);
-                // Debug.Log("moving " + objectToMove.name);
-                
-                // TODO: don't let objectToMove disappear when moving it 
-                // (could try setting its parent to the mouse or an object that follows the mouse)
+            Transform rootCell = cellComp.GetRoot();
 
-                PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
-                dir = placedObject.GetDir();
-                inventoryObject = placedObject.GetInventoryObject();
-                
-                gridUI.RemoveItem(inventoryObject, dir, slot);
+            PlacedObject placedObject = rootCell.GetComponentInChildren<PlacedObject>();
+            dir = placedObject.GetDir();
+            inventoryObject = placedObject.GetInventoryObject();
 
-                return;
-            }
-            else {
-                // TODO: figure out how to select the object anyway??
-                Debug.Log("item is child of different slot");
-                return;
-            }
+            objectToMove = placedObject.gameObject;
+            objectToMove.transform.SetParent(tempCell.transform);
+            objectToMove.transform.localPosition = Vector3.zero;
+            
+            gridUI.RemoveItem(inventoryObject, dir, slot);
+
+            return;
         }
 
+        // place an inventory object
         if(objectToMove != null) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
-                objectToMove.transform.SetParent(slotTransform);
+                objectToMove.transform.SetParent(slot.transform);
                 objectToMove.transform.localPosition = Vector3.zero;
-
-                float rotation = inventoryObject.GetRotationAngle(dir);
-                objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
                 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
 
@@ -87,34 +116,40 @@ public class InventorySystem : MonoBehaviour
                 objectToMove = null; // reset reference
             }
         }
-
-        // if(cellComp.GetAvailable()) {
-        //     // if true then slot is empty
-        //     Debug.Log("empty slot");
-        // }
     }
 
-
-    // change all logic past here
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R)) {
-            dir = InventoryObject.GetNextDir(dir);
-            Debug.Log("current dir: " + dir);
-        }
+        // so objectToMove follows the mouse when selected
+        if(objectToMove != null) {
+            Vector2 pos;
+            RectTransform inventoryPanelRect = panel.GetComponent<RectTransform>();
 
-        if(Input.GetKeyDown(KeyCode.Q)) {
-            AddObjectToInventory(inventoryObject);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                (RectTransform)canvas.transform,
+                Input.mousePosition,
+                canvas.worldCamera,
+                out pos
+            );
+
+            Vector2 minPosition = inventoryPanelRect.rect.min + (Vector2)objectToMove.transform.localScale * 0.5f;
+            Vector2 maxPosition = inventoryPanelRect.rect.max - (Vector2)objectToMove.transform.localScale * 0.5f;
+
+            // clamp position to inventory menu (makes it look nicer)
+            pos.x = Mathf.Clamp(pos.x, minPosition.x, maxPosition.x);
+            pos.y = Mathf.Clamp(pos.y, minPosition.y, maxPosition.y);
+
+            tempCell.transform.position = canvas.transform.TransformPoint(pos);
         }
     }
 
-    public void AddObjectToInventory(InventoryObject inventoryObject) 
+    public bool AddObjectToInventory(InventoryObject inventoryObject) 
     {
         foreach(GameObject slot in inventorySlots) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 // Debug.Log(slot + " empty");
 
-                GameObject newItem = Instantiate(inventoryObject.prefab.gameObject, slot.transform);
+                GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
                 float rotation = inventoryObject.GetRotationAngle(dir);
@@ -126,12 +161,69 @@ public class InventorySystem : MonoBehaviour
                 gridUI.PlaceItem(inventoryObject, dir, slot);
                 // Debug.Log("setting slot unavailable: " + slot.name);
 
-                return;
+                return true;
             }
             else {
                 Debug.Log(slot + " taken");
             }
         }
+
+        return false;
+    }
+
+    private void Rotate(InputAction.CallbackContext context)
+    {
+        if(objectToMove != null && isDisplayed) {
+            dir = InventoryObject.GetNextDir(dir);
+            float rotation = inventoryObject.GetRotationAngle(dir);
+            objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+        }
+    }
+
+    private void Drop(InputAction.CallbackContext context)
+    {
+        if(objectToMove != null && isDisplayed) {
+            PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
+            InventoryObject newObject = placedObject.GetInventoryObject();
+            Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+
+            // reset inventory movement stuff
+            ResetObjectToMove();
+        }
+    }
+
+    // will place objectToMove back in first available pos in inventory (for pause menu logic)
+    public void CheckIfMoving()
+    {
+        if(objectToMove != null) {
+            AddObjectToInventory(inventoryObject);
+            ResetObjectToMove();
+        }
+    }
+
+    private void ResetObjectToMove()
+    {
+        Destroy(objectToMove);
+        objectToMove = null; 
+    }
+
+    void OnEnable()
+    {
+        // input system boilerplate
+        rotate = actions.UI.RotateInventory;
+        rotate.Enable();
+        rotate.performed += Rotate;
+
+        drop = actions.UI.DropInventory;
+        drop.Enable();
+        drop.performed += Drop;
+    }
+
+    void OnDisable()
+    {
+        // input system boilerplate
+        rotate.Disable(); // null reference here
+        drop.Disable();
     }
 
     // for placing objects at specific inventory positions instead of next available
@@ -164,10 +256,6 @@ public class InventorySystem : MonoBehaviour
     //     }
     // }
 
-    public float GetCellSize()
-    {
-        return cellSize;
-    }
 }
 
 
