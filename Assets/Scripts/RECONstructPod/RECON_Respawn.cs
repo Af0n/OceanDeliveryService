@@ -47,7 +47,7 @@ public class RECON_Respawn : Interactable
         }
 
         if(StartSpawn){
-            isRespawn = true;
+            Interact();
         }
 
         if(isRespawn){
