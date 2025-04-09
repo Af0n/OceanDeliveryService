@@ -36,7 +36,7 @@ MonoBehaviour:
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: 
-    Text: Their greed sickens you.
+    Text: His greed sickens you.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0

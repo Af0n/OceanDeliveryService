@@ -21,8 +21,15 @@ MonoBehaviour:
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
+  - CharName: '"'
+    Text: If I was a robot... zzz... I could use this... zzz...
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
   - CharName: 
-    Text: You leave them to their endless slumber.
+    Text: You leave him to his endless slumber.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0

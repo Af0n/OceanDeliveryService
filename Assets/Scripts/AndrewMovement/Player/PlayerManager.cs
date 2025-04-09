@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
         if (isUnderwater)
         {
             // Only start drowning if the head is submerged too
-            if (movement.isSwimming)
+            if (!movement.isSwimming)
             {
                 waterDeath.StartDrowning();
             }
