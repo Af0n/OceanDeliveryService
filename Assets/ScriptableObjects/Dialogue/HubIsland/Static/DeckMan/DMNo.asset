@@ -110,16 +110,15 @@ MonoBehaviour:
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Deck Man
-    Text: do NAWT jump off the boat without the anchor being down. this is the only
-      boat in the WHOLE WORLD and we don't have the technology to get it if it drifts
-      away
+    Text: do NAWT jump off the boat without the anchor  down. this the only boat
+      in the WHOLE WORLD and we aint got the technology to get it if it drifts away
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Deck Man
-    Text: the death of maritime culture will be on your hands
+    Text: the death of maritime culture will be on ur hands
     HasMenu: 0
     MenuOptions: []
     DoesJump: 1
