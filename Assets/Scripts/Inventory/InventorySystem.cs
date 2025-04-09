@@ -61,11 +61,13 @@ public class InventorySystem : MonoBehaviour
         if(toDisplay) {
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
             isDisplayed = true;
         }
         else {
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
             isDisplayed = false;
         }
     }
