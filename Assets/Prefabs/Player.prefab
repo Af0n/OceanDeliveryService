@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3382880206538540792
 Transform:
   m_ObjectHideFlags: 0
@@ -683,7 +683,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927450679278593590}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.012796381, y: 0.76808673, z: -0.015356582, w: -0.64003384}
+  m_LocalRotation: {x: -0.012796379, y: 0.76808685, z: -0.015356582, w: -0.6400337}
   m_LocalPosition: {x: 2.4589818, y: 2.100006, z: 0.45096382}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1287,6 +1287,7 @@ MonoBehaviour:
   TPIUpdater: {fileID: 1193296776083735308}
   cinemachineCamera: {fileID: 8716754708579133126}
   Cam: {fileID: 4695198187370569555}
+  BodyVisual: {fileID: 381344833131612701}
 --- !u!114 &7783446691075827928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1398,7 +1399,7 @@ MonoBehaviour:
   audioManager: {fileID: 6797379618455077983}
   animator: {fileID: 0}
   Speed: 5
-  JumpHeight: 1
+  JumpHeight: 3
   isSwimming: 0
   isFloating: 0
   verticalWaterSpeed: 3
@@ -3423,7 +3424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7207059378534130328}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.012796375, y: 0.7680868, z: -0.015356576, w: -0.64003384}
+  m_LocalRotation: {x: -0.012796376, y: 0.7680869, z: -0.015356582, w: -0.64003366}
   m_LocalPosition: {x: 2.4589818, y: 2.100006, z: 0.45096382}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
