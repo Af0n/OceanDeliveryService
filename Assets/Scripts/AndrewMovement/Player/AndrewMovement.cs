@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class AndrewMovement : MonoBehaviour
 {
     public AudioManager audioManager;
+    public Animator animator;
 
     [Header("Movement Properties")]
     public float Speed;
@@ -55,6 +56,7 @@ public class AndrewMovement : MonoBehaviour
 
         manager = GetComponent<PlayerManager>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
+        animator = GetComponent<Animator>();
 
         if (audioManager == null)
         {
@@ -78,12 +80,23 @@ public class AndrewMovement : MonoBehaviour
         // checking for ground
         bool wasGroundedLastFrame = wasGrounded;
         isGrounded = Physics.CheckSphere(GroundCheck.position, GroundCheckRadius, standableMask);
+        animator.SetBool("Grounded", isGrounded);
+        animator.SetBool("Jump", !isGrounded);
 
         if (!wasGroundedLastFrame && isGrounded)
         {
             audioManager.Landing();
         }
         wasGrounded = isGrounded;
+
+        if (isSwimming || isFloating)
+        {
+            animator.SetBool("Water", true);
+        }
+        else
+        {
+            animator.SetBool("Water", false);
+        }
 
         if (isSwimming)
         {
@@ -144,13 +157,16 @@ public class AndrewMovement : MonoBehaviour
         deck.deckTarget.position += moveVec;
         moveVec = deck.deckTarget.position - transform.position;
         moveVec.y = 0;
+        animator.SetFloat("Speed", readMove.magnitude * Speed);
+        animator.SetFloat("MotionSpeed", 1);
         manager.Move(moveVec);
     }
 
     private void Move()
     {
         Vector2 readMove = move.ReadValue<Vector2>();
-
+        animator.SetFloat("Speed", readMove.magnitude * Speed);
+        animator.SetFloat("MotionSpeed", 1);
         Vector3 moveVec;
         if (manager.IsThirdPerson)
         {
@@ -256,6 +272,7 @@ public class AndrewMovement : MonoBehaviour
         yVelocity = Mathf.Sqrt(JumpHeight * 2 * GravityForce);
         checkForGround = false;
         audioManager.Jump();
+        animator.SetBool("Jump", true);
         StartCoroutine(nameof(JumpGracePeriod));
     }
     private void WaterVertical()
@@ -336,5 +353,15 @@ public class AndrewMovement : MonoBehaviour
                 deck.SetPos(transform.position);
                 break;
         }
+    }
+    
+    private void OnFootstep(AnimationEvent animationEvent)
+    {
+        //Leave here so the errors are not happening
+    }
+
+    private void OnLand(AnimationEvent animationEvent)
+    {
+        //Leave here so the errors are not happening
     }
 }
