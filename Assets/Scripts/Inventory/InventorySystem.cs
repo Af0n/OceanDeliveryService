@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class InventorySystem : MonoBehaviour
 
     private GridUI gridUI;
     public GameObject panel;
+    public GameObject DZPanel; 
     public GameObject cellPrefab;
     private List<GameObject> inventorySlots = new List<GameObject>(); // for storing UI elements 
 
@@ -24,6 +26,9 @@ public class InventorySystem : MonoBehaviour
 
     private CanvasGroup canvasGroup;
     private Canvas canvas;
+    private TextMeshProUGUI title; // Declare title as a field
+    private TextMeshProUGUI description; // Declare description as a field
+    private TextMeshProUGUI questName; // Declare questName as a field
     private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
 
     // input system stuff
@@ -78,6 +83,9 @@ public class InventorySystem : MonoBehaviour
             // Add an onClick listener to each slot
             slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
         }
+    }
+    public void UpdateDZPanelState(bool isInDeliveryZone, bool isOnInventoryTab){
+       DZPanel.SetActive(isInDeliveryZone && isOnInventoryTab);
     }
 
     void OnInventorySlotClick(GameObject slot)

@@ -21,7 +21,6 @@ public class PlayerManager : MonoBehaviour
     public PlayerUpgradeManager upgradeManager;
     public PauseUI pauseUI;
     public Image Reticle;
-
     public bool IsOnBoat;
     public bool IsInDeliveryZone;
     public bool IsUnderwater;
@@ -44,6 +43,7 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
+        
 
         ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
@@ -223,10 +223,8 @@ public class PlayerManager : MonoBehaviour
             case "DeliveryZone":
                 Debug.Log("Entered Delivery Zone");
                 IsInDeliveryZone = true;
-                if (pauseUI != null){
-                    pauseUI.Pause();
-                    pauseUI.SetActiveMenu(2); 
-                }
+                pauseUI.Pause();
+                pauseUI.SetActiveMenu(2); 
                 break;
         }
     }
@@ -241,10 +239,6 @@ public class PlayerManager : MonoBehaviour
             case "DeliveryZone":
                 Debug.Log("Exited Delivery Zone");
                 IsInDeliveryZone = false;
-                if (pauseUI != null){
-                    pauseUI.Pause(); 
-                    pauseUI.SetActiveMenu(pauseUI.systemIndex);
-                }
                 break;
         }
     }
@@ -292,6 +286,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         PlayerFloater.OnSurfacedPlayer += ToggleSurface;
+        pauseUI = GetComponentInChildren<PauseUI>();
     }
 
     void OnDestroy()
