@@ -17,6 +17,8 @@ public class ATMOS_Terminal : Interactable
     private InputSystem_Actions actions;
     private InputAction pause;
 
+    public Flags DeckLadyFlags;
+
     private void Awake()
     {
         // input system boilerplate
@@ -63,6 +65,7 @@ public class ATMOS_Terminal : Interactable
     // i had to do it this way for it to be recognized in the unity event for buttons
     public void SetWind(int windCode)
     {
+        DeckLadyFlags.SetFlag("UsedATMOS", true);
         WindManager.SetWind(windCode);
     }
 

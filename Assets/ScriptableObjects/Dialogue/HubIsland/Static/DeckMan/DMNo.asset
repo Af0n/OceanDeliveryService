@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: DMNo
+  m_EditorClassIdentifier: 
+  Label: Nop
+  Dialogues:
+  - CharName: Deck Man
+    Text: well then buckle up. ur gonna go through a crash course
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: u see that wheel? thats the most important bit
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: when you wanna sail, touch it with them fingers and you'll be set
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: u bring up the anchor with that [Space] button right here
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: be careful because then you'll be moving! press it again to put it back
+      and stop
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: those [Q] and [E] levers turn the sail. u want the wind to fill them it
+      up ya hear!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: 'speaking of sails, the [W] and [S] levers lower and raise the sail. remember:
+      W for walking, S for...'
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: uh...
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: skrimpin'
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: Anyways.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: theres sum more levers. [A] and [D] turn the wheel. once u turn it, it
+      will stayed turneded.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: thats about it from me
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: oh, but one more thing
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: do NAWT jump off the boat without the anchor being down. this is the only
+      boat in the WHOLE WORLD and we don't have the technology to get it if it drifts
+      away
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: the death of maritime culture will be on your hands
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 1
+    JumpChain: {fileID: 11400000, guid: 951b4a21dbf21194ab02602becc80ee3, type: 2}
+    JumpIndex: 0

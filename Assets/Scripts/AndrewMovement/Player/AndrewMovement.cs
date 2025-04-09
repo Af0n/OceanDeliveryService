@@ -326,7 +326,10 @@ public class AndrewMovement : MonoBehaviour
         jump.Enable();
         jump.performed += Jump;
 
-        manager.enabled = true;
+        if(manager.controller == null){
+            return;
+        }
+        manager.controller.enabled = true;
     }
 
     void OnDisable()
@@ -335,7 +338,10 @@ public class AndrewMovement : MonoBehaviour
         move.Disable();
         jump.Disable();
 
-        manager.enabled = false;
+        if(manager.controller == null){
+            return;
+        }
+        manager.controller.enabled = false;
     }
 
     private void OnDrawGizmosSelected()
