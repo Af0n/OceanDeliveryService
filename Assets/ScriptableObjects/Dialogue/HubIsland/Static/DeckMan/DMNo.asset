@@ -96,6 +96,14 @@ MonoBehaviour:
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Deck Man
+    Text: when u wanna hop off the wheel, just kick that [SHIFT] footpedal and you'll
+      pop right off
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 1
+    JumpChain: {fileID: 11400000, guid: 951b4a21dbf21194ab02602becc80ee3, type: 2}
+    JumpIndex: 0
+  - CharName: Deck Man
     Text: thats about it from me
     HasMenu: 0
     MenuOptions: []
