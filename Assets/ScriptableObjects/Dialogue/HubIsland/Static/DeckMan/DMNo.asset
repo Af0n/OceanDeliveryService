@@ -100,7 +100,7 @@ MonoBehaviour:
       pop right off
     HasMenu: 0
     MenuOptions: []
-    DoesJump: 1
+    DoesJump: 0
     JumpChain: {fileID: 11400000, guid: 951b4a21dbf21194ab02602becc80ee3, type: 2}
     JumpIndex: 0
   - CharName: Deck Man

@@ -5,9 +5,15 @@ public class Decklady : Interactable
     public Flags flags;
     public DialogueChain IntroChain, WoahChain, ByeChain;
 
+    private void Awake()
+    {
+        flags.SetAll(false);
+    }
+
     public override void Interact()
     {
-        switch(flags.CheckFlag("UsedATMOS")){
+        switch (flags.CheckFlag("UsedATMOS"))
+        {
             case 0:
                 DialogueManager.instance.StartDialogue(IntroChain);
                 return;
@@ -19,9 +25,10 @@ public class Decklady : Interactable
                 break;
         }
 
-        switch(flags.CheckFlag("HasWoahed")){
+        switch (flags.CheckFlag("HasWoahed"))
+        {
             case 0:
-            flags.SetFlag("HasWoahed", true);
+                flags.SetFlag("HasWoahed", true);
                 DialogueManager.instance.StartDialogue(WoahChain);
                 return;
             case 1:
