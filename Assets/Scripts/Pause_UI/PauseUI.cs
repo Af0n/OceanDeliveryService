@@ -71,6 +71,9 @@ public class PauseUI : MonoBehaviour
             // to bring up inventory 
             if(activeMenu == 2) {
                 inventory.DisplayInventory(true);
+                if(playerMan.IsInDeliveryZone) {
+                    inventory.DZPanel.SetActive(true);
+                }
             }
 
             return;
@@ -80,7 +83,7 @@ public class PauseUI : MonoBehaviour
         StartCoroutine(nameof(ResetActiveWindow));
         playerMan.SetAll(true);
         Cursor.lockState = CursorLockMode.Locked;
-
+        inventory.DZPanel.SetActive(false);
         inventory.DisplayInventory(false);
     }
 

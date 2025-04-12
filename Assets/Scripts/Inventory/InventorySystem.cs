@@ -26,9 +26,8 @@ public class InventorySystem : MonoBehaviour
 
     private CanvasGroup canvasGroup;
     private Canvas canvas;
-    private TextMeshProUGUI title; // Declare title as a field
-    private TextMeshProUGUI description; // Declare description as a field
-    private TextMeshProUGUI questName; // Declare questName as a field
+    public TextMeshProUGUI questNameText; 
+    public TextMeshProUGUI questRequirementsText;
     private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
 
     // input system stuff
@@ -86,8 +85,13 @@ public class InventorySystem : MonoBehaviour
             slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
         }
     }
-    public void UpdateDZPanelState(bool isInDeliveryZone, bool isOnInventoryTab){
-       DZPanel.SetActive(isInDeliveryZone && isOnInventoryTab);
+    public void UpdateDeliveryZonePanel(string questName, List<string> questRequirements){
+        questRequirementsText.text = string.Empty;
+        questNameText.text = questName;
+        foreach (string requirement in questRequirements)
+        {
+            questRequirementsText.text += "· " + requirement + "\n";
+        }
     }
 
     void OnInventorySlotClick(GameObject slot)

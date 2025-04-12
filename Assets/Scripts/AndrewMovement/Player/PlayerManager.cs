@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -224,7 +225,7 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log("Entered Delivery Zone");
                 IsInDeliveryZone = true;
                 pauseUI.Pause();
-                pauseUI.SetActiveMenu(2); 
+                pauseUI.SetActiveMenu(2);
                 break;
         }
     }
