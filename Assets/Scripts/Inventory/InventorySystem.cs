@@ -16,8 +16,8 @@ public class InventorySystem : MonoBehaviour
     public GameObject cellPrefab;
     private List<GameObject> inventorySlots = new List<GameObject>(); // for storing UI elements 
 
-    public int gridWidth;
     public int gridHeight;
+    public int gridWidth;
 
     private GameObject objectToMove;
     public GameObject tempCell; // for holding objectToMove when applicable
@@ -74,7 +74,7 @@ public class InventorySystem : MonoBehaviour
     void GenerateInventory()
     {
         // Initialize GridUI with panel, prefab, and grid size
-        gridUI = new GridUI(panel, cellPrefab, gridWidth, gridHeight, new Vector2(100,100));
+        gridUI = new GridUI(panel, cellPrefab, gridHeight, gridWidth, new Vector2(100,100));
 
         // Store references to the generated grid cells
         foreach (Transform child in panel.transform)
@@ -157,11 +157,11 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public bool AddObjectToInventory(InventoryObject inventoryObject) 
+    public bool AddObjectToInventory(InventoryObject inventoryObject, string reciepentName) 
     {
         foreach(GameObject slot in inventorySlots) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
-                // Debug.Log(slot + " empty");
+                inventoryObject.SetRecipientName(reciepentName);
 
                 GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
@@ -199,7 +199,8 @@ public class InventorySystem : MonoBehaviour
         if(objectToMove != null && isDisplayed) {
             PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
             InventoryObject newObject = placedObject.GetInventoryObject();
-            Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+            GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+            droppedObj.GetComponent<Package>().SetRecipient(newObject.GetRecipientName());
 
             // reset inventory movement stuff
             ResetObjectToMove();
@@ -210,7 +211,7 @@ public class InventorySystem : MonoBehaviour
     public void CheckIfMoving()
     {
         if(objectToMove != null) {
-            AddObjectToInventory(inventoryObject);
+            AddObjectToInventory(inventoryObject, inventoryObject.GetRecipientName());
             ResetObjectToMove();
         }
     }
@@ -219,6 +220,22 @@ public class InventorySystem : MonoBehaviour
     {
         Destroy(objectToMove);
         objectToMove = null; 
+    }
+
+    // for package delivery
+    public void DeliverPackage(string reciepentName) 
+    {
+        foreach(GameObject slot in inventorySlots) {
+            // if slot has a child && child is a package (tag)
+                // get placedObject comp
+                // get inventoryObject from placedObject
+                // get recipient name from inventoryObject
+                // if(recipient name == quest name)
+                    // objectToMove = slot child
+                    // copy functionality from Drop function
+
+                    // add a return statement if we are only doing 1 package per quest
+        }
     }
 
     void OnEnable()
