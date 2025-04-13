@@ -13,7 +13,7 @@ public class PlacedObject : MonoBehaviour
 
     private InventoryObject inventoryObject;
     private InventoryObject.Dir dir;
-    
+
     public void DestroySelf()
     {
         Destroy(gameObject);

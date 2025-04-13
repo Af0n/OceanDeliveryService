@@ -8,6 +8,7 @@ TagManager:
   - BoatTrigger
   - DeliveryZone
   - PlayerHead
+  - Package
   layers:
   - Default
   - TransparentFX
