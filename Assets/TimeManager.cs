@@ -205,6 +205,9 @@ public class TimeManager : MonoBehaviour
         // Adjust sun and moon lighting dynamically
         sunLight.intensity = Mathf.Clamp01(Mathf.Cos((normalizedTime -0.5f) * Mathf.PI * 2));
         moonLight.intensity = Mathf.Clamp01(Mathf.Cos((normalizedTime) * Mathf.PI * 2));
+        
+        sunLight.transform.rotation = Quaternion.LookRotation(celestialPivot.position - sun.position);
+        moonLight.transform.rotation = Quaternion.LookRotation(celestialPivot.position - moon.position);
     }
 
 }
