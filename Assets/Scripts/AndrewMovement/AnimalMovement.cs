@@ -34,6 +34,7 @@ public class AnimalMovement : MonoBehaviour
             if (isLandAnimal)
             {
                 cc.Move(landDirection * speed * Time.deltaTime);
+                Gravity();
             }
             else
             {
