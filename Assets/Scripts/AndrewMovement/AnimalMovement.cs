@@ -77,6 +77,6 @@ public class AnimalMovement : MonoBehaviour
 
     public void Gravity()
     {
-        cc.Move(Time.deltaTime * yVelocity * Vector3.up);
+        cc.Move(Time.deltaTime * yVelocity * Vector3.down);
     }
 }
