@@ -23,6 +23,7 @@ public class RECON_Respawn : Interactable
     public ParticleSystem OppParticles;
     public TextMeshProUGUI TextBox;
     public bool StartLocked;
+    public bool StartSpawn;
 
     public delegate void SetRespawnEvent();
     public static SetRespawnEvent OnSetRespawn;
@@ -34,7 +35,7 @@ public class RECON_Respawn : Interactable
     {
         OnSetRespawn += ResetBool;
 
-        isLocked = StartLocked;
+        isLocked = StartLocked && !StartSpawn;
     }
 
     void Start()
@@ -43,6 +44,10 @@ public class RECON_Respawn : Interactable
             SetParticleGradient(LockedGrad, OppLockedGrad);
             TextBox.text = LockedMessage;
             return;
+        }
+
+        if(StartSpawn){
+            Interact();
         }
 
         if(isRespawn){
