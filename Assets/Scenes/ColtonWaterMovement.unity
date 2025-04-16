@@ -1217,6 +1217,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dog
       objectReference: {fileID: 0}
+    - target: {fileID: 7294809940399268264, guid: e81b4c3b472c70947a96a571d0668c66, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1274,6 +1278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tiger
       objectReference: {fileID: 0}
+    - target: {fileID: 5070479771018888244, guid: 5d1a8e8e08cb8b94e88cbb991bbff40e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1290,6 +1298,10 @@ PrefabInstance:
     - target: {fileID: 4008351963527331199, guid: d592bef1dbc78cc4a93ef29c16e8ca4f, type: 3}
       propertyPath: m_Name
       value: Deer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008351963527331199, guid: d592bef1dbc78cc4a93ef29c16e8ca4f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085076639699906514, guid: d592bef1dbc78cc4a93ef29c16e8ca4f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1476,7 +1488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8309967959243093368, guid: 96a13ee2db6e25f4381802c21d1b1f2f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 49.69118
+      value: 48.259
       objectReference: {fileID: 0}
     - target: {fileID: 8309967959243093368, guid: 96a13ee2db6e25f4381802c21d1b1f2f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1530,6 +1542,10 @@ PrefabInstance:
     - target: {fileID: 3511523343846268089, guid: 884cfb1c50044534c850f84748d8bcbc, type: 3}
       propertyPath: m_Name
       value: Kitty
+      objectReference: {fileID: 0}
+    - target: {fileID: 3511523343846268089, guid: 884cfb1c50044534c850f84748d8bcbc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6324705788394281855, guid: 884cfb1c50044534c850f84748d8bcbc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1628,6 +1644,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horse
       objectReference: {fileID: 0}
+    - target: {fileID: 753041600230311159, guid: 3da5467624b6a33479b793d6c065d4ba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1644,6 +1664,10 @@ PrefabInstance:
     - target: {fileID: 7033004674691567690, guid: 542b4565ced5c304f92bee3e9fd78286, type: 3}
       propertyPath: m_Name
       value: Penguin
+      objectReference: {fileID: 0}
+    - target: {fileID: 7033004674691567690, guid: 542b4565ced5c304f92bee3e9fd78286, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8013715734044099000, guid: 542b4565ced5c304f92bee3e9fd78286, type: 3}
       propertyPath: m_LocalPosition.x

@@ -16,6 +16,8 @@ public class AnimalMovement : MonoBehaviour
     private Vector3 landDirection;
     private Vector3 waterDirection;
     private float yVelocity = Physics.gravity.magnitude;
+
+    private bool inWater;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,13 +36,16 @@ public class AnimalMovement : MonoBehaviour
             if (isLandAnimal)
             {
                 cc.Move(landDirection * speed * Time.deltaTime);
-                Gravity();
             }
             else
             {
                 cc.Move(waterDirection * speed * Time.deltaTime);
             }
-            
+        }
+
+        if (!inWater)
+        {
+            Gravity();
         }
     }
 
@@ -78,5 +83,21 @@ public class AnimalMovement : MonoBehaviour
     public void Gravity()
     {
         cc.Move(Time.deltaTime * yVelocity * Vector3.down);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            inWater = true;
+        }
+    }
+    
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            inWater = false;
+        }
     }
 }
