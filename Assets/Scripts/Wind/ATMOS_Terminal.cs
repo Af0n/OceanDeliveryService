@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ATMOS_Terminal : Interactable
 {
@@ -13,8 +14,16 @@ public class ATMOS_Terminal : Interactable
     private Transform mainCam;
     private Vector3 defaultCam;
 
+    private InputSystem_Actions actions;
+    private InputAction pause;
+
+    public Flags DeckLadyFlags;
+
     private void Awake()
     {
+        // input system boilerplate
+        actions = new InputSystem_Actions();
+
         playerMan = GameObject.FindWithTag("Player").GetComponent<PlayerManager>();
         mainCam = Camera.main.transform;
     }
@@ -23,6 +32,7 @@ public class ATMOS_Terminal : Interactable
     {
         // save this for later;
         defaultCam = mainCam.transform.localPosition;
+        Debug.Log(defaultCam);
 
         playerMan.SetAll(false);
 
@@ -39,9 +49,37 @@ public class ATMOS_Terminal : Interactable
         TerminalUI.gameObject.SetActive(false); // hide UI
     }
 
+    public void Cancel(InputAction.CallbackContext context)
+    {
+        // test if player NOT in UI
+        if(!TerminalUI.gameObject.activeSelf){
+            return;
+        }
+
+        playerMan.SetAll(true);
+        mainCam.SetLocalPositionAndRotation(defaultCam, Quaternion.identity); // [TODO] smoother transition
+        Cursor.lockState = CursorLockMode.Locked; // lock cursor
+        TerminalUI.gameObject.SetActive(false); // hide UI
+    }
+
     // i had to do it this way for it to be recognized in the unity event for buttons
     public void SetWind(int windCode)
     {
+        DeckLadyFlags.SetFlag("UsedATMOS", true);
         WindManager.SetWind(windCode);
+    }
+
+    private void OnEnable()
+    {
+        // input system boilerplate
+        pause = actions.UI.Pause;
+        pause.Enable();
+        pause.performed += Cancel;
+    }
+
+    private void OnDisable()
+    {
+        // input system boilerplate
+        pause.Disable();
     }
 }
