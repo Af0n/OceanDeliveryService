@@ -21,6 +21,13 @@ public class Flags : ScriptableObject {
         }
     }
 
+    public void SetAll(bool b){
+        foreach (Flag f in FlagList)
+        {
+            f.IsSet = b;
+        }
+    }
+
     // toggles the flag
     public void SetFlag(string name){
         foreach (Flag f in FlagList)

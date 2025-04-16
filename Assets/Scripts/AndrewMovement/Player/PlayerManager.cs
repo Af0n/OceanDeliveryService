@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     public UpdateThirdPersonInteractUI TPIUpdater;
     public CinemachineCamera cinemachineCamera;
     public Transform Cam;
+    public Transform BodyVisual;
 
     private void Awake()
     {
@@ -66,7 +67,7 @@ public class PlayerManager : MonoBehaviour
         if (isUnderwater)
         {
             // Only start drowning if the head is submerged too
-            if (movement.isSwimming)
+            if (!movement.isSwimming)
             {
                 waterDeath.StartDrowning();
             }
@@ -111,6 +112,7 @@ public class PlayerManager : MonoBehaviour
     public void ToggleThirdPerson(bool b)
     {
         IsThirdPerson = b;
+        BodyVisual.gameObject.SetActive(IsThirdPerson);
 
         if (IsThirdPerson)
         {

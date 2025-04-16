@@ -84,6 +84,10 @@ public class PlayerInteract : MonoBehaviour
     private void TryInteract(InputAction.CallbackContext context)
     {
         if(manager.IsThirdPerson){
+            if(detectedInteractables.Length == 0){
+                // nothing to interact with
+                return;
+            }
             detectedInteractables[selectedInteractable].transform.GetComponent<Interactable>().Interact();
             return;
         }

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: SleepyJoe
+  m_EditorClassIdentifier: 
+  Label: 
+  Dialogues:
+  - CharName: Sleepy
+    Text: zzz... zzz... zzz...
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: '"'
+    Text: Honk shoo...
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: '"'
+    Text: Oh, mom... five more minutes, please?
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: 
+    Text: He hasn't woken up for 15 days. Attempt to wake up?
+    HasMenu: 1
+    MenuOptions:
+    - {fileID: 11400000, guid: a8f9ce9b099fd5a468fb66cad8b5f94c, type: 2}
+    - {fileID: 11400000, guid: 5cf11beed2c3c0044b0aa9569ea75110, type: 2}
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
