@@ -18,7 +18,6 @@ public class PlayerUpgradeManager : MonoBehaviour
     public int depthCost;
 
     [Header("Swim Ability Upgrades")]
-    public bool swimAbilityUpgrade;
     public int floatieCost;
 
     [Header("Inventory Capacity Upgrades")]
@@ -36,14 +35,21 @@ public class PlayerUpgradeManager : MonoBehaviour
     [Header("Goggles Upgrades")] 
     public bool hasGoggles;
     public int goggleCost;
-
+    
+    private AndrewMovement movement;
+    private WaterDeath water;
+    void Start()
+    {
+        movement = GetComponent<AndrewMovement>();
+        water = GetComponent<WaterDeath>();
+    }
     public void GiveWaterResistanceUpgrade()
     {
         if (currentWaterIndex < waterResistance.Count)
         {
             waterResistanceUpgrade = waterResistance[currentWaterIndex];
             currentWaterIndex++;
-            
+            water.DrownTime = waterResistanceUpgrade;
         }
     }
 
@@ -58,7 +64,7 @@ public class PlayerUpgradeManager : MonoBehaviour
     
     public void GiveSwimAbilityUpgrade()
     {
-        swimAbilityUpgrade = true;
+        movement.canSwim = true;
     }
     
     public void GiveInventoryUpgrade()
@@ -76,12 +82,14 @@ public class PlayerUpgradeManager : MonoBehaviour
         {
             swimSpeedUpgrade = swimSpeed[currentSwimSpeedIndex];
             currentSwimSpeedIndex++;
+            movement.Speed = swimSpeedUpgrade;
         }
     }
 
     public void GiveGoggleUpgrade()
     {
         hasGoggles = true;
+        
     }
 
     public int ListCosts(string name)
