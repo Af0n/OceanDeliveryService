@@ -7,7 +7,7 @@ using TMPro;
 public class InventorySystem : MonoBehaviour
 {
     private InventoryObject inventoryObject;
-
+    private deliveryZone deliveryZone;
     private InventoryObject.Dir dir = InventoryObject.Dir.Horizontal;
 
     private GridUI gridUI;
@@ -28,6 +28,8 @@ public class InventorySystem : MonoBehaviour
     private Canvas canvas;
     public TextMeshProUGUI questNameText; 
     public TextMeshProUGUI questRequirementsText;
+    public TextMeshProUGUI errorMessageText; 
+    public Button deliverButton;
     private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
 
     // input system stuff
@@ -85,12 +87,25 @@ public class InventorySystem : MonoBehaviour
             slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
         }
     }
-    public void UpdateDeliveryZonePanel(string questName, List<string> questRequirements){
+    public void SetDeliveryZone(deliveryZone deliveryZone) {
+        this.deliveryZone = deliveryZone;
+    }
+    public void ClearDeliveryZone() {
+        deliveryZone = null;
+    }
+    public void UpdateDeliveryZonePanel(string questName, string questReciepentName){
         questRequirementsText.text = string.Empty;
         questNameText.text = questName;
-        foreach (string requirement in questRequirements)
-        {
-            questRequirementsText.text += "· " + requirement + "\n";
+        questRequirementsText.text += "· " + questReciepentName + "'s package\n";
+        foreach(GameObject slot in inventorySlots) {
+            if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetInventoryObject().GetRecipientName();
+                Debug.Log("recipientName: hello" + recipientName + ", questRecipentName: " + questReciepentName);
+                if (recipientName == questReciepentName){
+                    questRequirementsText.text = "<s>"+ questRequirementsText.text +"</s>";
+                    return;
+                }
+            }
         }
     }
 
@@ -107,6 +122,7 @@ public class InventorySystem : MonoBehaviour
             PlacedObject placedObject = rootCell.GetComponentInChildren<PlacedObject>();
             dir = placedObject.GetDir();
             inventoryObject = placedObject.GetInventoryObject();
+            inventoryObject.SetRecipientName(placedObject.GetInventoryObject().GetRecipientName());
 
             objectToMove = placedObject.gameObject;
             objectToMove.transform.SetParent(tempCell.transform);
@@ -162,7 +178,7 @@ public class InventorySystem : MonoBehaviour
         foreach(GameObject slot in inventorySlots) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 inventoryObject.SetRecipientName(reciepentName);
-
+                Debug.Log("stored object and its recipient is: " + inventoryObject.GetRecipientName());
                 GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
@@ -223,19 +239,39 @@ public class InventorySystem : MonoBehaviour
     }
 
     // for package delivery
-    public void DeliverPackage(string reciepentName) 
-    {
+    public void DeliverPackage() {
         foreach(GameObject slot in inventorySlots) {
-            // if slot has a child && child is a package (tag)
-                // get placedObject comp
-                // get inventoryObject from placedObject
-                // get recipient name from inventoryObject
-                // if(recipient name == quest name)
-                    // objectToMove = slot child
-                    // copy functionality from Drop function
-
-                    // add a return statement if we are only doing 1 package per quest
+            // Check if the slot has a child and the child is tagged as "Package"
+            if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetInventoryObject().GetRecipientName();
+                string questRecipentName = deliveryZone.recipientName;
+                Debug.Log("recipientName: " + recipientName + ", questRecipentName: " + questRecipentName);
+                // Check if the recipient name matches the quest name
+                if (recipientName == questRecipentName){
+                    Cell cellComp = slot.GetComponent<Cell>();
+                    Transform rootCell = cellComp.GetRoot();
+                    PlacedObject tempPlacedObject = rootCell.GetComponentInChildren<PlacedObject>();
+                    dir = tempPlacedObject.GetDir();
+                    inventoryObject = tempPlacedObject.GetInventoryObject();
+                    objectToMove = tempPlacedObject.gameObject;
+                    PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
+                    InventoryObject newObject = placedObject.GetInventoryObject();
+                    // Instantiate the dropped object in the world
+                    GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+                    droppedObj.GetComponent<Package>().SetRecipient(recipientName);
+                    gridUI.RemoveItem(inventoryObject, dir, slot);
+                    ResetObjectToMove();
+                    return;
+                }
+            }
         }
+        errorMessageText.gameObject.SetActive(true);
+        // Invoke(nameof(HideErrorMsg), 1f);
+        return;
+    }
+
+    private void HideErrorMsg(){
+        errorMessageText.gameObject.SetActive(false);
     }
 
     void OnEnable()

@@ -6,7 +6,6 @@ public class PlacedObject : MonoBehaviour
     public static void SetUpObject(GameObject itemSource, InventoryObject inventoryObject, InventoryObject.Dir dir) 
     {
         PlacedObject placedObject = itemSource.GetComponent<PlacedObject>();
-
         placedObject.inventoryObject = inventoryObject;
         placedObject.dir = dir;
     }
