@@ -24,11 +24,9 @@ public class deliveryZone : MonoBehaviour{
             inventory.ClearDeliveryZone();
         }
     }
-    public void DisableDeliveryZone()
-{
-    // Disable the GameObject or functionality of the delivery zone
-    gameObject.SetActive(false);
-}
+    public void DisableDeliveryZone(){
+        gameObject.SetActive(false);
+    }
     // public string GetQuestRequirements(){
     //     return string.Join(", ", packages);
     // }

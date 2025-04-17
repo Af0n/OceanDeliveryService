@@ -269,7 +269,7 @@ public class InventorySystem : MonoBehaviour
             }
         }
         errorMessageText.gameObject.SetActive(true);
-        Invoke(nameof(HideErrorMsg), 1f);
+        // Invoke(nameof(HideErrorMsg), 1f);
         return;
     }
 

@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  recipientName: Bob
+  recipientName: 
   QuestName: 1
 --- !u!1 &4746327860597463182
 GameObject:
