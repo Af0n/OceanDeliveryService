@@ -17,7 +17,6 @@ public class InventoryObject : ScriptableObject
     public int width;
     public bool dontRotate;
     private Dir dir;
-    private string reciepentName;
 
     public int GetRotationAngle(Dir dir)
     {
@@ -38,15 +37,5 @@ public class InventoryObject : ScriptableObject
     {
         Debug.Log("direction set to " + dir);
         return dir;
-    }
-
-    public void SetRecipientName(string name)
-    {
-        this.reciepentName = name;
-    }
-
-    public string GetRecipientName()
-    {
-        return reciepentName;
     }
 }

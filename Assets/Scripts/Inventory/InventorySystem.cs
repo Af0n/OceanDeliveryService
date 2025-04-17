@@ -99,7 +99,7 @@ public class InventorySystem : MonoBehaviour
         questRequirementsText.text += "· " + questReciepentName + "'s package\n";
         foreach(GameObject slot in inventorySlots) {
             if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
-                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetInventoryObject().GetRecipientName();
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
                 Debug.Log("recipientName: hello" + recipientName + ", questRecipentName: " + questReciepentName);
                 if (recipientName == questReciepentName){
                     questRequirementsText.text = "<s>"+ questRequirementsText.text +"</s>";
@@ -122,7 +122,6 @@ public class InventorySystem : MonoBehaviour
             PlacedObject placedObject = rootCell.GetComponentInChildren<PlacedObject>();
             dir = placedObject.GetDir();
             inventoryObject = placedObject.GetInventoryObject();
-            inventoryObject.SetRecipientName(placedObject.GetInventoryObject().GetRecipientName());
 
             objectToMove = placedObject.gameObject;
             objectToMove.transform.SetParent(tempCell.transform);
@@ -138,10 +137,13 @@ public class InventorySystem : MonoBehaviour
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 objectToMove.transform.SetParent(slot.transform);
                 objectToMove.transform.localPosition = Vector3.zero;
+
+                string name = objectToMove.GetComponent<PlacedObject>().GetRecipient();
+                Debug.Log("recipient is " + name);
                 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
 
-                PlacedObject.SetUpObject(objectToMove, inventoryObject, dir);
+                PlacedObject.SetUpObject(objectToMove, inventoryObject, dir, name);
 
                 objectToMove = null; // reset reference
             }
@@ -177,8 +179,6 @@ public class InventorySystem : MonoBehaviour
     {
         foreach(GameObject slot in inventorySlots) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
-                inventoryObject.SetRecipientName(reciepentName);
-                Debug.Log("stored object and its recipient is: " + inventoryObject.GetRecipientName());
                 GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
@@ -186,7 +186,7 @@ public class InventorySystem : MonoBehaviour
                 newItem.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
 
                 // save the object when it's created
-                PlacedObject.SetUpObject(newItem, inventoryObject, dir);
+                PlacedObject.SetUpObject(newItem, inventoryObject, dir, reciepentName);
 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
                 // Debug.Log("setting slot unavailable: " + slot.name);
@@ -216,7 +216,7 @@ public class InventorySystem : MonoBehaviour
             PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
             InventoryObject newObject = placedObject.GetInventoryObject();
             GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
-            droppedObj.GetComponent<Package>().SetRecipient(newObject.GetRecipientName());
+            droppedObj.GetComponent<Package>().SetRecipient(placedObject.GetRecipient());
 
             // reset inventory movement stuff
             ResetObjectToMove();
@@ -227,7 +227,7 @@ public class InventorySystem : MonoBehaviour
     public void CheckIfMoving()
     {
         if(objectToMove != null) {
-            AddObjectToInventory(inventoryObject, inventoryObject.GetRecipientName());
+            AddObjectToInventory(inventoryObject, objectToMove.GetComponent<PlacedObject>().GetRecipient());
             ResetObjectToMove();
         }
     }
@@ -243,7 +243,7 @@ public class InventorySystem : MonoBehaviour
         foreach(GameObject slot in inventorySlots) {
             // Check if the slot has a child and the child is tagged as "Package"
             if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
-                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetInventoryObject().GetRecipientName();
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
                 string questRecipentName = deliveryZone.recipientName;
                 Debug.Log("recipientName: " + recipientName + ", questRecipentName: " + questRecipentName);
                 // Check if the recipient name matches the quest name
