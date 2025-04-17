@@ -93,7 +93,7 @@ public class FusionForge : MonoBehaviour
     
     public void PlayerUpgradeFloatie()
     {
-        if (Economy.Scrap > playerUpgradeManager.floatieCost && !playerUpgradeManager.swimAbilityUpgrade)
+        if (Economy.Scrap > playerUpgradeManager.floatieCost && !playerUpgradeManager.GetComponent<AndrewMovement>().canSwim)
         {
             playerUpgradeManager.GiveSwimAbilityUpgrade();
             Economy.TakeScrap(playerUpgradeManager.floatieCost);

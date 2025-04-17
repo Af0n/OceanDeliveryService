@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: DLBye
+  m_EditorClassIdentifier: 
+  Label: 
+  Dialogues:
+  - CharName: Deck Lady
+    Text: I have taught you all that I can for now, little robot.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Lady
+    Text: Now go off into the world. Go make a name for yourself.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Lady
+    Text: No, really. Go make up a name. I couldn't come up with one for you.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Lady
+    Text: I was thinking of naming you Sckimbly, but Deck Man said that was a bad
+      name.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
