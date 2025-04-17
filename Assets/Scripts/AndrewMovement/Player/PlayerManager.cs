@@ -225,6 +225,7 @@ public class PlayerManager : MonoBehaviour
                 break;
             case "DeliveryZone":
                 Debug.Log("Entered Delivery Zone");
+                if(IsInDeliveryZone) return;
                 IsInDeliveryZone = true;
                 pauseUI.Pause();
                 pauseUI.SetActiveMenu(2);

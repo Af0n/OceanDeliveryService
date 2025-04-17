@@ -66,6 +66,7 @@ public class PauseUI : MonoBehaviour
         {
             StopCoroutine(nameof(ResetActiveWindow));
             playerMan.SetLook(false);
+            playerMan.SetMovement(false);
             Cursor.lockState = CursorLockMode.None;
 
             // to bring up inventory 
