@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class deliveryZone : MonoBehaviour
-{
+public class deliveryZone : MonoBehaviour{
     public InventorySystem inventory;
     [Tooltip("The reciepent name for the quest.")]
     public string recipientName;
@@ -25,6 +24,11 @@ public class deliveryZone : MonoBehaviour
             inventory.ClearDeliveryZone();
         }
     }
+    public void DisableDeliveryZone()
+{
+    // Disable the GameObject or functionality of the delivery zone
+    gameObject.SetActive(false);
+}
     // public string GetQuestRequirements(){
     //     return string.Join(", ", packages);
     // }
