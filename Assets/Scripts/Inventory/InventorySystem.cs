@@ -2,20 +2,22 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class InventorySystem : MonoBehaviour
 {
     private InventoryObject inventoryObject;
-
+    private deliveryZone deliveryZone;
     private InventoryObject.Dir dir = InventoryObject.Dir.Horizontal;
 
     private GridUI gridUI;
     public GameObject panel;
+    public GameObject DZPanel; 
     public GameObject cellPrefab;
     private List<GameObject> inventorySlots = new List<GameObject>(); // for storing UI elements 
 
-    public int gridWidth;
     public int gridHeight;
+    public int gridWidth;
 
     private GameObject objectToMove;
     public GameObject tempCell; // for holding objectToMove when applicable
@@ -24,6 +26,10 @@ public class InventorySystem : MonoBehaviour
 
     private CanvasGroup canvasGroup;
     private Canvas canvas;
+    public TextMeshProUGUI questNameText; 
+    public TextMeshProUGUI questRequirementsText;
+    public TextMeshProUGUI errorMessageText; 
+    public Button deliverButton;
     private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
 
     // input system stuff
@@ -70,7 +76,7 @@ public class InventorySystem : MonoBehaviour
     void GenerateInventory()
     {
         // Initialize GridUI with panel, prefab, and grid size
-        gridUI = new GridUI(panel, cellPrefab, gridWidth, gridHeight, new Vector2(100,100));
+        gridUI = new GridUI(panel, cellPrefab, gridHeight, gridWidth, new Vector2(100,100));
 
         // Store references to the generated grid cells
         foreach (Transform child in panel.transform)
@@ -79,6 +85,27 @@ public class InventorySystem : MonoBehaviour
             inventorySlots.Add(slot);
             // Add an onClick listener to each slot
             slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
+        }
+    }
+    public void SetDeliveryZone(deliveryZone deliveryZone) {
+        this.deliveryZone = deliveryZone;
+    }
+    public void ClearDeliveryZone() {
+        deliveryZone = null;
+    }
+    public void UpdateDeliveryZonePanel(string questName, string questReciepentName){
+        questRequirementsText.text = string.Empty;
+        questNameText.text = questName;
+        questRequirementsText.text += "· " + questReciepentName + "'s package\n";
+        foreach(GameObject slot in inventorySlots) {
+            if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
+                Debug.Log("recipientName: hello" + recipientName + ", questRecipentName: " + questReciepentName);
+                if (recipientName == questReciepentName){
+                    questRequirementsText.text = "<s>"+ questRequirementsText.text +"</s>";
+                    return;
+                }
+            }
         }
     }
 
@@ -110,10 +137,13 @@ public class InventorySystem : MonoBehaviour
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 objectToMove.transform.SetParent(slot.transform);
                 objectToMove.transform.localPosition = Vector3.zero;
+
+                string name = objectToMove.GetComponent<PlacedObject>().GetRecipient();
+                Debug.Log("recipient is " + name);
                 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
 
-                PlacedObject.SetUpObject(objectToMove, inventoryObject, dir);
+                PlacedObject.SetUpObject(objectToMove, inventoryObject, dir, name);
 
                 objectToMove = null; // reset reference
             }
@@ -145,12 +175,10 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public bool AddObjectToInventory(InventoryObject inventoryObject) 
+    public bool AddObjectToInventory(InventoryObject inventoryObject, string reciepentName) 
     {
         foreach(GameObject slot in inventorySlots) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
-                // Debug.Log(slot + " empty");
-
                 GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
@@ -158,7 +186,7 @@ public class InventorySystem : MonoBehaviour
                 newItem.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
 
                 // save the object when it's created
-                PlacedObject.SetUpObject(newItem, inventoryObject, dir);
+                PlacedObject.SetUpObject(newItem, inventoryObject, dir, reciepentName);
 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
                 // Debug.Log("setting slot unavailable: " + slot.name);
@@ -187,7 +215,8 @@ public class InventorySystem : MonoBehaviour
         if(objectToMove != null && isDisplayed) {
             PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
             InventoryObject newObject = placedObject.GetInventoryObject();
-            Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+            GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+            droppedObj.GetComponent<Package>().SetRecipient(placedObject.GetRecipient());
 
             // reset inventory movement stuff
             ResetObjectToMove();
@@ -198,7 +227,7 @@ public class InventorySystem : MonoBehaviour
     public void CheckIfMoving()
     {
         if(objectToMove != null) {
-            AddObjectToInventory(inventoryObject);
+            AddObjectToInventory(inventoryObject, objectToMove.GetComponent<PlacedObject>().GetRecipient());
             ResetObjectToMove();
         }
     }
@@ -207,6 +236,45 @@ public class InventorySystem : MonoBehaviour
     {
         Destroy(objectToMove);
         objectToMove = null; 
+    }
+
+    // for package delivery
+    public void DeliverPackage() {
+        foreach(GameObject slot in inventorySlots) {
+            // Check if the slot has a child and the child is tagged as "Package"
+            if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
+                string questRecipentName = deliveryZone.recipientName;
+                Debug.Log("recipientName: " + recipientName + ", questRecipentName: " + questRecipentName);
+                // Check if the recipient name matches the quest name
+                if (recipientName == questRecipentName){
+                    Cell cellComp = slot.GetComponent<Cell>();
+                    Transform rootCell = cellComp.GetRoot();
+                    PlacedObject tempPlacedObject = rootCell.GetComponentInChildren<PlacedObject>();
+                    dir = tempPlacedObject.GetDir();
+                    inventoryObject = tempPlacedObject.GetInventoryObject();
+                    objectToMove = tempPlacedObject.gameObject;
+                    PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
+                    InventoryObject newObject = placedObject.GetInventoryObject();
+                    // Instantiate the dropped object in the world
+                    GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+                    droppedObj.GetComponent<Package>().SetRecipient(recipientName);
+                    gridUI.RemoveItem(inventoryObject, dir, slot);
+                    ResetObjectToMove();
+                    deliveryZone.DisableDeliveryZone();
+                    ClearDeliveryZone();
+                    
+                    return;
+                }
+            }
+        }
+        errorMessageText.gameObject.SetActive(true);
+        // Invoke(nameof(HideErrorMsg), 1f);
+        return;
+    }
+
+    private void HideErrorMsg(){
+        errorMessageText.gameObject.SetActive(false);
     }
 
     void OnEnable()

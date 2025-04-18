@@ -1276,11 +1276,14 @@ MonoBehaviour:
   waterDeath: {fileID: 0}
   controller: {fileID: 0}
   upgradeManager: {fileID: 0}
+  pauseUI: {fileID: 0}
   Reticle: {fileID: 5551240740829295811}
   IsOnBoat: 0
+  IsInDeliveryZone: 0
   IsUnderwater: 0
   onSurfaceDepth: -1
   playerFloater: {fileID: 8596158877227434374}
+  inventoryVisibility: 1
   HasThirdPersonInteractable: 0
   HasMultipleTPI: 0
   ThirdPersonDisplay: {fileID: 9095462186199019872}
@@ -5195,6 +5198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory System (UI)
       objectReference: {fileID: 0}
+    - target: {fileID: 3146194283971309272, guid: 1a4b26d3f205fdd4d972f0f3f34b91a8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3589751198399566847, guid: 1a4b26d3f205fdd4d972f0f3f34b91a8, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -5210,6 +5217,10 @@ PrefabInstance:
     - target: {fileID: 6527724572514898845, guid: 1a4b26d3f205fdd4d972f0f3f34b91a8, type: 3}
       propertyPath: m_OverrideSorting
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6600542361154835748, guid: 1a4b26d3f205fdd4d972f0f3f34b91a8, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7242449047063951742, guid: 1a4b26d3f205fdd4d972f0f3f34b91a8, type: 3}
       propertyPath: m_AnchorMax.x

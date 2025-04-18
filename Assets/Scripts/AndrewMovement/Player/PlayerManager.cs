@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -19,12 +20,14 @@ public class PlayerManager : MonoBehaviour
     public WaterDeath waterDeath;
     public CharacterController controller;
     public PlayerUpgradeManager upgradeManager;
+    public PauseUI pauseUI;
     public Image Reticle;
-
     public bool IsOnBoat;
+    public bool IsInDeliveryZone;
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
+    public float inventoryVisibility = 1f;
     public bool HasThirdPersonInteractable, HasMultipleTPI;
 
     [Header("Unity Set Up")]
@@ -42,6 +45,7 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
+        
 
         ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
@@ -219,6 +223,13 @@ public class PlayerManager : MonoBehaviour
             case "BoatTrigger":
                 IsOnBoat = true;
                 break;
+            case "DeliveryZone":
+                Debug.Log("Entered Delivery Zone");
+                if(IsInDeliveryZone) return;
+                IsInDeliveryZone = true;
+                pauseUI.Pause();
+                pauseUI.SetActiveMenu(2);
+                break;
         }
     }
 
@@ -228,6 +239,10 @@ public class PlayerManager : MonoBehaviour
         {
             case "BoatTrigger":
                 IsOnBoat = false;
+                break;
+            case "DeliveryZone":
+                Debug.Log("Exited Delivery Zone");
+                IsInDeliveryZone = false;
                 break;
         }
     }
@@ -266,7 +281,7 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(RespawnTime);
         StartCoroutine(nameof(Respawn));
     }
-
+    
     public void ToggleSurface(float surfaced)
     {
         // onSurfaceDepth = surfaced;
@@ -275,6 +290,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         PlayerFloater.OnSurfacedPlayer += ToggleSurface;
+        pauseUI = GetComponentInChildren<PauseUI>();
     }
 
     void OnDestroy()
