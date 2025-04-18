@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42537be433c08394aab55c86875c8eae, type: 3}
   m_Name: 3_Metal_Panel
   m_EditorClassIdentifier: 
-  nameString: Bulb
   worldPrefab: {fileID: 1292219873356503187, guid: f1c1b1dc12d60f741b92dc712af8b3aa, type: 3}
-  uiPrefab: {fileID: 2162241689682632981, guid: a42f985601bca3f4ba5995d713a37ce7, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: 8f83e7e84df33e048a6d99ec96c660b7, type: 3}
   height: 1
   width: 2
+  dontRotate: 0

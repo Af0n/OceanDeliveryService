@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 7_Motor
   m_EditorClassIdentifier: 
   worldPrefab: {fileID: 4663161360713316191, guid: 478fcd19308e72e45a4355d76c8b4d3f, type: 3}
-  uiPrefab: {fileID: 2162241689682632981, guid: 97fa9211b3881234db55ced2da955f12, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: 166770a8569e58e478a39991a4a5b011, type: 3}
   height: 2
   width: 2
   dontRotate: 1
