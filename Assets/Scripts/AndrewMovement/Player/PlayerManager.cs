@@ -266,10 +266,20 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Respawning player at respawn point...");
         SetAll(true);
 
-        controller.excludeLayers = ExcludeLayersTemp;
-        controller.Move(RespawnPoint.position - transform.position);
-        transform.rotation = RespawnPoint.rotation;
+        // wait for next frame
+        yield return 0;
 
+        StartCoroutine(Teleport(RespawnPoint.position));
+    }
+
+    public void DoTeleport(Vector3 pos){
+        StartCoroutine(Teleport(pos));
+    }
+
+    public IEnumerator Teleport(Vector3 teleport){
+        controller.excludeLayers = ExcludeLayersTemp;
+        controller.Move(teleport - transform.position);
+        transform.rotation = RespawnPoint.rotation;
         // wait for a frame
         yield return 0;
 
