@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviour
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
+    public GameObject firstPersonPlayerFloater;
+    public GameObject firstPersonVisual;
     public float inventoryVisibility = 1f;
     public bool HasThirdPersonInteractable, HasMultipleTPI;
 
@@ -46,7 +48,8 @@ public class PlayerManager : MonoBehaviour
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
         
-
+        playerFloater.SetActive(false);
+        firstPersonPlayerFloater.SetActive(false);
         ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
         ToggleThirdPerson(IsThirdPerson);
@@ -83,6 +86,7 @@ public class PlayerManager : MonoBehaviour
             movement.isFloating = false;
             movement.isSwimming = false;
             playerFloater.SetActive(false);
+            firstPersonPlayerFloater.SetActive(false);
             //OnEmerge?.Invoke();
             movement.audioManager.Emerge();
         }
@@ -97,6 +101,7 @@ public class PlayerManager : MonoBehaviour
             movement.isSwimming = true;
             movement.isFloating = false;
             playerFloater.SetActive(false);
+            firstPersonPlayerFloater.SetActive(false);
             waterDeath.StartDrowning();
         }
         else
@@ -108,6 +113,7 @@ public class PlayerManager : MonoBehaviour
                 movement.isSwimming = false;
                 movement.isFloating = true;
                 playerFloater.SetActive(true);
+                firstPersonPlayerFloater.SetActive(true);
                 waterDeath.StopDrowning();
             }
         }
@@ -120,6 +126,7 @@ public class PlayerManager : MonoBehaviour
 
         if (IsThirdPerson)
         {
+            firstPersonVisual.SetActive(false);
             SetLook(false);
             cinemachineCamera.enabled = true;
             Reticle.enabled = false;
@@ -128,6 +135,7 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
+        firstPersonVisual.SetActive(true);
         SetLook(true);
         cinemachineCamera.enabled = false;
         Reticle.enabled = true;
