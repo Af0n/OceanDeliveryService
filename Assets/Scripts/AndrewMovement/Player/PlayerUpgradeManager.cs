@@ -21,8 +21,8 @@ public class PlayerUpgradeManager : MonoBehaviour
     public int floatieCost;
 
     [Header("Inventory Capacity Upgrades")]
-    public int inventoryCapacityUpgrade;
-    public List<int> inventoryCapacity = new List<int>();
+    public int inventoryCapacityUpgrade; // current capacity
+    public List<int> inventoryCapacity = new List<int>(); // list of all sizes
     public int currentInventoryCapacityIndex = 0;
     public int inventoryCost;
     

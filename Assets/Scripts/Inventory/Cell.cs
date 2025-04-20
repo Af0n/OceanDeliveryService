@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
+    [SerializeField]
     private bool cellAvailable;
     private Transform root;
 
-    void Start()
+    void Awake()
     {
         cellAvailable = true;
         root = null;
