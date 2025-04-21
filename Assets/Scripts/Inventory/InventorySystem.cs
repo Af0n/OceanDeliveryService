@@ -184,13 +184,9 @@ public class InventorySystem : MonoBehaviour
 
             tempCell.transform.position = canvas.transform.TransformPoint(pos);
         }
-
-        if(Input.GetKeyDown(KeyCode.U)) {
-            UpdateInventory();
-        }
     }
 
-    void UpdateInventory()
+    public void UpgradeInventory(int newSize)
     {
         // store any objects in tempCell before changing inventory size
         foreach(GameObject slot in inventorySlots) {
@@ -209,7 +205,7 @@ public class InventorySystem : MonoBehaviour
 
         // recreate inventory w/ new size
         gridUI.ClearGrid();
-        gridWidth = 8; // for testing
+        gridWidth = newSize;
         GenerateInventory();
 
         // put all stored objects back in inventory

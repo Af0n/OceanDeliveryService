@@ -38,11 +38,15 @@ public class PlayerUpgradeManager : MonoBehaviour
     
     private AndrewMovement movement;
     private WaterDeath water;
+    private InventorySystem inventory;
+
     void Start()
     {
         movement = GetComponent<AndrewMovement>();
         water = GetComponent<WaterDeath>();
+        inventory = GetComponentInChildren<InventorySystem>();
     }
+
     public void GiveWaterResistanceUpgrade()
     {
         if (currentWaterIndex < waterResistance.Count)
@@ -73,6 +77,8 @@ public class PlayerUpgradeManager : MonoBehaviour
         {
             inventoryCapacityUpgrade = inventoryCapacity[currentInventoryCapacityIndex];
             currentInventoryCapacityIndex++;
+
+            inventory.UpgradeInventory(inventoryCapacityUpgrade);
         }
     }
 
