@@ -40,6 +40,10 @@ public class InventorySystem : MonoBehaviour
     {
         actions = new InputSystem_Actions();
         objectToMove = null;
+
+        // get correct size based on upgrades 
+        gridWidth = GetComponentInParent<PlayerUpgradeManager>().inventoryCapacityUpgrade;
+
         GenerateInventory();
     }
 
@@ -75,18 +79,24 @@ public class InventorySystem : MonoBehaviour
 
     void GenerateInventory()
     {
+        // clear old slots if they exist (when upgrading)
+        foreach(GameObject slot in inventorySlots) {
+            Destroy(slot);
+        }
+        inventorySlots.Clear();
+
         // Initialize GridUI with panel, prefab, and grid size
         gridUI = new GridUI(panel, cellPrefab, gridHeight, gridWidth, new Vector2(100,100));
 
         // Store references to the generated grid cells
-        foreach (Transform child in panel.transform)
-        {
-            GameObject slot = child.gameObject;
-            inventorySlots.Add(slot);
-            // Add an onClick listener to each slot
-            slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
+        inventorySlots = gridUI.GetAllCells();
+        foreach(GameObject slot in inventorySlots) {
+            Button button = slot.GetComponent<Button>();
+            button.onClick.RemoveAllListeners(); // Prevent duplicate handlers
+            button.onClick.AddListener(() => OnInventorySlotClick(slot));
         }
     }
+
     public void SetDeliveryZone(deliveryZone deliveryZone) {
         this.deliveryZone = deliveryZone;
     }
@@ -111,13 +121,14 @@ public class InventorySystem : MonoBehaviour
 
     void OnInventorySlotClick(GameObject slot)
     {
-        // Debug.Log(slot.name + " clicked");
+        Debug.Log(slot.name + " clicked");
 
         Cell cellComp = slot.GetComponent<Cell>();
         
         // pick up an inventory object
         if(!cellComp.GetAvailable() && objectToMove == null) {
             Transform rootCell = cellComp.GetRoot();
+            // Debug.Log(rootCell);
 
             PlacedObject placedObject = rootCell.GetComponentInChildren<PlacedObject>();
             dir = placedObject.GetDir();
@@ -175,6 +186,42 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    public void UpgradeInventory(int newSize)
+    {
+        // store any objects in tempCell before changing inventory size
+        foreach(GameObject slot in inventorySlots) {
+            if(slot.transform.childCount > 0) {
+                GameObject childObj = slot.transform.GetChild(0).gameObject;
+                childObj.transform.SetParent(tempCell.transform);
+                childObj.transform.localPosition = Vector3.zero;
+
+                PlacedObject placedObject = childObj.GetComponent<PlacedObject>();
+                dir = placedObject.GetDir();
+                inventoryObject = placedObject.GetInventoryObject();
+
+                gridUI.RemoveItem(inventoryObject, dir, slot);
+            }
+        }
+
+        // recreate inventory w/ new size
+        gridUI.ClearGrid();
+        gridWidth = newSize;
+        GenerateInventory();
+
+        // put all stored objects back in inventory
+        foreach(Transform child in tempCell.transform) {
+            GameObject childObj = child.gameObject;
+            PlacedObject placedObject = childObj.GetComponent<PlacedObject>();
+            InventoryObject inventoryObject = placedObject.GetInventoryObject();
+            string reciepent = placedObject.GetRecipient();
+            dir = placedObject.GetDir(); // to make sure dir is correct 
+
+            AddObjectToInventory(inventoryObject, reciepent);
+
+            Destroy(childObj); // bc AddObjectToInventory creates a duplicate so the old one needs to go
+        }
+    }
+
     public bool AddObjectToInventory(InventoryObject inventoryObject, string reciepentName) 
     {
         foreach(GameObject slot in inventorySlots) {
@@ -194,7 +241,7 @@ public class InventorySystem : MonoBehaviour
                 return true;
             }
             else {
-                Debug.Log(slot + " taken");
+                Debug.Log("could not find slot -- see GridUI.CanPlaceItem()");
             }
         }
 
@@ -216,7 +263,11 @@ public class InventorySystem : MonoBehaviour
             PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
             InventoryObject newObject = placedObject.GetInventoryObject();
             GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
-            droppedObj.GetComponent<Package>().SetRecipient(placedObject.GetRecipient());
+            
+            Package package = droppedObj.GetComponent<Package>();
+            if(package != null) {
+                package.SetRecipient(placedObject.GetRecipient());
+            }
 
             // reset inventory movement stuff
             ResetObjectToMove();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,7 @@ public class GridUI
 {
     private GameObject panel;
     private GameObject cellPrefab;
-    private int rows, cols;
+    public int rows, cols;
     private Vector2 cellSize; 
 
     private GameObject[,] gridArray;
@@ -19,6 +20,7 @@ public class GridUI
         this.cellSize = cellSize;
 
         gridArray = new GameObject[rows, cols];
+        Debug.Log(gridArray.GetLength(0) + "," + gridArray.GetLength(1));
 
         InitializeGrid();
     }
@@ -51,6 +53,24 @@ public class GridUI
         }
     }
 
+    public GameObject GetGridCell(int x, int y)
+    {
+        return gridArray[x, y];
+    }
+
+    public List<GameObject> GetAllCells()
+    {
+        List<GameObject> allCells = new List<GameObject>();
+        for (int x = 0; x < rows; x++)
+        {
+            for (int y = 0; y < cols; y++)
+            {
+                allCells.Add(gridArray[x, y]);
+            }
+        }
+        return allCells;
+    }
+
     public Vector2Int GetCellPosition(GameObject selectedCell) 
     {
         for(int x = 0; x < rows; x++) {
@@ -77,9 +97,11 @@ public class GridUI
             itemWidth = temp;
         }
 
+        Debug.Log(selectedCell);
         Vector2Int cellPos = GetCellPosition(selectedCell);
         
         if (cellPos.x + itemHeight > rows || cellPos.y + itemWidth > cols) {
+            // Debug.Log("CanPlaceItem out of bounds check");
             return false; // out of bounds check
         }
 
@@ -91,12 +113,13 @@ public class GridUI
                 GameObject cell = gridArray[gridX, gridY];
                 if(!cell.GetComponent<Cell>().GetAvailable()) {
                     // if occupied returns false
-                    // Debug.Log(cell.name + " occupied");
+                    // Debug.Log(cell.name + " occupied (CanPlaceItem is cell free check)");
                     return false;
                 }
             }
         }
 
+        // Debug.Log("CanPlaceItem returned true");
         return true;
     }
 
@@ -164,6 +187,18 @@ public class GridUI
                 cellComp = cell.GetComponent<Cell>();
                 cellComp.SetAvailable(true);
                 cellComp.SetRoot(null); // reset reference when object moved
+            }
+        }
+    }
+
+    public void ClearGrid()
+    {
+        for(int x = 0; x < rows; x++) {
+            for(int y = 0; y < cols; y++) {
+                if(gridArray[x,y] != null) {
+                    Object.Destroy(gridArray[x,y]);
+                    gridArray[x,y] = null;
+                }
             }
         }
     }
