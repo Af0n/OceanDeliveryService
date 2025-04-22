@@ -667,7 +667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5509877076141968163
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2849,6 +2849,7 @@ MonoBehaviour:
   speed: 10
   CamPos: {fileID: 2874616164932248233}
   TerminalUI: {fileID: 6357320850457087241}
+  DeckLadyFlags: {fileID: 0}
 --- !u!65 &6238954200886256311
 BoxCollider:
   m_ObjectHideFlags: 0
