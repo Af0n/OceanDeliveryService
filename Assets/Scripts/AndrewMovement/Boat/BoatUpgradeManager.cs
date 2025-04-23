@@ -15,6 +15,8 @@ public class BoatUpgradeManager : MonoBehaviour
 
     public bool motorUpgrade;
     public int motorCost;
+    public GameObject motor1;
+    public GameObject motor2;
 
     public bool submersible;
     public int subCost;
@@ -49,6 +51,8 @@ public class BoatUpgradeManager : MonoBehaviour
     public void GiveMotorUpgrade()
     {
         motorUpgrade = true;
+        motor1.SetActive(true);
+        motor2.SetActive(true);
     }
 
     public void GiveSubmersibleUpgrade()
