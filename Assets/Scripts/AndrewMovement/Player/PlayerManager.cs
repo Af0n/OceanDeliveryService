@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     public UpdateThirdPersonInteractUI TPIUpdater;
     public CinemachineCamera cinemachineCamera;
     public Transform Cam;
+    public float firstPersonCameraHeight = 1.7f;
 
     private void Awake()
     {
@@ -126,7 +127,7 @@ public class PlayerManager : MonoBehaviour
         cinemachineCamera.enabled = false;
         Reticle.enabled = true;
         interaction.StopThirdPersonCheck();
-        Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
+        Cam.SetLocalPositionAndRotation(new Vector3(0f, firstPersonCameraHeight, 0f), Quaternion.identity);
         ThirdPersonDisplay.gameObject.SetActive(true);
     }
 
