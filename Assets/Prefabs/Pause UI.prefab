@@ -2884,6 +2884,7 @@ MonoBehaviour:
   playerMan: {fileID: 0}
   systemIndex: 4
   optionsIndex: 5
+  inventory: {fileID: 0}
 --- !u!1 &6976312439340440806
 GameObject:
   m_ObjectHideFlags: 0

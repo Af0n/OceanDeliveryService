@@ -514,6 +514,7 @@ MonoBehaviour:
   speed: 10
   CamPos: {fileID: 2688006814079771495}
   TerminalUI: {fileID: 3773768413481766136}
+  DeckLadyFlags: {fileID: 11400000, guid: f9d6d2b9b0581bf4f8f7fbefbb0b0ba4, type: 2}
 --- !u!65 &2951820813330587227
 BoxCollider:
   m_ObjectHideFlags: 0

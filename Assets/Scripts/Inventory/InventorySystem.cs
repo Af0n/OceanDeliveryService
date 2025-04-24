@@ -2,20 +2,22 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class InventorySystem : MonoBehaviour
 {
     private InventoryObject inventoryObject;
-
+    private deliveryZone deliveryZone;
     private InventoryObject.Dir dir = InventoryObject.Dir.Horizontal;
 
     private GridUI gridUI;
     public GameObject panel;
+    public GameObject DZPanel; 
     public GameObject cellPrefab;
     private List<GameObject> inventorySlots = new List<GameObject>(); // for storing UI elements 
 
-    public int gridWidth;
     public int gridHeight;
+    public int gridWidth;
 
     private GameObject objectToMove;
     public GameObject tempCell; // for holding objectToMove when applicable
@@ -24,6 +26,10 @@ public class InventorySystem : MonoBehaviour
 
     private CanvasGroup canvasGroup;
     private Canvas canvas;
+    public TextMeshProUGUI questNameText; 
+    public TextMeshProUGUI questRequirementsText;
+    public TextMeshProUGUI errorMessageText; 
+    public Button deliverButton;
     private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
 
     // input system stuff
@@ -34,6 +40,10 @@ public class InventorySystem : MonoBehaviour
     {
         actions = new InputSystem_Actions();
         objectToMove = null;
+
+        // get correct size based on upgrades 
+        gridWidth = GetComponentInParent<PlayerUpgradeManager>().inventoryCapacityUpgrade;
+
         GenerateInventory();
     }
 
@@ -69,28 +79,56 @@ public class InventorySystem : MonoBehaviour
 
     void GenerateInventory()
     {
+        // clear old slots if they exist (when upgrading)
+        foreach(GameObject slot in inventorySlots) {
+            Destroy(slot);
+        }
+        inventorySlots.Clear();
+
         // Initialize GridUI with panel, prefab, and grid size
-        gridUI = new GridUI(panel, cellPrefab, gridWidth, gridHeight, new Vector2(100,100));
+        gridUI = new GridUI(panel, cellPrefab, gridHeight, gridWidth, new Vector2(100,100));
 
         // Store references to the generated grid cells
-        foreach (Transform child in panel.transform)
-        {
-            GameObject slot = child.gameObject;
-            inventorySlots.Add(slot);
-            // Add an onClick listener to each slot
-            slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
+        inventorySlots = gridUI.GetAllCells();
+        foreach(GameObject slot in inventorySlots) {
+            Button button = slot.GetComponent<Button>();
+            button.onClick.RemoveAllListeners(); // Prevent duplicate handlers
+            button.onClick.AddListener(() => OnInventorySlotClick(slot));
+        }
+    }
+
+    public void SetDeliveryZone(deliveryZone deliveryZone) {
+        this.deliveryZone = deliveryZone;
+    }
+    public void ClearDeliveryZone() {
+        deliveryZone = null;
+    }
+    public void UpdateDeliveryZonePanel(string questName, string questReciepentName){
+        questRequirementsText.text = string.Empty;
+        questNameText.text = questName;
+        questRequirementsText.text += "· " + questReciepentName + "'s package\n";
+        foreach(GameObject slot in inventorySlots) {
+            if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
+                Debug.Log("recipientName: hello" + recipientName + ", questRecipentName: " + questReciepentName);
+                if (recipientName == questReciepentName){
+                    questRequirementsText.text = "<s>"+ questRequirementsText.text +"</s>";
+                    return;
+                }
+            }
         }
     }
 
     void OnInventorySlotClick(GameObject slot)
     {
-        // Debug.Log(slot.name + " clicked");
+        Debug.Log(slot.name + " clicked");
 
         Cell cellComp = slot.GetComponent<Cell>();
         
         // pick up an inventory object
         if(!cellComp.GetAvailable() && objectToMove == null) {
             Transform rootCell = cellComp.GetRoot();
+            // Debug.Log(rootCell);
 
             PlacedObject placedObject = rootCell.GetComponentInChildren<PlacedObject>();
             dir = placedObject.GetDir();
@@ -110,10 +148,13 @@ public class InventorySystem : MonoBehaviour
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
                 objectToMove.transform.SetParent(slot.transform);
                 objectToMove.transform.localPosition = Vector3.zero;
+
+                string name = objectToMove.GetComponent<PlacedObject>().GetRecipient();
+                Debug.Log("recipient is " + name);
                 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
 
-                PlacedObject.SetUpObject(objectToMove, inventoryObject, dir);
+                PlacedObject.SetUpObject(objectToMove, inventoryObject, dir, name);
 
                 objectToMove = null; // reset reference
             }
@@ -145,12 +186,46 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public bool AddObjectToInventory(InventoryObject inventoryObject) 
+    public void UpgradeInventory(int newSize)
+    {
+        // store any objects in tempCell before changing inventory size
+        foreach(GameObject slot in inventorySlots) {
+            if(slot.transform.childCount > 0) {
+                GameObject childObj = slot.transform.GetChild(0).gameObject;
+                childObj.transform.SetParent(tempCell.transform);
+                childObj.transform.localPosition = Vector3.zero;
+
+                PlacedObject placedObject = childObj.GetComponent<PlacedObject>();
+                dir = placedObject.GetDir();
+                inventoryObject = placedObject.GetInventoryObject();
+
+                gridUI.RemoveItem(inventoryObject, dir, slot);
+            }
+        }
+
+        // recreate inventory w/ new size
+        gridUI.ClearGrid();
+        gridWidth = newSize;
+        GenerateInventory();
+
+        // put all stored objects back in inventory
+        foreach(Transform child in tempCell.transform) {
+            GameObject childObj = child.gameObject;
+            PlacedObject placedObject = childObj.GetComponent<PlacedObject>();
+            InventoryObject inventoryObject = placedObject.GetInventoryObject();
+            string reciepent = placedObject.GetRecipient();
+            dir = placedObject.GetDir(); // to make sure dir is correct 
+
+            AddObjectToInventory(inventoryObject, reciepent);
+
+            Destroy(childObj); // bc AddObjectToInventory creates a duplicate so the old one needs to go
+        }
+    }
+
+    public bool AddObjectToInventory(InventoryObject inventoryObject, string reciepentName) 
     {
         foreach(GameObject slot in inventorySlots) {
             if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
-                // Debug.Log(slot + " empty");
-
                 GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
@@ -158,7 +233,7 @@ public class InventorySystem : MonoBehaviour
                 newItem.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
 
                 // save the object when it's created
-                PlacedObject.SetUpObject(newItem, inventoryObject, dir);
+                PlacedObject.SetUpObject(newItem, inventoryObject, dir, reciepentName);
 
                 gridUI.PlaceItem(inventoryObject, dir, slot);
                 // Debug.Log("setting slot unavailable: " + slot.name);
@@ -166,7 +241,7 @@ public class InventorySystem : MonoBehaviour
                 return true;
             }
             else {
-                Debug.Log(slot + " taken");
+                Debug.Log("could not find slot -- see GridUI.CanPlaceItem()");
             }
         }
 
@@ -187,7 +262,12 @@ public class InventorySystem : MonoBehaviour
         if(objectToMove != null && isDisplayed) {
             PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
             InventoryObject newObject = placedObject.GetInventoryObject();
-            Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+            GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+            
+            Package package = droppedObj.GetComponent<Package>();
+            if(package != null) {
+                package.SetRecipient(placedObject.GetRecipient());
+            }
 
             // reset inventory movement stuff
             ResetObjectToMove();
@@ -198,7 +278,7 @@ public class InventorySystem : MonoBehaviour
     public void CheckIfMoving()
     {
         if(objectToMove != null) {
-            AddObjectToInventory(inventoryObject);
+            AddObjectToInventory(inventoryObject, objectToMove.GetComponent<PlacedObject>().GetRecipient());
             ResetObjectToMove();
         }
     }
@@ -207,6 +287,45 @@ public class InventorySystem : MonoBehaviour
     {
         Destroy(objectToMove);
         objectToMove = null; 
+    }
+
+    // for package delivery
+    public void DeliverPackage() {
+        foreach(GameObject slot in inventorySlots) {
+            // Check if the slot has a child and the child is tagged as "Package"
+            if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
+                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
+                string questRecipentName = deliveryZone.recipientName;
+                Debug.Log("recipientName: " + recipientName + ", questRecipentName: " + questRecipentName);
+                // Check if the recipient name matches the quest name
+                if (recipientName == questRecipentName){
+                    Cell cellComp = slot.GetComponent<Cell>();
+                    Transform rootCell = cellComp.GetRoot();
+                    PlacedObject tempPlacedObject = rootCell.GetComponentInChildren<PlacedObject>();
+                    dir = tempPlacedObject.GetDir();
+                    inventoryObject = tempPlacedObject.GetInventoryObject();
+                    objectToMove = tempPlacedObject.gameObject;
+                    PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
+                    InventoryObject newObject = placedObject.GetInventoryObject();
+                    // Instantiate the dropped object in the world
+                    GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+                    droppedObj.GetComponent<Package>().SetRecipient(recipientName);
+                    gridUI.RemoveItem(inventoryObject, dir, slot);
+                    ResetObjectToMove();
+                    deliveryZone.DisableDeliveryZone();
+                    ClearDeliveryZone();
+                    
+                    return;
+                }
+            }
+        }
+        errorMessageText.gameObject.SetActive(true);
+        // Invoke(nameof(HideErrorMsg), 1f);
+        return;
+    }
+
+    private void HideErrorMsg(){
+        errorMessageText.gameObject.SetActive(false);
     }
 
     void OnEnable()

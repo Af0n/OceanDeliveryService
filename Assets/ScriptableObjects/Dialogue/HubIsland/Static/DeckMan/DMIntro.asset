@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: DMIntro
+  m_EditorClassIdentifier: 
+  Label: 
+  Dialogues:
+  - CharName: Deck Man
+    Text: ayyy
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Deck Man
+    Text: do u know how to sail a byatt?
+    HasMenu: 1
+    MenuOptions:
+    - {fileID: 11400000, guid: 951b4a21dbf21194ab02602becc80ee3, type: 2}
+    - {fileID: 11400000, guid: 856acf4ebe5f4c64ab271761f372b809, type: 2}
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0

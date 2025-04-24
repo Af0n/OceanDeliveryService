@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -19,12 +20,16 @@ public class PlayerManager : MonoBehaviour
     public WaterDeath waterDeath;
     public CharacterController controller;
     public PlayerUpgradeManager upgradeManager;
+    public PauseUI pauseUI;
     public Image Reticle;
-
     public bool IsOnBoat;
+    public bool IsInDeliveryZone;
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
+    public GameObject firstPersonPlayerFloater;
+    public GameObject firstPersonVisual;
+    public float inventoryVisibility = 1f;
     public bool HasThirdPersonInteractable, HasMultipleTPI;
 
     [Header("Unity Set Up")]
@@ -33,6 +38,7 @@ public class PlayerManager : MonoBehaviour
     public CinemachineCamera cinemachineCamera;
     public Transform Cam;
     public float firstPersonCameraHeight = 1.7f;
+    public Transform BodyVisual;
 
     private void Awake()
     {
@@ -42,7 +48,9 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
-
+        
+        playerFloater.SetActive(false);
+        firstPersonPlayerFloater.SetActive(false);
         ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
         ToggleThirdPerson(IsThirdPerson);
@@ -67,7 +75,7 @@ public class PlayerManager : MonoBehaviour
         if (isUnderwater)
         {
             // Only start drowning if the head is submerged too
-            if (movement.isSwimming)
+            if (!movement.isSwimming)
             {
                 waterDeath.StartDrowning();
             }
@@ -79,6 +87,7 @@ public class PlayerManager : MonoBehaviour
             movement.isFloating = false;
             movement.isSwimming = false;
             playerFloater.SetActive(false);
+            firstPersonPlayerFloater.SetActive(false);
             //OnEmerge?.Invoke();
             movement.audioManager.Emerge();
         }
@@ -93,6 +102,7 @@ public class PlayerManager : MonoBehaviour
             movement.isSwimming = true;
             movement.isFloating = false;
             playerFloater.SetActive(false);
+            firstPersonPlayerFloater.SetActive(false);
             waterDeath.StartDrowning();
         }
         else
@@ -104,6 +114,7 @@ public class PlayerManager : MonoBehaviour
                 movement.isSwimming = false;
                 movement.isFloating = true;
                 playerFloater.SetActive(true);
+                firstPersonPlayerFloater.SetActive(true);
                 waterDeath.StopDrowning();
             }
         }
@@ -112,9 +123,11 @@ public class PlayerManager : MonoBehaviour
     public void ToggleThirdPerson(bool b)
     {
         IsThirdPerson = b;
+        BodyVisual.gameObject.SetActive(IsThirdPerson);
 
         if (IsThirdPerson)
         {
+            firstPersonVisual.SetActive(false);
             SetLook(false);
             cinemachineCamera.enabled = true;
             Reticle.enabled = false;
@@ -123,6 +136,7 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
+        firstPersonVisual.SetActive(true);
         SetLook(true);
         cinemachineCamera.enabled = false;
         Reticle.enabled = true;
@@ -218,6 +232,13 @@ public class PlayerManager : MonoBehaviour
             case "BoatTrigger":
                 IsOnBoat = true;
                 break;
+            case "DeliveryZone":
+                Debug.Log("Entered Delivery Zone");
+                if(IsInDeliveryZone) return;
+                IsInDeliveryZone = true;
+                pauseUI.Pause();
+                pauseUI.SetActiveMenu(2);
+                break;
         }
     }
 
@@ -227,6 +248,10 @@ public class PlayerManager : MonoBehaviour
         {
             case "BoatTrigger":
                 IsOnBoat = false;
+                break;
+            case "DeliveryZone":
+                Debug.Log("Exited Delivery Zone");
+                IsInDeliveryZone = false;
                 break;
         }
     }
@@ -250,10 +275,20 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Respawning player at respawn point...");
         SetAll(true);
 
-        controller.excludeLayers = ExcludeLayersTemp;
-        controller.Move(RespawnPoint.position - transform.position);
-        transform.rotation = RespawnPoint.rotation;
+        // wait for next frame
+        yield return 0;
 
+        StartCoroutine(Teleport(RespawnPoint.position));
+    }
+
+    public void DoTeleport(Vector3 pos){
+        StartCoroutine(Teleport(pos));
+    }
+
+    public IEnumerator Teleport(Vector3 teleport){
+        controller.excludeLayers = ExcludeLayersTemp;
+        controller.Move(teleport - transform.position);
+        transform.rotation = RespawnPoint.rotation;
         // wait for a frame
         yield return 0;
 
@@ -265,7 +300,7 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(RespawnTime);
         StartCoroutine(nameof(Respawn));
     }
-
+    
     public void ToggleSurface(float surfaced)
     {
         // onSurfaceDepth = surfaced;
@@ -274,6 +309,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         PlayerFloater.OnSurfacedPlayer += ToggleSurface;
+        pauseUI = GetComponentInChildren<PauseUI>();
     }
 
     void OnDestroy()

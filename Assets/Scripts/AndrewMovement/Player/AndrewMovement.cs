@@ -12,6 +12,7 @@ public class AndrewMovement : MonoBehaviour
     [Header("Movement Properties")]
     public float Speed;
     public float JumpHeight;
+    [HideInInspector] public bool canSwim;
     public bool isSwimming;
     public bool isFloating;
     public float verticalWaterSpeed;
@@ -179,35 +180,60 @@ public class AndrewMovement : MonoBehaviour
             moveVec = transform.forward * readMove.y + transform.right * readMove.x;
         }
 
-        if (isSwimming)
+        if (canSwim)
         {
-            if (readMove.magnitude > 0)
+            if (isSwimming)
             {
-                audioManager.StartSwimming(false);
+                if (readMove.magnitude > 0)
+                {
+                    audioManager.StartSwimming(false);
+                }
+                else
+                {
+                    audioManager.StopSwimming(false);
+                }
+                WaterVertical();
+                moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
+
+                manager.Move(moveVec);
+            }
+            else if (isFloating)
+            {
+                if (readMove.magnitude > 0)
+                {
+                    audioManager.StartSwimming(true);
+                }
+                else
+                {
+                    audioManager.StopSwimming(true);
+                }
+                WaterVertical();
+                moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
+
+                manager.Move(moveVec);
             }
             else
             {
-                audioManager.StopSwimming(false);
-            }
-            WaterVertical();
-            moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
+                moveVec *= Time.deltaTime * Speed;
 
-            manager.Move(moveVec);
-        }
-        else if (isFloating)
-        {
-            if (readMove.magnitude > 0)
-            {
-                audioManager.StartSwimming(true);
-            }
-            else
-            {
-                audioManager.StopSwimming(true);
-            }
-            WaterVertical();
-            moveVec *= Time.deltaTime * upgradeManager.swimSpeedUpgrade;
+                if (isGrounded)
+                {
+                    if (readMove.magnitude > 0)
+                    {
+                        audioManager.StartWalking(false);
+                    }
+                    else
+                    {
+                        audioManager.StopWalking(false);
+                    }
+                }
+                else
+                {
+                    audioManager.StopWalking(false);
+                }
 
-            manager.Move(moveVec);
+                manager.Move(moveVec);
+            }
         }
         else
         {
@@ -326,7 +352,10 @@ public class AndrewMovement : MonoBehaviour
         jump.Enable();
         jump.performed += Jump;
 
-        manager.enabled = true;
+        if(manager.controller == null){
+            return;
+        }
+        manager.controller.enabled = true;
     }
 
     void OnDisable()
@@ -335,7 +364,10 @@ public class AndrewMovement : MonoBehaviour
         move.Disable();
         jump.Disable();
 
-        manager.enabled = false;
+        if(manager.controller == null){
+            return;
+        }
+        manager.controller.enabled = false;
     }
 
     private void OnDrawGizmosSelected()

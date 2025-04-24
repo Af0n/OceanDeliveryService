@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Interactable
   - BoatTrigger
+  - DeliveryZone
   - PlayerHead
+  - Package
   layers:
   - Default
   - TransparentFX
