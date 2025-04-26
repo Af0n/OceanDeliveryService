@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Creator : Interactable
 {
@@ -21,38 +22,26 @@ public class Creator : Interactable
         }
     }
 
+    public void CompleteGame()
+    {
+        Debug.Log("Game is over now. Sending to the end scene");
+    }
+
     public override void Interact()
     {
-        switch (flags.CheckFlag("HasTalked"))
+        if (flags.CheckFlag("FinishedPackages") == 1)
         {
-            case 0:
-                break;
-            case 1:
-                // continue
-                DialogueManager.instance.StartDialogue(ReturnChain);
-                return;
-            default:
-                DialogueManager.instance.StartDialogue(ReturnChain);
-                break;
+            DialogueManager.instance.StartDialogue(ByeChain);
+            return;
         }
-        
-        switch (flags.CheckFlag("FinishedPackages"))
-        {
-            case 0:
-                DialogueManager.instance.StartDialogue(IntroChain);
-                flags.SetFlag("HasTalked", true);
-                return;
-            case 1:
-                // continue
-                break;
-            default:
-                DialogueManager.instance.StartDialogue(IntroChain);
-                flags.SetFlag("HasTalked", true);
-                break;
-        }
-        
-        
 
-        DialogueManager.instance.StartDialogue(ByeChain);
+        if (flags.CheckFlag("HasTalked") == 0)
+        {
+            DialogueManager.instance.StartDialogue(IntroChain);
+            flags.SetFlag("HasTalked", true);
+            return;
+        }
+    
+        DialogueManager.instance.StartDialogue(ReturnChain);
     }
 }

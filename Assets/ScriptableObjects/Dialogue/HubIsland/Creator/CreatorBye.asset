@@ -22,16 +22,18 @@ MonoBehaviour:
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Chrysler
-    Text: Now we can finally get out of here. We are going to the moon.
+    Text: 'We can finally get out of here. We are going to the moon. '
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Chrysler
-    Text: (Starts End)
-    HasMenu: 0
-    MenuOptions: []
+    Text: Do you want to get out of here now or stay for little while?
+    HasMenu: 1
+    MenuOptions:
+    - {fileID: 11400000, guid: 52930f66fdaab5f4898a5121fba2a4d6, type: 2}
+    - {fileID: 11400000, guid: 4bfafa353df1c4e47ba89c840b78425d, type: 2}
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0

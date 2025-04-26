@@ -122,8 +122,19 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void MenuSelection(int i){
-        SetChain(menuOptions[i], 0);
-        SetDialogue(chain.Dialogues[index]);
+        // SetChain(menuOptions[i], 0);
+        // SetDialogue(chain.Dialogues[index]);
+        
+        var selected = menuOptions[i];
+        
+        if (selected.Label == "Yes lets get out of here." || selected.Label == "I would like to stay for a little bit."){
+            CallFunction(selected.Label);
+        }
+        else {
+            SetChain(menuOptions[i], 0);
+            SetDialogue(chain.Dialogues[index]);
+        }
+        
         for(int c=0; c<menu.childCount; c++)
         {
             menu.GetChild(c).gameObject.SetActive(false);
@@ -140,5 +151,23 @@ public class DialogueManager : MonoBehaviour
     void OnDisable()
     {
         advance.Disable();
+    }
+    
+    
+    private void CallFunction(string functionName)
+    {
+        if (functionName == "I would like to stay for a little bit.")
+        {
+            EndDialogue();
+        }
+        else if (functionName == "Yes lets get out of here.")
+        {
+            FindObjectOfType<Creator>().CompleteGame(); 
+            EndDialogue();
+        }
+        else
+        {
+            Debug.LogWarning($"No function found for {functionName}");
+        }
     }
 }
