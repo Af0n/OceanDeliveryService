@@ -261,7 +261,7 @@ public class InventorySystem : MonoBehaviour
                     droppedObj.GetComponent<Package>().SetRecipient(recipientName);
                     gridUI.RemoveItem(inventoryObject, dir, slot);
                     ResetObjectToMove();
-                    deliveryZone.DisableDeliveryZone();
+                    deliveryZone.CompleteDelivery();
                     ClearDeliveryZone();
                     
                     return;
@@ -269,7 +269,7 @@ public class InventorySystem : MonoBehaviour
             }
         }
         errorMessageText.gameObject.SetActive(true);
-        // Invoke(nameof(HideErrorMsg), 1f);
+        Invoke(nameof(HideErrorMsg), 1f);
         return;
     }
 

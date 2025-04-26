@@ -1,22 +1,18 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class deliveryZone : MonoBehaviour{
     public InventorySystem inventory;
+    public Quest quest;
     [Tooltip("The reciepent name for the quest.")]
     public string recipientName;
-    [Tooltip("The name of the quest attached to this zone.")]
-    public QuestList QuestName;
-    [Tooltip("The packages required to be delivered in this zone.(features implementation is TBD)")]
-    // public List<QuestRequirements> packages;
 
     private void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player")){
+            quest = QuestManager.Instance.GetQuestForRecipient(recipientName);
+            Debug.Log($"Player entered delivery zone for quest: {quest.questName}");
+            InventorySystem inventory = other.GetComponent<PlayerManager>().GetComponentInChildren<InventorySystem>();
             inventory.SetDeliveryZone(this);
-            inventory.UpdateDeliveryZonePanel(QuestName.ToString(), recipientName);
-            // inventory.UpdateDeliveryZonePanel(QuestName.ToString(), packages.ConvertAll(package => package.ToString()));
-            
+            inventory.UpdateDeliveryZonePanel(quest.questName, recipientName);
         }
     }
     private void OnTriggerExit(Collider other){
@@ -24,25 +20,10 @@ public class deliveryZone : MonoBehaviour{
             inventory.ClearDeliveryZone();
         }
     }
-    public void DisableDeliveryZone(){
-        gameObject.SetActive(false);
+    public void CompleteDelivery(){
+        quest = QuestManager.Instance.GetQuestForRecipient(recipientName);
+        QuestManager.Instance.CompleteQuest(quest);
+        Debug.Log($"Delivery completed for quest: {quest.questName}");
+        gameObject.SetActive(false); 
     }
-    // public string GetQuestRequirements(){
-    //     return string.Join(", ", packages);
-    // }
-    public enum QuestList{
-        QuestA,
-        QuestB,
-        QuestC,
-        //Just sample quests
-    }
-    
-
-    // public enum QuestRequirements
-    // {
-    //     packageA,
-    //     packageB,
-    //     packageC,
-    //     // Just sample packages, a quest struct should be made.
-    // }
 }
