@@ -165,9 +165,5 @@ public class DialogueManager : MonoBehaviour
             FindObjectOfType<Creator>().CompleteGame(); 
             EndDialogue();
         }
-        else
-        {
-            Debug.LogWarning($"No function found for {functionName}");
-        }
     }
 }
