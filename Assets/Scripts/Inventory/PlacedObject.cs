@@ -13,7 +13,8 @@ public class PlacedObject : MonoBehaviour
 
     private InventoryObject inventoryObject;
     private InventoryObject.Dir dir;
-    public string reciepent;
+    [SerializeField]
+    private string reciepent; // set as serialize field so viewable from inspector (for testing)
 
     public void DestroySelf()
     {

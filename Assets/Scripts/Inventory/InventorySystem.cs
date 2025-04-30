@@ -12,7 +12,7 @@ public class InventorySystem : MonoBehaviour
 
     private GridUI gridUI;
     public GameObject panel;
-    public GameObject DZPanel; 
+    public GameObject DZPanel;
     public GameObject cellPrefab;
     private List<GameObject> inventorySlots = new List<GameObject>(); // for storing UI elements 
 
@@ -26,20 +26,27 @@ public class InventorySystem : MonoBehaviour
 
     private CanvasGroup canvasGroup;
     private Canvas canvas;
-    public TextMeshProUGUI questNameText; 
+    public TextMeshProUGUI questNameText;
     public TextMeshProUGUI questRequirementsText;
-    public TextMeshProUGUI errorMessageText; 
+    public TextMeshProUGUI errorMessageText;
     public Button deliverButton;
-    private bool isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
+    public Creator questFlag;
+
+    private bool
+        isDisplayed; // so inputs aren't called unless the inventory is shown (not that they do anything if it isn't)
 
     // input system stuff
     private InputSystem_Actions actions;
-    private InputAction rotate, drop; 
+    private InputAction rotate, drop;
 
     void Awake()
     {
         actions = new InputSystem_Actions();
         objectToMove = null;
+
+        // get correct size based on upgrades 
+        gridWidth = GetComponentInParent<PlayerUpgradeManager>().inventoryCapacityUpgrade;
+
         GenerateInventory();
     }
 
@@ -55,17 +62,20 @@ public class InventorySystem : MonoBehaviour
     public void DisplayInventory(bool toDisplay)
     {
         // here bc call in PauseUI runs before canvasGroup is assigned
-        if(canvasGroup == null) {
+        if (canvasGroup == null)
+        {
             return;
         }
 
-        if(toDisplay) {
+        if (toDisplay)
+        {
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
             isDisplayed = true;
         }
-        else {
+        else
+        {
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
@@ -75,22 +85,34 @@ public class InventorySystem : MonoBehaviour
 
     void GenerateInventory()
     {
+        // clear old slots if they exist (when upgrading)
+        foreach (GameObject slot in inventorySlots)
+        {
+            Destroy(slot);
+        }
+
+        inventorySlots.Clear();
+
         // Initialize GridUI with panel, prefab, and grid size
-        gridUI = new GridUI(panel, cellPrefab, gridHeight, gridWidth, new Vector2(100,100));
+        gridUI = new GridUI(panel, cellPrefab, gridHeight, gridWidth, new Vector2(100, 100));
 
         // Store references to the generated grid cells
-        foreach (Transform child in panel.transform)
+        inventorySlots = gridUI.GetAllCells();
+        foreach (GameObject slot in inventorySlots)
         {
-            GameObject slot = child.gameObject;
-            inventorySlots.Add(slot);
-            // Add an onClick listener to each slot
-            slot.GetComponent<Button>().onClick.AddListener(() => OnInventorySlotClick(slot));
+            Button button = slot.GetComponent<Button>();
+            button.onClick.RemoveAllListeners(); // Prevent duplicate handlers
+            button.onClick.AddListener(() => OnInventorySlotClick(slot));
         }
     }
-    public void SetDeliveryZone(deliveryZone deliveryZone) {
+
+    public void SetDeliveryZone(deliveryZone deliveryZone)
+    {
         this.deliveryZone = deliveryZone;
     }
-    public void ClearDeliveryZone() {
+
+    public void ClearDeliveryZone()
+    {
         deliveryZone = null;
     }
     public void UpdateDeliveryZonePanel(string questName, List<string> questObjectives){
@@ -104,13 +126,15 @@ public class InventorySystem : MonoBehaviour
 
     void OnInventorySlotClick(GameObject slot)
     {
-        // Debug.Log(slot.name + " clicked");
+        Debug.Log(slot.name + " clicked");
 
         Cell cellComp = slot.GetComponent<Cell>();
-        
+
         // pick up an inventory object
-        if(!cellComp.GetAvailable() && objectToMove == null) {
+        if (!cellComp.GetAvailable() && objectToMove == null)
+        {
             Transform rootCell = cellComp.GetRoot();
+            // Debug.Log(rootCell);
 
             PlacedObject placedObject = rootCell.GetComponentInChildren<PlacedObject>();
             dir = placedObject.GetDir();
@@ -119,21 +143,23 @@ public class InventorySystem : MonoBehaviour
             objectToMove = placedObject.gameObject;
             objectToMove.transform.SetParent(tempCell.transform);
             objectToMove.transform.localPosition = Vector3.zero;
-            
+
             gridUI.RemoveItem(inventoryObject, dir, slot);
 
             return;
         }
 
         // place an inventory object
-        if(objectToMove != null) {
-            if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
+        if (objectToMove != null)
+        {
+            if (gridUI.CanPlaceItem(inventoryObject, dir, slot))
+            {
                 objectToMove.transform.SetParent(slot.transform);
                 objectToMove.transform.localPosition = Vector3.zero;
 
                 string name = objectToMove.GetComponent<PlacedObject>().GetRecipient();
                 Debug.Log("recipient is " + name);
-                
+
                 gridUI.PlaceItem(inventoryObject, dir, slot);
 
                 PlacedObject.SetUpObject(objectToMove, inventoryObject, dir, name);
@@ -146,7 +172,8 @@ public class InventorySystem : MonoBehaviour
     void Update()
     {
         // so objectToMove follows the mouse when selected
-        if(objectToMove != null) {
+        if (objectToMove != null)
+        {
             Vector2 pos;
             RectTransform inventoryPanelRect = panel.GetComponent<RectTransform>();
 
@@ -168,10 +195,51 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public bool AddObjectToInventory(InventoryObject inventoryObject, string reciepentName) 
+    public void UpgradeInventory(int newSize)
     {
-        foreach(GameObject slot in inventorySlots) {
-            if(gridUI.CanPlaceItem(inventoryObject, dir, slot)) {
+        // store any objects in tempCell before changing inventory size
+        foreach (GameObject slot in inventorySlots)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                GameObject childObj = slot.transform.GetChild(0).gameObject;
+                childObj.transform.SetParent(tempCell.transform);
+                childObj.transform.localPosition = Vector3.zero;
+
+                PlacedObject placedObject = childObj.GetComponent<PlacedObject>();
+                dir = placedObject.GetDir();
+                inventoryObject = placedObject.GetInventoryObject();
+
+                gridUI.RemoveItem(inventoryObject, dir, slot);
+            }
+        }
+
+        // recreate inventory w/ new size
+        gridUI.ClearGrid();
+        gridWidth = newSize;
+        GenerateInventory();
+
+        // put all stored objects back in inventory
+        foreach (Transform child in tempCell.transform)
+        {
+            GameObject childObj = child.gameObject;
+            PlacedObject placedObject = childObj.GetComponent<PlacedObject>();
+            InventoryObject inventoryObject = placedObject.GetInventoryObject();
+            string reciepent = placedObject.GetRecipient();
+            dir = placedObject.GetDir(); // to make sure dir is correct 
+
+            AddObjectToInventory(inventoryObject, reciepent);
+
+            Destroy(childObj); // bc AddObjectToInventory creates a duplicate so the old one needs to go
+        }
+    }
+
+    public bool AddObjectToInventory(InventoryObject inventoryObject, string reciepentName)
+    {
+        foreach (GameObject slot in inventorySlots)
+        {
+            if (gridUI.CanPlaceItem(inventoryObject, dir, slot))
+            {
                 GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
                 newItem.transform.localPosition = Vector3.zero;
 
@@ -186,8 +254,9 @@ public class InventorySystem : MonoBehaviour
 
                 return true;
             }
-            else {
-                Debug.Log(slot + " taken");
+            else
+            {
+                Debug.Log("could not find slot -- see GridUI.CanPlaceItem()");
             }
         }
 
@@ -196,7 +265,8 @@ public class InventorySystem : MonoBehaviour
 
     private void Rotate(InputAction.CallbackContext context)
     {
-        if(objectToMove != null && isDisplayed) {
+        if (objectToMove != null && isDisplayed)
+        {
             dir = InventoryObject.GetNextDir(dir);
             float rotation = inventoryObject.GetRotationAngle(dir);
             objectToMove.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
@@ -205,11 +275,17 @@ public class InventorySystem : MonoBehaviour
 
     private void Drop(InputAction.CallbackContext context)
     {
-        if(objectToMove != null && isDisplayed) {
+        if (objectToMove != null && isDisplayed)
+        {
             PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
             InventoryObject newObject = placedObject.GetInventoryObject();
             GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
-            droppedObj.GetComponent<Package>().SetRecipient(placedObject.GetRecipient());
+
+            Package package = droppedObj.GetComponent<Package>();
+            if (package != null)
+            {
+                package.SetRecipient(placedObject.GetRecipient());
+            }
 
             // reset inventory movement stuff
             ResetObjectToMove();
@@ -219,7 +295,8 @@ public class InventorySystem : MonoBehaviour
     // will place objectToMove back in first available pos in inventory (for pause menu logic)
     public void CheckIfMoving()
     {
-        if(objectToMove != null) {
+        if (objectToMove != null)
+        {
             AddObjectToInventory(inventoryObject, objectToMove.GetComponent<PlacedObject>().GetRecipient());
             ResetObjectToMove();
         }
@@ -228,7 +305,7 @@ public class InventorySystem : MonoBehaviour
     private void ResetObjectToMove()
     {
         Destroy(objectToMove);
-        objectToMove = null; 
+        objectToMove = null;
     }
 
     // for package delivery
@@ -275,7 +352,8 @@ public class InventorySystem : MonoBehaviour
         Invoke(nameof(HideErrorMsg), 1f);
     }
 
-    private void HideErrorMsg(){
+    private void HideErrorMsg()
+    {
         errorMessageText.gameObject.SetActive(false);
     }
 
@@ -297,51 +375,5 @@ public class InventorySystem : MonoBehaviour
         rotate.Disable(); // null reference here
         drop.Disable();
     }
-
-    // for placing objects at specific inventory positions instead of next available
-    // public void AddObjectToSpecific(InventoryObject inventoryObject, int x, int y, InventoryObject.Dir dir) 
-    // {
-    //     List<Vector2Int> gridPosList = inventoryObject.GetGridPositionList(new Vector2Int(x, y), dir);
-    //     bool canPlace = true;
-    //     foreach(Vector2Int gridPos in gridPosList) {
-    //         if(gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= gridWidth || gridPos.y >= gridHeight) {
-    //             canPlace = false; // out of bounds check
-    //             break;
-    //         }
-    //         if(!grid.GetGridObject(gridPos.x, gridPos.y).CanPlace()) {
-    //             canPlace = false; // overlap check
-    //             break;
-    //         }
-    //     }
-
-    //     if(canPlace) {
-    //         Vector2Int rotationOffset = inventoryObject.GetRotationOffset(dir);
-    //         Vector3 placedPos = new Vector3(x*10, y*10, 0) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * cellSize;
-
-    //         PlacedObject placedObject = PlacedObject.Create(placedPos, new Vector2Int(x, y), dir, inventoryObject);
-            
-    //         foreach(Vector2Int gridPos in gridPosList) {
-    //             grid.GetGridObject(gridPos.x, gridPos.y).SetPlacedObject(placedObject);
-    //         }
-
-    //         return;
-    //     }
-    // }
-
 }
-
-
-// code for destroying an object (saving in case it's needed later)
-
-// GridObject gridObject = grid.GetGridObject(Mouse3D.GetMouseWorldPosition());
-// PlacedObject placedObject = gridObject.GetPlacedObject();
-// if(placedObject != null) {
-//     // can clear
-//     placedObject.DestroySelf();
-
-//     List<Vector2Int> gridPosList = placedObject.GetGridPositionList();
     
-//     foreach(Vector2Int gridPos in gridPosList) {
-//         grid.GetGridObject(gridPos.x, gridPos.y).ClearPlacedObject();
-//     } 
-// }

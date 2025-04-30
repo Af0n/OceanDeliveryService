@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviour
     public bool IsUnderwater;
     public float onSurfaceDepth = -1f;
     public GameObject playerFloater;
+    public GameObject firstPersonPlayerFloater;
+    public GameObject firstPersonVisual;
     public float inventoryVisibility = 1f;
     public bool HasThirdPersonInteractable, HasMultipleTPI;
 
@@ -35,6 +37,7 @@ public class PlayerManager : MonoBehaviour
     public UpdateThirdPersonInteractUI TPIUpdater;
     public CinemachineCamera cinemachineCamera;
     public Transform Cam;
+    public float firstPersonCameraHeight = 1.7f;
     public Transform BodyVisual;
 
     private void Awake()
@@ -46,7 +49,20 @@ public class PlayerManager : MonoBehaviour
         waterDeath = GetComponent<WaterDeath>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
         
+        playerFloater.SetActive(false);
+        firstPersonPlayerFloater.SetActive(false);
+        
+    }
 
+    private void Start()
+    {
+        PlayerFloater.OnSurfacedPlayer += ToggleSurface;
+        pauseUI = GetComponentInChildren<PauseUI>();
+
+        if (PlayerPrefs.HasKey("IsThirdPerson"))
+        {
+            IsThirdPerson = PlayerPrefs.GetInt("IsThirdPerson") == 1;
+        }
         ThirdPersonDisplay.gameObject.SetActive(IsThirdPerson);
 
         ToggleThirdPerson(IsThirdPerson);
@@ -83,6 +99,7 @@ public class PlayerManager : MonoBehaviour
             movement.isFloating = false;
             movement.isSwimming = false;
             playerFloater.SetActive(false);
+            firstPersonPlayerFloater.SetActive(false);
             //OnEmerge?.Invoke();
             movement.audioManager.Emerge();
         }
@@ -97,6 +114,7 @@ public class PlayerManager : MonoBehaviour
             movement.isSwimming = true;
             movement.isFloating = false;
             playerFloater.SetActive(false);
+            firstPersonPlayerFloater.SetActive(false);
             waterDeath.StartDrowning();
         }
         else
@@ -108,6 +126,7 @@ public class PlayerManager : MonoBehaviour
                 movement.isSwimming = false;
                 movement.isFloating = true;
                 playerFloater.SetActive(true);
+                firstPersonPlayerFloater.SetActive(true);
                 waterDeath.StopDrowning();
             }
         }
@@ -116,69 +135,32 @@ public class PlayerManager : MonoBehaviour
     public void ToggleThirdPerson(bool b)
     {
         IsThirdPerson = b;
+        PlayerPrefs.SetInt("IsThirdPerson", IsThirdPerson ? 1 : 0);
         BodyVisual.gameObject.SetActive(IsThirdPerson);
 
         if (IsThirdPerson)
         {
-            SetLook(false);
+            firstPersonVisual.SetActive(false);
+            SetLook(true);
             cinemachineCamera.enabled = true;
             Reticle.enabled = false;
             interaction.StartThirdPersonCheck();
             ThirdPersonDisplay.gameObject.SetActive(true);
+
+            look.ThirdPersonBody(); // <-- ADD THIS LINE
+
             return;
         }
 
+        firstPersonVisual.SetActive(true);
         SetLook(true);
         cinemachineCamera.enabled = false;
         Reticle.enabled = true;
         interaction.StopThirdPersonCheck();
-        Cam.SetLocalPositionAndRotation(new Vector3(0f, 1.5f, 0f), Quaternion.identity);
+        Cam.SetLocalPositionAndRotation(new Vector3(0f, firstPersonCameraHeight, 0f), Quaternion.identity);
         ThirdPersonDisplay.gameObject.SetActive(true);
     }
 
-    /*
-    private void FixedUpdate()
-    {
-        if (playerFloater.transform.position.y > onSurfaceDepth && playerFloater.transform.position.y < 0)
-        {
-            if(upgradeManager.swimAbilityUpgrade)
-            {
-                movement.isSwimming = false;
-                IsUnderwater = false;
-                if (!movement.isFloating)
-                {
-                    movement.audioManager.Emerge();
-                }
-                movement.isFloating = true;
-                playerFloater.SetActive(true);
-            }
-        } 
-        else if (playerFloater.transform.position.y < onSurfaceDepth)
-        {
-            if(upgradeManager.swimAbilityUpgrade)
-            {
-                movement.isSwimming = true;
-                IsUnderwater = true;
-                movement.isFloating = false;
-                playerFloater.SetActive(false);
-            }
-        }
-        else if (playerFloater.transform.position.y > 0)
-        {
-            movement.isSwimming = false;
-            IsUnderwater = false;
-            movement.isFloating = false;
-            playerFloater.SetActive(false);
-        }
-
-        if(IsUnderwater){
-            waterDeath.StartDrowning();
-        }else{
-            waterDeath.StopDrowning();
-        }
-    }
-    
-    */
 
     public void SetMovement(bool b)
     {
@@ -266,10 +248,20 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Respawning player at respawn point...");
         SetAll(true);
 
-        controller.excludeLayers = ExcludeLayersTemp;
-        controller.Move(RespawnPoint.position - transform.position);
-        transform.rotation = RespawnPoint.rotation;
+        // wait for next frame
+        yield return 0;
 
+        StartCoroutine(Teleport(RespawnPoint.position));
+    }
+
+    public void DoTeleport(Vector3 pos){
+        StartCoroutine(Teleport(pos));
+    }
+
+    public IEnumerator Teleport(Vector3 teleport){
+        controller.excludeLayers = ExcludeLayersTemp;
+        controller.Move(teleport - transform.position);
+        transform.rotation = RespawnPoint.rotation;
         // wait for a frame
         yield return 0;
 
@@ -285,12 +277,6 @@ public class PlayerManager : MonoBehaviour
     public void ToggleSurface(float surfaced)
     {
         // onSurfaceDepth = surfaced;
-    }
-
-    void Start()
-    {
-        PlayerFloater.OnSurfacedPlayer += ToggleSurface;
-        pauseUI = GetComponentInChildren<PauseUI>();
     }
 
     void OnDestroy()

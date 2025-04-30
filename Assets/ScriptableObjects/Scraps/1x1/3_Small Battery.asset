@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42537be433c08394aab55c86875c8eae, type: 3}
   m_Name: 3_Small Battery
   m_EditorClassIdentifier: 
-  nameString: Small Battery
   worldPrefab: {fileID: 4924048847092004577, guid: ba17e294d7dc727449119405ccbe6f5f, type: 3}
-  uiPrefab: {fileID: 2162241689682632981, guid: 96d9743b20b5b92469356aad26c67fe2, type: 3}
+  uiPrefab: {fileID: 2162241689682632981, guid: 986c784697a661045958648e8fb84395, type: 3}
   height: 1
   width: 1
+  dontRotate: 0

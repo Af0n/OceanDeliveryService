@@ -355,7 +355,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7740935367914196784}
   - component: {fileID: 8168659508382928986}
-  m_Layer: 0
+  - component: {fileID: 330825816161864017}
+  - component: {fileID: 1258866964759918451}
+  m_Layer: 19
   m_Name: Female
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +392,7 @@ Animator:
   m_GameObject: {fileID: 2935517064919513929}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3cefbbfe8c81fbb4283daa116169ef21, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0b45f2211631c5840adfd01839019fe6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -402,6 +404,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &330825816161864017
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935517064919513929}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1258866964759918451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935517064919513929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b186cdfb903044da3d8eb045ed02ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flags: {fileID: 11400000, guid: f9d6d2b9b0581bf4f8f7fbefbb0b0ba4, type: 2}
+  IntroChain: {fileID: 11400000, guid: da695f468932df04ba875d9b883dc7f0, type: 2}
+  WoahChain: {fileID: 11400000, guid: fb794eca262bf204a9cc3647708c1043, type: 2}
+  ByeChain: {fileID: 11400000, guid: 8cc8fd19636d39e47bb1bc71a0f102a8, type: 2}
 --- !u!1 &3620750333944601090
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,7 +880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5982422993042995621
 Transform:
   m_ObjectHideFlags: 0

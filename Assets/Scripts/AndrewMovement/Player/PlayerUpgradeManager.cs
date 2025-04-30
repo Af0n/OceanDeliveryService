@@ -21,8 +21,8 @@ public class PlayerUpgradeManager : MonoBehaviour
     public int floatieCost;
 
     [Header("Inventory Capacity Upgrades")]
-    public int inventoryCapacityUpgrade;
-    public List<int> inventoryCapacity = new List<int>();
+    public int inventoryCapacityUpgrade; // current capacity
+    public List<int> inventoryCapacity = new List<int>(); // list of all sizes
     public int currentInventoryCapacityIndex = 0;
     public int inventoryCost;
     
@@ -38,11 +38,15 @@ public class PlayerUpgradeManager : MonoBehaviour
     
     private AndrewMovement movement;
     private WaterDeath water;
+    private InventorySystem inventory;
+
     void Start()
     {
         movement = GetComponent<AndrewMovement>();
         water = GetComponent<WaterDeath>();
+        inventory = GetComponentInChildren<InventorySystem>();
     }
+
     public void GiveWaterResistanceUpgrade()
     {
         if (currentWaterIndex < waterResistance.Count)
@@ -73,6 +77,8 @@ public class PlayerUpgradeManager : MonoBehaviour
         {
             inventoryCapacityUpgrade = inventoryCapacity[currentInventoryCapacityIndex];
             currentInventoryCapacityIndex++;
+
+            inventory.UpgradeInventory(inventoryCapacityUpgrade);
         }
     }
 
@@ -89,7 +95,6 @@ public class PlayerUpgradeManager : MonoBehaviour
     public void GiveGoggleUpgrade()
     {
         hasGoggles = true;
-        
     }
 
     public int ListCosts(string name)
