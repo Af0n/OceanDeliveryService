@@ -18,6 +18,8 @@ public class ParrotAndInnerTubes : MonoBehaviour
     [SerializeField] private AudioMixer myMixer;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+
+    private int leftShoulder;
     
     public TextMeshProUGUI textMesh;
     
@@ -34,11 +36,15 @@ public class ParrotAndInnerTubes : MonoBehaviour
     public void LeftShoulder()
     {
         parrotPrefab.transform.position = leftShoulderParent.position;
+        leftShoulder = 1;
+        PlayerPrefs.SetInt("currentShoulder", leftShoulder);
     }
 
     public void RightShoulder()
     {
         parrotPrefab.transform.position = rightShoulderParent.position;
+        leftShoulder = 0;
+        PlayerPrefs.SetInt("currentShoulder", leftShoulder);
     }
 
     public void LeftInnerTube()
@@ -49,6 +55,7 @@ public class ParrotAndInnerTubes : MonoBehaviour
         innerTubes[currentIndex].SetActive(true);
         firstPersonInnerTubes[currentIndex].SetActive(true);
         textMesh.text = buttonText[currentIndex];
+        PlayerPrefs.SetInt("currentFloat", currentIndex);
     }
 
     public void RightInnerTube()
@@ -59,6 +66,7 @@ public class ParrotAndInnerTubes : MonoBehaviour
         innerTubes[currentIndex].SetActive(true);
         firstPersonInnerTubes[currentIndex].SetActive(true);
         textMesh.text = buttonText[currentIndex];
+        PlayerPrefs.SetInt("currentFloat", currentIndex);
     }
     
     public void SetMusicVolume(){
@@ -78,5 +86,28 @@ public class ParrotAndInnerTubes : MonoBehaviour
         SetMusicVolume();
         sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
         SetSfxVolume();
+        
+        currentIndex = PlayerPrefs.GetInt("currentFloat");
+        for (int i = 0; i < innerTubes.Count; i++)
+        {
+            if (i == currentIndex)
+            {
+                innerTubes[i].SetActive(true);
+                firstPersonInnerTubes[i].SetActive(true);
+            }
+            else
+            {
+                innerTubes[i].SetActive(false);
+                firstPersonInnerTubes[i].SetActive(false);
+            }
+        }
+        if (PlayerPrefs.GetInt("currentShoulder") == 1)
+        {
+            parrotPrefab.transform.position = leftShoulderParent.position;
+        }
+        else
+        {
+            parrotPrefab.transform.position = rightShoulderParent.position;
+        }
     }
 }

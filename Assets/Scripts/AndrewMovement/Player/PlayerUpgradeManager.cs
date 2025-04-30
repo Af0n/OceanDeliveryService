@@ -95,7 +95,6 @@ public class PlayerUpgradeManager : MonoBehaviour
     public void GiveGoggleUpgrade()
     {
         hasGoggles = true;
-        
     }
 
     public int ListCosts(string name)

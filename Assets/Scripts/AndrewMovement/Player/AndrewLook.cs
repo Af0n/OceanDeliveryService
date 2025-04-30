@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +20,7 @@ public class AndrewLook : MonoBehaviour
     private InputAction look;
     
     private DeckTargetClamp deck;
+    private bool wakingUp;
 
     private void Awake() {
         actions = new InputSystem_Actions();
@@ -28,10 +31,16 @@ public class AndrewLook : MonoBehaviour
     void Start()
     {
         deck = DeckTargetClamp.instance;
+        
+        StartCoroutine(WakingUp());
     }
 
     private void Update()
     {
+        if (!wakingUp)
+        {
+            return;
+        }
         if(manager.IsThirdPerson){
             ThirdPersonBody();
             return;
@@ -45,7 +54,7 @@ public class AndrewLook : MonoBehaviour
         Look();
     }
 
-    private void ThirdPersonBody(){
+    public void ThirdPersonBody(){
         Vector3 dir = Cam.forward;
         dir.y = 0;
         dir.Normalize();
@@ -103,5 +112,11 @@ public class AndrewLook : MonoBehaviour
                 deck.SetYRot(transform.eulerAngles.y);
                 break;
         }
+    }
+
+    public IEnumerator WakingUp()
+    {
+        yield return new WaitForSeconds(10f);
+        wakingUp = true;
     }
 }
