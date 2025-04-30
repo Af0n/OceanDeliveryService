@@ -19,6 +19,22 @@ public class QuestManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public List<(string questName, string description)> GetAllQuestsInfo()
+    {
+        List<(string questName, string description)> allQuestsInfo = new List<(string questName, string description)>();
+
+        foreach (var quest in activeQuests)
+        {
+            allQuestsInfo.Add((quest.questName, quest.description));
+        }
+
+        foreach (var quest in completedQuests)
+        {
+            allQuestsInfo.Add((quest.questName, quest.description));
+        }
+
+        return allQuestsInfo;
+    }
 
     // Add a new quest to the active quests list
     public void AddQuest(QuestData questData)

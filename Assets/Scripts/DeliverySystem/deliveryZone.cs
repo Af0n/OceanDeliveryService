@@ -5,6 +5,7 @@ public class deliveryZone : MonoBehaviour
     public InventorySystem inventory;
     [Tooltip("Assign the quest data for this delivery zone.")]
     public QuestData questData; // Reference to the ScriptableObject containing quest information
+    public QuestManager questManager;
     private void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player")){
             Debug.Log($"Player entered delivery zone for quest: {questData.questName}");
@@ -19,9 +20,11 @@ public class deliveryZone : MonoBehaviour
             inventory.ClearDeliveryZone();
         }
     }
+    private void OnDisable(){
+        questManager.CompleteQuest(questData); // Mark the quest as completed when the delivery zone is disabled
+    }
 
     public void CompleteDelivery(){
-        questData.isCompleted = true;
         Debug.Log($"Delivery completed for quest: {questData.questName}");
         gameObject.SetActive(false); // Disable the delivery zone
     }

@@ -76,6 +76,9 @@ public class PauseUI : MonoBehaviour
                     inventory.DZPanel.SetActive(true);
                 }
             }
+            if(activeMenu == 1){
+                
+            }
 
             return;
         }
