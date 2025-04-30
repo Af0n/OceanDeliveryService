@@ -3,22 +3,16 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    public static QuestManager Instance; // Singleton instance
+    public static QuestManager instance; // Singleton instance of the QuestManager
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     public List<QuestData> activeQuests = new List<QuestData>(); // List of active quests
     public List<QuestData> completedQuests = new List<QuestData>(); // List of completed quests
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
     public List<(string questName, string description)> GetAllQuestsInfo()
     {
         List<(string questName, string description)> allQuestsInfo = new List<(string questName, string description)>();

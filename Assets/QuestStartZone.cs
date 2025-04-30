@@ -4,10 +4,9 @@ public class QuestStartZone : MonoBehaviour
 {
     [Tooltip("Assign the quest data for this quest start zone.")]
     public QuestData questData; // Reference to the ScriptableObject containing quest information
-    public QuestManager questManager;
     private void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player")){
-            questManager.AddQuest(questData); // Add the quest to the active quests when the player enters the zone(will be changed to add when the player accepts the quest)
+            QuestManager.instance.AddQuest(questData); // Add the quest to the active quests when the player enters the zone(will be changed to add when the player accepts the quest)
             Debug.Log($"Player entered quest start zone for quest: {questData.questName}");
         }
     }
