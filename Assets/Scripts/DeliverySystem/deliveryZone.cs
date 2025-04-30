@@ -5,7 +5,6 @@ public class deliveryZone : MonoBehaviour
     public InventorySystem inventory;
     [Tooltip("Assign the quest data for this delivery zone.")]
     public QuestData questData; // Reference to the ScriptableObject containing quest information
-
     private void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player")){
             Debug.Log($"Player entered delivery zone for quest: {questData.questName}");

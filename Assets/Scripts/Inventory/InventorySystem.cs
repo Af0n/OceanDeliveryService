@@ -6,6 +6,7 @@ using TMPro;
 
 public class InventorySystem : MonoBehaviour
 {
+    public event System.Action OnPackageDelivered;
     private InventoryObject inventoryObject;
     private deliveryZone deliveryZone;
     private InventoryObject.Dir dir = InventoryObject.Dir.Horizontal;
@@ -339,7 +340,8 @@ public class InventorySystem : MonoBehaviour
                     // Remove the item from the grid and reset
                     gridUI.RemoveItem(inventoryObject, dir, slot);
                     ResetObjectToMove();
-
+                    // Trigger the delivery event
+                    OnPackageDelivered?.Invoke();
                     // Mark the delivery as complete
                     deliveryZone.CompleteDelivery();
                     ClearDeliveryZone();

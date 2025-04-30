@@ -497,10 +497,11 @@ MonoBehaviour:
   gridWidth: 5
   tempCell: {fileID: 8220345165330974420}
   objDropPoint: {fileID: 0}
-  questNameText: {fileID: 0}
-  questRequirementsText: {fileID: 0}
-  errorMessageText: {fileID: 0}
-  deliverButton: {fileID: 0}
+  questNameText: {fileID: 3728510945127526747}
+  questRequirementsText: {fileID: 2205767578170711226}
+  errorMessageText: {fileID: 2749302639967417860}
+  deliverButton: {fileID: 929965706560332667}
+  questFlag: {fileID: 0}
 --- !u!1 &1981062164219761874
 GameObject:
   m_ObjectHideFlags: 0

@@ -160,7 +160,9 @@ public class PlayerManager : MonoBehaviour
         Cam.SetLocalPositionAndRotation(new Vector3(0f, firstPersonCameraHeight, 0f), Quaternion.identity);
         ThirdPersonDisplay.gameObject.SetActive(true);
     }
-
+    public void SetInDeliveryZone(bool b){
+        IsInDeliveryZone = b;
+    }
 
     public void SetMovement(bool b)
     {
