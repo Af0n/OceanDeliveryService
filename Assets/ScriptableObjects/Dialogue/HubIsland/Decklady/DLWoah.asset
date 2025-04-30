@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Label: 
   Dialogues:
-  - CharName: Deck Lady
+  - CharName: Luno
     Text: Directions? And you made the wind change? That's really cool!
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: Deck Lady
+  - CharName: Luno
     Text: Maybe you can go talk to Deck Man and borrow his boat?
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: Deck Lady
+  - CharName: Luno
     Text: I love boats!
     HasMenu: 0
     MenuOptions: []

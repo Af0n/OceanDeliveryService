@@ -21,14 +21,14 @@ MonoBehaviour:
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: '"'
+  - CharName: Luno
     Text: I'm not sure what it does, but maybe interacting with it might do something!
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: '"'
+  - CharName: Luno
     Text: Talk to me after and tell me what you see!
     HasMenu: 0
     MenuOptions: []

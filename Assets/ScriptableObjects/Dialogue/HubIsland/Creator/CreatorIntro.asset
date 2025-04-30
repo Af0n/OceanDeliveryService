@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: CreatorIntro
+  m_EditorClassIdentifier: 
+  Label: 
+  Dialogues:
+  - CharName: Chrysler
+    Text: Woah I can't believe I did it. I found you buried over here and I repaired
+      you. I hope we can be friends.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Chrysler
+    Text: I really don't like it here. I wish we could get out of here. But, we are
+      broke. It would super cool if you could help us out.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Chrysler
+    Text: 'I have an Idea maybe you can go deliver packages to people so we can get
+      resources!!! '
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Chrysler
+    Text: There are other people here maybe go talk to them. Go see Luno on the Dock
+      to get you started on your journey.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Chrysler
+    Text: Come and see me once you deliver all of the packages. I hope to see you
+      soon. Goodbye and Good Luck!!!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0

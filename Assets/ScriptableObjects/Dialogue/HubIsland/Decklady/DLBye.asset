@@ -14,28 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Label: 
   Dialogues:
-  - CharName: Deck Lady
+  - CharName: Luno
     Text: I have taught you all that I can for now, little robot.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: Deck Lady
+  - CharName: Luno
     Text: Now go off into the world. Go make a name for yourself.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: Deck Lady
+  - CharName: Luno
     Text: No, really. Go make up a name. I couldn't come up with one for you.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: Deck Lady
+  - CharName: Luno
     Text: I was thinking of naming you Sckimbly, but Deck Man said that was a bad
       name.
     HasMenu: 0
