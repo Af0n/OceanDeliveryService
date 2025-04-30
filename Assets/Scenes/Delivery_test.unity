@@ -804,6 +804,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeliveryZone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4746327860597463182, guid: dcb0f2149e2765e439eda2f0a7be7f22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8726289380443277035, guid: dcb0f2149e2765e439eda2f0a7be7f22, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.5
@@ -1067,6 +1071,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 795915408}
     - target: {fileID: 2698316241863426533, guid: dcb0f2149e2765e439eda2f0a7be7f22, type: 3}
+      propertyPath: questData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9bac6d0bb3faa5c4cbb28ba15f863fe2, type: 2}
+    - target: {fileID: 2698316241863426533, guid: dcb0f2149e2765e439eda2f0a7be7f22, type: 3}
       propertyPath: recipientName
       value: Bob
       objectReference: {fileID: 0}
@@ -1117,33 +1125,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1362877810222608994, guid: dcb0f2149e2765e439eda2f0a7be7f22, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1479750462}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcb0f2149e2765e439eda2f0a7be7f22, type: 3}
---- !u!1 &1479750461 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1362877810222608994, guid: dcb0f2149e2765e439eda2f0a7be7f22, type: 3}
-  m_PrefabInstance: {fileID: 1479750460}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1479750462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479750461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 434e6037ad793df418d26686ecfe766d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questName: 
-  description: 
-  recipientName: 
-  isCompleted: 0
-  objectives: []
 --- !u!1 &1536387801
 GameObject:
   m_ObjectHideFlags: 0

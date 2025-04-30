@@ -93,19 +93,12 @@ public class InventorySystem : MonoBehaviour
     public void ClearDeliveryZone() {
         deliveryZone = null;
     }
-    public void UpdateDeliveryZonePanel(string questName, string questReciepentName){
+    public void UpdateDeliveryZonePanel(string questName, List<string> questObjectives){
         questRequirementsText.text = string.Empty;
         questNameText.text = questName;
-        questRequirementsText.text += "· " + questReciepentName + "'s package\n";
-        foreach(GameObject slot in inventorySlots) {
-            if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
-                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
-                Debug.Log("recipientName: hello" + recipientName + ", questRecipentName: " + questReciepentName);
-                if (recipientName == questReciepentName){
-                    questRequirementsText.text = "<s>"+ questRequirementsText.text +"</s>";
-                    return;
-                }
-            }
+        questRequirementsText.text = string.Empty;
+        foreach (string objective in questObjectives){
+            questRequirementsText.text += "· " + objective + "\n";
         }
     }
 
@@ -239,38 +232,47 @@ public class InventorySystem : MonoBehaviour
     }
 
     // for package delivery
-    public void DeliverPackage() {
-        foreach(GameObject slot in inventorySlots) {
-            // Check if the slot has a child and the child is tagged as "Package"
+    public void DeliverPackage(){
+        if (deliveryZone == null || deliveryZone.questData == null){
+            Debug.LogError("Delivery zone or quest data is null!");
+            return;
+        }
+        string questRecipientName = deliveryZone.questData.recipientName;
+        Debug.Log("questRecipientName: " + questRecipientName);
+        foreach (GameObject slot in inventorySlots){
+
+             // Check if the slot has a child and the child is tagged as "Package"
             if (slot.transform.childCount > 0 && slot.transform.GetChild(0).CompareTag("Package")){
-                string recipientName = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
-                string questRecipentName = deliveryZone.recipientName;
-                Debug.Log("recipientName: " + recipientName + ", questRecipentName: " + questRecipentName);
+                string packageRecipient = slot.transform.GetChild(0).GetComponent<PlacedObject>().GetRecipient();
+                Debug.Log("packageRecipient: " + packageRecipient + ", questRecipientName: " + questRecipientName);
+
                 // Check if the recipient name matches the quest name
-                if (recipientName == questRecipentName){
+                if (packageRecipient == questRecipientName){
                     Cell cellComp = slot.GetComponent<Cell>();
                     Transform rootCell = cellComp.GetRoot();
                     PlacedObject tempPlacedObject = rootCell.GetComponentInChildren<PlacedObject>();
                     dir = tempPlacedObject.GetDir();
                     inventoryObject = tempPlacedObject.GetInventoryObject();
                     objectToMove = tempPlacedObject.gameObject;
-                    PlacedObject placedObject = objectToMove.GetComponent<PlacedObject>();
-                    InventoryObject newObject = placedObject.GetInventoryObject();
+
                     // Instantiate the dropped object in the world
-                    GameObject droppedObj = Instantiate(newObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
-                    droppedObj.GetComponent<Package>().SetRecipient(recipientName);
+                    GameObject droppedObj = Instantiate(inventoryObject.worldPrefab, objDropPoint.position, objDropPoint.rotation);
+                    droppedObj.GetComponent<Package>().SetRecipient(packageRecipient);
+
+                    // Remove the item from the grid and reset
                     gridUI.RemoveItem(inventoryObject, dir, slot);
                     ResetObjectToMove();
+
+                    // Mark the delivery as complete
                     deliveryZone.CompleteDelivery();
                     ClearDeliveryZone();
-                    
                     return;
                 }
             }
         }
+        // Show an error message if no matching package was found
         errorMessageText.gameObject.SetActive(true);
         Invoke(nameof(HideErrorMsg), 1f);
-        return;
     }
 
     private void HideErrorMsg(){

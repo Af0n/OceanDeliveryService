@@ -5,10 +5,11 @@ public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance; // Singleton instance
 
-    public List<Quest> activeQuests = new List<Quest>(); 
-    public List<Quest> completedQuests = new List<Quest>(); 
+    public List<QuestData> activeQuests = new List<QuestData>(); // List of active quests
+    public List<QuestData> completedQuests = new List<QuestData>(); // List of completed quests
 
-    private void Awake(){
+    private void Awake()
+    {
         if (Instance == null)
         {
             Instance = this;
@@ -18,30 +19,37 @@ public class QuestManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void AddQuest(Quest quest){
-        activeQuests.Add(quest);
-        Debug.Log($"Quest '{quest.questName}' added!");
+
+    // Add a new quest to the active quests list
+    public void AddQuest(QuestData questData)
+    {
+        if (!activeQuests.Contains(questData) && !questData.isCompleted)
+        {
+            activeQuests.Add(questData);
+            Debug.Log($"Quest '{questData.questName}' added to active quests!");
+        }
     }
 
     // Mark a quest as completed
-    public void CompleteQuest(Quest quest)
+    public void CompleteQuest(QuestData questData)
     {
-        if (activeQuests.Contains(quest))
+        if (activeQuests.Contains(questData))
         {
-            quest.CompleteQuest();
-            activeQuests.Remove(quest);
-            completedQuests.Add(quest);
+            questData.isCompleted = true;
+            activeQuests.Remove(questData);
+            completedQuests.Add(questData);
+            Debug.Log($"Quest '{questData.questName}' marked as completed!");
         }
     }
 
     // Check if a delivery matches an active quest
-    public Quest GetQuestForRecipient(string recipientName)
+    public QuestData GetQuestForRecipient(string recipientName)
     {
-        foreach (Quest quest in activeQuests)
+        foreach (QuestData questData in activeQuests)
         {
-            if (quest.recipientName == recipientName && !quest.isCompleted)
+            if (questData.recipientName == recipientName && !questData.isCompleted)
             {
-                return quest;
+                return questData;
             }
         }
         return null;

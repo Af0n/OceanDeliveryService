@@ -1,29 +1,29 @@
 using UnityEngine;
 
-public class deliveryZone : MonoBehaviour{
+public class deliveryZone : MonoBehaviour
+{
     public InventorySystem inventory;
-    public Quest quest;
-    [Tooltip("The reciepent name for the quest.")]
-    public string recipientName;
+    [Tooltip("Assign the quest data for this delivery zone.")]
+    public QuestData questData; // Reference to the ScriptableObject containing quest information
 
     private void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player")){
-            quest = QuestManager.Instance.GetQuestForRecipient(recipientName);
-            Debug.Log($"Player entered delivery zone for quest: {quest.questName}");
+            Debug.Log($"Player entered delivery zone for quest: {questData.questName}");
             InventorySystem inventory = other.GetComponent<PlayerManager>().GetComponentInChildren<InventorySystem>();
             inventory.SetDeliveryZone(this);
-            inventory.UpdateDeliveryZonePanel(quest.questName, recipientName);
+            inventory.UpdateDeliveryZonePanel(questData.questName, questData.objectives);
         }
     }
+
     private void OnTriggerExit(Collider other){
         if (other.CompareTag("Player")){
             inventory.ClearDeliveryZone();
         }
     }
+
     public void CompleteDelivery(){
-        quest = QuestManager.Instance.GetQuestForRecipient(recipientName);
-        QuestManager.Instance.CompleteQuest(quest);
-        Debug.Log($"Delivery completed for quest: {quest.questName}");
-        gameObject.SetActive(false); 
+        questData.isCompleted = true;
+        Debug.Log($"Delivery completed for quest: {questData.questName}");
+        gameObject.SetActive(false); // Disable the delivery zone
     }
 }
