@@ -8,6 +8,7 @@ public class AndrewMovement : MonoBehaviour
 {
     public AudioManager audioManager;
     public Animator animator;
+    public GameObject Parrot;
 
     [Header("Movement Properties")]
     public float Speed;
@@ -49,6 +50,7 @@ public class AndrewMovement : MonoBehaviour
     private Camera MainCamera;
     private bool raisingInWater;
     private bool loweringInWater;
+    private bool wakingUp;
 
     private void Awake()
     {
@@ -58,6 +60,7 @@ public class AndrewMovement : MonoBehaviour
         manager = GetComponent<PlayerManager>();
         upgradeManager = GetComponent<PlayerUpgradeManager>();
         animator = GetComponent<Animator>();
+        
 
         if (audioManager == null)
         {
@@ -74,10 +77,16 @@ public class AndrewMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         deck = DeckTargetClamp.instance;
+        animator.SetTrigger("Stand");
+        StartCoroutine(WakeUp());
     }
 
     private void Update()
     {
+        if (!wakingUp)
+        {
+            return;
+        }
         // checking for ground
         bool wasGroundedLastFrame = wasGrounded;
         isGrounded = Physics.CheckSphere(GroundCheck.position, GroundCheckRadius, standableMask);
@@ -383,6 +392,7 @@ public class AndrewMovement : MonoBehaviour
         {
             case "BoatTrigger":
                 deck.SetPos(transform.position);
+                Parrot.SetActive(true);
                 break;
         }
     }
@@ -395,5 +405,11 @@ public class AndrewMovement : MonoBehaviour
     private void OnLand(AnimationEvent animationEvent)
     {
         //Leave here so the errors are not happening
+    }
+
+    public IEnumerator WakeUp()
+    {
+        yield return new WaitForSeconds(10f);
+        wakingUp = true;
     }
 }

@@ -76,6 +76,9 @@ public class PauseUI : MonoBehaviour
                     inventory.DZPanel.SetActive(true);
                 }
             }
+            if(activeMenu == 1){
+                
+            }
 
             return;
         }
@@ -95,6 +98,7 @@ public class PauseUI : MonoBehaviour
 
     private void OnEnable()
     {
+        inventory.OnPackageDelivered += HandlePackageDelivered;
         // input system boilerplate
         pause = actions.UI.Pause;
         pause.Enable();
@@ -103,8 +107,14 @@ public class PauseUI : MonoBehaviour
 
     private void OnDisable()
     {
+        inventory.OnPackageDelivered -= HandlePackageDelivered;
         // input system boilerplate
         pause.Disable();
+    }
+    private void HandlePackageDelivered(){
+        playerMan.SetInDeliveryZone(false);
+        // inventory.DZPanel.SetActive(false);
+        Pause();
     }
 
     public void SetActiveMenu(int index)
