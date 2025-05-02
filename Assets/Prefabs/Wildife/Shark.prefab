@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1081992613647904774}
   - component: {fileID: 8828550964881681411}
   - component: {fileID: 39137163787820892}
+  - component: {fileID: 4268878725521510935}
   m_Layer: 0
   m_Name: Shark
   m_TagString: Untagged
@@ -102,3 +103,28 @@ MonoBehaviour:
   isLandAnimal: 0
   speed: 5
   isMoving: 0
+--- !u!143 &4268878725521510935
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2792635040637695548}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2.4622283
+  m_Radius: 2.9137
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
