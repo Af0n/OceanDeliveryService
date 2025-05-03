@@ -2337,6 +2337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 6797379618455077983}
   animator: {fileID: 0}
+  Parrot: {fileID: 0}
   Speed: 5
   JumpHeight: 3
   canSwim: 0
@@ -5157,7 +5158,7 @@ Transform:
   m_GameObject: {fileID: 7207059378534130328}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0043071266, y: 0.9763119, z: -0.019518413, w: -0.21544266}
-  m_LocalPosition: {x: 169.19211, y: 237.095, z: 585.40784}
+  m_LocalPosition: {x: 1.0521163, y: 2.1, z: 2.26783}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7016,6 +7017,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause UI
       objectReference: {fileID: 0}
+    - target: {fileID: 6658741967324121935, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6689597436755994921, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -7083,6 +7088,14 @@ PrefabInstance:
     - target: {fileID: 8457504559309832654, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8626021914413345473, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8983469558395589852, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
