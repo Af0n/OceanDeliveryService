@@ -1525,8 +1525,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927450679278593590}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.004307127, y: 0.9763119, z: -0.019518415, w: -0.21544267}
-  m_LocalPosition: {x: 1.0521163, y: 2.1, z: 2.26783}
+  m_LocalRotation: {x: -0.46250337, y: -0.17472892, z: -0.0935132, w: 0.86418504}
+  m_LocalPosition: {x: 0.3884877, y: 0.5, z: -0.9214299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1604,8 +1604,8 @@ MonoBehaviour:
       Radius: 4
       Height: 2.25
     Bottom:
-      Radius: 2.5
-      Height: 0.1
+      Radius: 1
+      Height: -1.5
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
@@ -2338,7 +2338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 6797379618455077983}
   animator: {fileID: 0}
-  Parrot: {fileID: 0}
+  Parrot: {fileID: 4613421282573195880}
   Speed: 5
   JumpHeight: 3
   canSwim: 0
@@ -5202,8 +5202,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7207059378534130328}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0043071266, y: 0.9763119, z: -0.019518413, w: -0.21544266}
-  m_LocalPosition: {x: 1.0521163, y: 2.1, z: 2.26783}
+  m_LocalRotation: {x: -0.46250328, y: -0.17472902, z: -0.09351324, w: 0.86418504}
+  m_LocalPosition: {x: 0.3884877, y: 0.5, z: -0.9214299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6483,7 +6483,7 @@ Transform:
   m_GameObject: {fileID: 8596158877227434374}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.12328024, y: 0.6, z: -0.031144565}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
