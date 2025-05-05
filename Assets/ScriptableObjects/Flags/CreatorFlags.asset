@@ -16,4 +16,4 @@ MonoBehaviour:
   - FlagName: FinishedPackages
     IsSet: 1
   - FlagName: HasTalked
-    IsSet: 1
+    IsSet: 0

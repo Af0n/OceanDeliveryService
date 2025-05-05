@@ -7,6 +7,7 @@ public class Creator : Interactable
     public DialogueChain IntroChain, ReturnChain, ByeChain;
     public int maxQuests;
     private int currentQuest;
+    public SceneChanger sceneChanger;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class Creator : Interactable
     public void CompleteGame()
     {
         Debug.Log("Game is over now. Sending to the end scene");
+        sceneChanger.ChangeScene(2);
     }
 
     public override void Interact()
