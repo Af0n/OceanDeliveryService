@@ -5,6 +5,11 @@ public class EndGame : MonoBehaviour
     public GameObject CreditScreen;
     public GameObject GameOverScreen;
 
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void EnterCredits()
     {
         CreditScreen.SetActive(true);
