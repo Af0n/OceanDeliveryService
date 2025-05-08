@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 6089857013991371545}
   m_Layer: 0
   m_Name: Horse
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   isLandAnimal: 1
   speed: 2
   isMoving: 0
+  inWater: 0
 --- !u!1 &975910283013195319
 GameObject:
   m_ObjectHideFlags: 0

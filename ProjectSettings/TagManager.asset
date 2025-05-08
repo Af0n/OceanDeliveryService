@@ -9,6 +9,7 @@ TagManager:
   - DeliveryZone
   - PlayerHead
   - Package
+  - Animal
   layers:
   - Default
   - TransparentFX

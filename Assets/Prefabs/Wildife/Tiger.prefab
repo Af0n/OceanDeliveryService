@@ -681,7 +681,7 @@ GameObject:
   - component: {fileID: 4930271858863220477}
   m_Layer: 0
   m_Name: Tiger
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -765,6 +765,7 @@ MonoBehaviour:
   isLandAnimal: 1
   speed: 2
   isMoving: 0
+  inWater: 0
 --- !u!1 &5071272293123956699
 GameObject:
   m_ObjectHideFlags: 0

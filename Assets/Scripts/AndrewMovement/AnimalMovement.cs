@@ -17,7 +17,7 @@ public class AnimalMovement : MonoBehaviour
     private Vector3 waterDirection;
     private float yVelocity = Physics.gravity.magnitude;
 
-    private bool inWater;
+    [HideInInspector]public bool inWater;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,7 +51,10 @@ public class AnimalMovement : MonoBehaviour
 
     public IEnumerator StopTimer()
     {
-        anim.SetBool("Walking", false);
+        if(isLandAnimal)
+        {
+            anim.SetBool("Walking", false);
+        }
         isMoving = false;
         yield return new WaitForSeconds(stopTimer);
         isMoving = true;
@@ -61,7 +64,10 @@ public class AnimalMovement : MonoBehaviour
 
     public IEnumerator MoveTimer()
     {
-        anim.SetBool("Walking", true);
+        if(isLandAnimal)
+        {
+            anim.SetBool("Walking", true);
+        }
         if (isLandAnimal)
         {
             landDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized;
@@ -85,19 +91,19 @@ public class AnimalMovement : MonoBehaviour
         cc.Move(Time.deltaTime * yVelocity * Vector3.down);
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-        {
-            inWater = true;
-        }
-    }
-    
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-        {
-            inWater = false;
-        }
-    }
+    // public void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+    //     {
+    //         inWater = true;
+    //     }
+    // }
+    //
+    // public void OnTriggerExit(Collider other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+    //     {
+    //         inWater = false;
+    //     }
+    // }
 }
