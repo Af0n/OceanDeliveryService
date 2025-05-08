@@ -99,13 +99,16 @@ public class AndrewMovement : MonoBehaviour
         }
         wasGrounded = isGrounded;
 
-        if (isSwimming || isFloating)
+        if(canSwim)
         {
-            animator.SetBool("Water", true);
-        }
-        else
-        {
-            animator.SetBool("Water", false);
+            if (isSwimming || isFloating)
+            {
+                animator.SetBool("Water", true);
+            }
+            else
+            {
+                animator.SetBool("Water", false);
+            }
         }
 
         if (isSwimming)
@@ -278,7 +281,7 @@ public class AndrewMovement : MonoBehaviour
 
     private void Gravity()
     {
-        if (isSwimming || isFloating)
+        if ((isSwimming || isFloating) && canSwim)
         {
             return;
         }
@@ -296,7 +299,7 @@ public class AndrewMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (isSwimming || isFloating)
+        if ((isSwimming || isFloating) && canSwim)
         {
             return;
         }
@@ -313,6 +316,7 @@ public class AndrewMovement : MonoBehaviour
     private void WaterVertical()
     {
         float direction = waterVertical.ReadValue<float>();
+        Debug.Log(direction);
         if (isSwimming)
         {
             if (direction != 0)
