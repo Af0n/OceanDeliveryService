@@ -735,7 +735,7 @@ GameObject:
   - component: {fileID: 5507986820224332170}
   m_Layer: 0
   m_Name: Chicken Jockey
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -819,6 +819,7 @@ MonoBehaviour:
   isLandAnimal: 1
   speed: 2
   isMoving: 0
+  inWater: 0
 --- !u!1 &3372406627544505993
 GameObject:
   m_ObjectHideFlags: 0

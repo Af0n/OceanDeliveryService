@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 3731467927222216785}
   m_Layer: 0
   m_Name: Deer
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -699,6 +699,7 @@ MonoBehaviour:
   isLandAnimal: 1
   speed: 2
   isMoving: 0
+  inWater: 0
 --- !u!1 &4161709828941684316
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,12 @@ namespace Water
                 Debug.Log("Head Submerged!");
                 OnUnderWaterSurfaceChange?.Invoke(true);
             }
+            
+            if (other.CompareTag("Animal"))
+            {
+                Debug.Log("Exited Water Volume");
+                other.GetComponent<AnimalMovement>().inWater = true;
+            }
         }
 
         //Checks if the players body or head exit the water separately.
@@ -37,6 +43,12 @@ namespace Water
             {
                 Debug.Log("Exited Water Volume");
                 OnUnderWaterStateChange?.Invoke(false);
+            }
+
+            if (other.CompareTag("Animal"))
+            {
+                Debug.Log("Exited Water Volume");
+                other.GetComponent<AnimalMovement>().inWater = false;
             }
         }
     }
