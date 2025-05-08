@@ -18,4 +18,4 @@ MonoBehaviour:
   objectives:
   - Pick up long box
   - Drop package off at (island name)/(house name)
-  isCompleted: 1
+  isCompleted: 0
