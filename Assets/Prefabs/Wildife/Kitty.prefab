@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 8274482173324739352}
   m_Layer: 0
   m_Name: Kitty
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -640,6 +640,7 @@ MonoBehaviour:
   isLandAnimal: 1
   speed: 2
   isMoving: 0
+  inWater: 0
 --- !u!1 &3577764490820693520
 GameObject:
   m_ObjectHideFlags: 0
