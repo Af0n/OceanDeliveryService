@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class QuestManager : MonoBehaviour
 {
@@ -12,19 +13,21 @@ public class QuestManager : MonoBehaviour
 
     public List<QuestData> activeQuests = new List<QuestData>(); // List of active quests
     public List<QuestData> completedQuests = new List<QuestData>(); // List of completed quests
-
-    public List<(string questName, string description)> GetAllQuestsInfo()
+    // Events to notify when quests are added or completed
+    public event Action OnQuestAdded;
+    public event Action OnQuestCompleted;
+    public List<(string questName, List<string> objectives)> GetAllQuestsInfo()
     {
-        List<(string questName, string description)> allQuestsInfo = new List<(string questName, string description)>();
+        List<(string questName, List<string> objectives)> allQuestsInfo = new List<(string questName, List<string> objectives)>();
 
         foreach (var quest in activeQuests)
         {
-            allQuestsInfo.Add((quest.questName, quest.description));
+            allQuestsInfo.Add((quest.questName, quest.objectives));
         }
 
         foreach (var quest in completedQuests)
         {
-            allQuestsInfo.Add((quest.questName, quest.description));
+            allQuestsInfo.Add((quest.questName, quest.objectives));
         }
 
         return allQuestsInfo;
@@ -37,6 +40,8 @@ public class QuestManager : MonoBehaviour
         {
             activeQuests.Add(questData);
             Debug.Log($"Quest '{questData.questName}' added to active quests!");
+            // Trigger the OnQuestAdded event
+            OnQuestAdded?.Invoke();
         }
     }
 
@@ -49,6 +54,8 @@ public class QuestManager : MonoBehaviour
             activeQuests.Remove(questData);
             completedQuests.Add(questData);
             Debug.Log($"Quest '{questData.questName}' marked as completed!");
+            // Trigger the OnQuestCompleted event
+            OnQuestCompleted?.Invoke();
         }
     }
 
