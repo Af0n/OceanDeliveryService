@@ -71,12 +71,22 @@ public class ParrotAndInnerTubes : MonoBehaviour
     
     public void SetMusicVolume(){
         float volume = musicSlider.value;
+        if (volume == 0)
+        {
+            PlayerPrefs.SetFloat("musicVolume", volume);
+            return;
+        }
         myMixer.SetFloat("Music", Mathf.Log10(volume)*20);
         PlayerPrefs.SetFloat("musicVolume", volume);
     }
 
     public void SetSfxVolume(){
         float volume = sfxSlider.value;
+        if (volume == 0)
+        {
+            PlayerPrefs.SetFloat("sfxVolume", volume);
+            return;
+        }
         myMixer.SetFloat("SFX", Mathf.Log10(volume)*20);
         PlayerPrefs.SetFloat("sfxVolume", volume);
     }
