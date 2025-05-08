@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: First Delivery
   description: 
-  recipientName: Zombie Master
+  recipientName: ZombieMaster
   objectives:
   - Pick up long box
   - Drop package off at (island name)/(house name)
-  isCompleted: 0
+  isCompleted: 1

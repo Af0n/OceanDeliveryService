@@ -21,4 +21,4 @@ MonoBehaviour:
   - find island name
   - find house number blank
   - deliver Bob's Package
-  isCompleted: 1
+  isCompleted: 0

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: Supply Runner
   description: 
-  recipientName: Deck Lady
+  recipientName: Fisherman
   objectives:
   - Grab big supply box
   - Deliver big box to the lady on the deck
-  isCompleted: 0
+  isCompleted: 1
