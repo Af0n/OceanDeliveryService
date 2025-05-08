@@ -18,4 +18,4 @@ MonoBehaviour:
   objectives:
   - Grab small snack box
   - 'Deliver the cop his lunchly(warning: transporting biohazard, proceed with caution)'
-  isCompleted: 0
+  isCompleted: 1
