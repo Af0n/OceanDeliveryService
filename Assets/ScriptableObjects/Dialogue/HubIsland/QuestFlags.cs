@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class QuestFlags : MonoBehaviour
 {
-    public Flags quest1;
-    public Flags quest2;
-    public Flags quest3;
+    public QuestData quest1;
+    public QuestData quest2;
+    public QuestData quest3;
     
     private void Awake()
     {
-        quest1.SetAll(false);
-        quest2.SetAll(false);
-        quest3.SetAll(false);
+        quest1.isCompleted = false;
+        quest2.isCompleted = false;
+        quest3.isCompleted = false;
     }
 }
