@@ -42,3 +42,18 @@ MonoBehaviour:
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
+  - CharName: John Pork
+    Text: Since you will be traveling the water., Buy the Floatie and Motor upgrades.
+      For you and your Boat!!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: John Pork
+    Text: When you are done go see Luno on the dock to learn more!!!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0

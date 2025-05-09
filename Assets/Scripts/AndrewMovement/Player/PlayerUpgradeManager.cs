@@ -32,6 +32,7 @@ public class PlayerUpgradeManager : MonoBehaviour
 
     [Header("Goggles Upgrades")] 
     public bool hasGoggles;
+    public GameObject goggles;
     public int goggleCost;
     
     private AndrewMovement movement;
@@ -93,6 +94,7 @@ public class PlayerUpgradeManager : MonoBehaviour
     public void GiveGoggleUpgrade()
     {
         hasGoggles = true;
+        goggles.SetActive(true);
     }
 
     public int ListCosts(string name)
