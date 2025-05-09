@@ -7772,7 +7772,6 @@ MonoBehaviour:
   - {fileID: 3977730413792770759}
   - {fileID: 4130606061678149925}
   - {fileID: 833980371955125369}
-  EndCredits: {fileID: 0}
 --- !u!114 &6161545469597919229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8891,7 +8890,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2730943041245509703, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.33
+      value: -2.03
       objectReference: {fileID: 0}
     - target: {fileID: 2730943041245509703, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8899,7 +8898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2730943041245509703, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.28
+      value: 5.59
       objectReference: {fileID: 0}
     - target: {fileID: 2730943041245509703, guid: 3a6d201fdf20b7c489953dbfe18f3a60, type: 3}
       propertyPath: m_LocalRotation.w

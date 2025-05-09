@@ -39,8 +39,8 @@ MonoBehaviour:
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Chrysler
-    Text: There are other people here maybe go talk to them. Go see Luno on the Dock
-      to get you started on your journey.
+    Text: There are other people here maybe go talk to them. Go see John Pork the
+      Cop at the Fusion Forge to learn more about us.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
