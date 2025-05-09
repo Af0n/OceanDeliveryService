@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434e6037ad793df418d26686ecfe766d, type: 3}
   m_Name: ZombieQuest
   m_EditorClassIdentifier: 
-  questName: First Delivery
-  description: 
+  questName: You Don't Wanna Know
+  description: "Grando, the semi-retired zombie warlord, needs you to round up some
+    feed for his \u201Cbattle hens.\u201D Apparently they eat only the best, and
+    the 'best' seems to be trying to talk to you from inside the package. It's probably
+    best not to think about it too much. Head to the big ass island."
   recipientName: ZombieMaster
   objectives:
   - Pick up long box
