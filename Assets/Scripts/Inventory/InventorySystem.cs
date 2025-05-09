@@ -345,6 +345,7 @@ public class InventorySystem : MonoBehaviour
                     // Mark the delivery as complete
                     deliveryZone.CompleteDelivery();
                     ClearDeliveryZone();
+                    questFlag.CompleteQuest();
                     return;
                 }
             }
