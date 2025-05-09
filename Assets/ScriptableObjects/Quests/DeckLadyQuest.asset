@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434e6037ad793df418d26686ecfe766d, type: 3}
   m_Name: DeckLadyQuest
   m_EditorClassIdentifier: 
-  questName: Supply Runner
-  description: 
+  questName: Fish
+  description: A Fisherman needs all the bait
   recipientName: Fisherman
   objectives:
   - Grab big supply box

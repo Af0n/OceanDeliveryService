@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CopQuest
   m_EditorClassIdentifier: 
   questName: Snack run
-  description: 
+  description: A Cop needs his snacks or
   recipientName: HorseCop
   objectives:
   - Grab small snack box
