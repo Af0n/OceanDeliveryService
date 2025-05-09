@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434e6037ad793df418d26686ecfe766d, type: 3}
   m_Name: DeckLadyQuest
   m_EditorClassIdentifier: 
-  questName: Supply Runner
-  description: 
+  questName: Fishin' for Compliments
+  description: Ol' Gilberto swears on his lucky socks that the fish up north only
+    bite when he sings (its definitely not because his voice sound like a dying whale)
+    Deliver him a packet of throat lozenges and a water proof karaoke machine pronto,
+    before the fish find out the only thing dying are our ears. He's North of the
+    big Island near the glaciers.
   recipientName: Fisherman
   objectives:
   - Grab big supply box

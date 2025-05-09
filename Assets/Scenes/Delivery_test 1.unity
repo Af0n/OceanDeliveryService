@@ -513,6 +513,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275302291}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &469190161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2694818090973091056, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+  m_PrefabInstance: {fileID: 795915406}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &525050196 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3732213878951129179, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
@@ -986,7 +991,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2788890034204332897, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
       insertIndex: -1
       addedObject: {fileID: 119070386}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2694818090973091056, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1434571034}
   m_SourcePrefab: {fileID: 100100000, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
 --- !u!1 &795915407 stripped
 GameObject:
@@ -1386,12 +1394,27 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9195602199445231648, guid: c7563d4f40c4ee541a7d8154bc76e186, type: 3}
   m_PrefabInstance: {fileID: 795915406}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 469190161}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 454449ff57439b04abb75ad464622d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1434571034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469190161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a8b15b950ae3840b746b3c452af6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest1: {fileID: 11400000, guid: 9bac6d0bb3faa5c4cbb28ba15f863fe2, type: 2}
+  quest2: {fileID: 11400000, guid: 5652dd196fbac6f49b09b204d6dfba64, type: 2}
+  quest3: {fileID: 0}
 --- !u!1 &1461733750
 GameObject:
   m_ObjectHideFlags: 0

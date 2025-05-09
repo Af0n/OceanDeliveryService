@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434e6037ad793df418d26686ecfe766d, type: 3}
   m_Name: CopQuest
   m_EditorClassIdentifier: 
-  questName: Snack run
-  description: 
+  questName: Snacks For Bertha
+  description: 'Horse Cop needs carrots for his trusty steed Bertha ASAP. Bring the
+    box of organic, vegan, non-GMO carrots for her at that big ass island over yonder.
+
+'
   recipientName: HorseCop
   objectives:
   - Grab small snack box
