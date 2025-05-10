@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1081992613647904774}
   - component: {fileID: 8828550964881681411}
   - component: {fileID: 39137163787820892}
-  - component: {fileID: 4268878725521510935}
+  - component: {fileID: 1928038095232157193}
   m_Layer: 0
   m_Name: Shark
   m_TagString: Animal
@@ -105,31 +105,28 @@ MonoBehaviour:
   speed: 5
   isMoving: 0
   inWater: 0
---- !u!143 &4268878725521510935
-CharacterController:
+--- !u!195 &1928038095232157193
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2792635040637695548}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2.4622283
+  m_AgentTypeID: 0
   m_Radius: 2.9137
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2.4622283
+  m_BaseOffset: 1.2311141
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &4021254713260166397
 GameObject:
   m_ObjectHideFlags: 0

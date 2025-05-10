@@ -1,109 +1,97 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AnimalMovement : MonoBehaviour
 {
-    private CharacterController cc;
+    private NavMeshAgent agent;
     private Animator anim;
-    
+
     public bool isLandAnimal;
-    public float speed;
+    public float speed = 3.5f;
 
     public bool isMoving;
-    private float walkDistanceTimer;
-    private float stopTimer;
-    
-    private Vector3 landDirection;
-    private Vector3 waterDirection;
-    private float yVelocity = Physics.gravity.magnitude;
+    private float walkDuration;
+    private float stopDuration;
 
-    [HideInInspector]public bool inWater;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [HideInInspector] public bool inWater;
+
+    // Start is called before the first frame update
     void Start()
     {
-        cc = GetComponent<CharacterController>();
+        agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        stopTimer = Random.Range(1, 5);
-        walkDistanceTimer = Random.Range(1, 5);
+
+        agent.speed = speed;
+        stopDuration = Random.Range(1f, 5f);
+        walkDuration = Random.Range(1f, 5f);
+
         StartCoroutine(StopTimer());
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isMoving)
+        if (isMoving && agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (isLandAnimal)
-            {
-                cc.Move(landDirection * speed * Time.deltaTime);
-            }
-            else
-            {
-                cc.Move(waterDirection * speed * Time.deltaTime);
-            }
-        }
-
-        if (!inWater)
-        {
-            Gravity();
+            isMoving = false;
+            stopDuration = Random.Range(1f, 5f);
+            StartCoroutine(StopTimer());
         }
     }
 
-    public IEnumerator StopTimer()
+    IEnumerator StopTimer()
     {
-        if(isLandAnimal)
+        if (isLandAnimal)
         {
             anim.SetBool("Walking", false);
         }
+
         isMoving = false;
-        yield return new WaitForSeconds(stopTimer);
-        isMoving = true;
-        walkDistanceTimer = Random.Range(1, 5);
+        agent.ResetPath();
+
+        yield return new WaitForSeconds(stopDuration);
+
+        walkDuration = Random.Range(1f, 5f);
         StartCoroutine(MoveTimer());
     }
 
-    public IEnumerator MoveTimer()
+    IEnumerator MoveTimer()
     {
-        if(isLandAnimal)
+        if (isLandAnimal)
         {
             anim.SetBool("Walking", true);
         }
-        if (isLandAnimal)
+
+        Vector3 destination = GetRandomNavMeshLocation(transform.position, 5f); // 5 = search radius
+        if (destination != Vector3.zero)
         {
-            landDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized;
-            transform.rotation = Quaternion.LookRotation(landDirection);
+            agent.SetDestination(destination);
+            isMoving = true;
         }
-        else
+
+        yield return new WaitForSeconds(walkDuration);
+
+        if (isMoving)
         {
-            waterDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-            transform.rotation = Quaternion.LookRotation(waterDirection);
+            agent.ResetPath();
+            isMoving = false;
+            stopDuration = Random.Range(1f, 5f);
+            StartCoroutine(StopTimer());
         }
-        
-        isMoving = true;
-        yield return new WaitForSeconds(walkDistanceTimer);
-        isMoving = false;
-        stopTimer = Random.Range(1, 5);
-        StartCoroutine(StopTimer());
     }
 
-    public void Gravity()
+    Vector3 GetRandomNavMeshLocation(Vector3 origin, float distance)
     {
-        cc.Move(Time.deltaTime * yVelocity * Vector3.down);
-    }
+        for (int i = 0; i < 10; i++) // Try 10 times to find a valid point
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * distance;
+            randomDirection += origin;
 
-    // public void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-    //     {
-    //         inWater = true;
-    //     }
-    // }
-    //
-    // public void OnTriggerExit(Collider other)
-    // {
-    //     if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-    //     {
-    //         inWater = false;
-    //     }
-    // }
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 4f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
+        return Vector3.zero; // Failed to find a point
+    }
 }

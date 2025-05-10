@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7087894309028357188}
   - component: {fileID: 1976702273994819605}
   - component: {fileID: 5542960343339976461}
-  - component: {fileID: -5606361021998943328}
+  - component: {fileID: -205047856544027244}
   m_Layer: 0
   m_Name: FishV4
   m_TagString: Untagged
@@ -103,28 +103,26 @@ MonoBehaviour:
   isLandAnimal: 0
   speed: 5
   isMoving: 0
---- !u!143 &-5606361021998943328
-CharacterController:
+  inWater: 0
+--- !u!195 &-205047856544027244
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5912169034425188338}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 0.48728883
+  m_AgentTypeID: 0
   m_Radius: 0.5062919
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.48728883
+  m_BaseOffset: 0.24364442
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

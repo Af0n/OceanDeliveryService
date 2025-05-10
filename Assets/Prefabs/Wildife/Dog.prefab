@@ -1026,9 +1026,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4035348394318168122}
-  - component: {fileID: 255436312945814977}
   - component: {fileID: 2024958786470452256}
   - component: {fileID: 546339790223229245}
+  - component: {fileID: -2770640045412623285}
   m_Layer: 0
   m_Name: Dog
   m_TagString: Animal
@@ -1053,31 +1053,6 @@ Transform:
   - {fileID: 4392174241611886825}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &255436312945814977
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7294809940399268264}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 0.63
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.49, z: 0}
 --- !u!95 &2024958786470452256
 Animator:
   serializedVersion: 7
@@ -1116,6 +1091,28 @@ MonoBehaviour:
   speed: 2
   isMoving: 0
   inWater: 0
+--- !u!195 &-2770640045412623285
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7294809940399268264}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7543116375470721894
 GameObject:
   m_ObjectHideFlags: 0
