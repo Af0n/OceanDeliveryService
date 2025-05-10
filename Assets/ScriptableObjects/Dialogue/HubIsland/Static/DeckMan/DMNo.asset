@@ -132,3 +132,11 @@ MonoBehaviour:
     DoesJump: 1
     JumpChain: {fileID: 11400000, guid: 951b4a21dbf21194ab02602becc80ee3, type: 2}
     JumpIndex: 0
+  - CharName: Deck Man
+    Text: Oh before you go I have your first package to my left. Pick it up and check
+      your database for instructions.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 1
+    JumpChain: {fileID: 11400000, guid: 951b4a21dbf21194ab02602becc80ee3, type: 2}
+    JumpIndex: 0

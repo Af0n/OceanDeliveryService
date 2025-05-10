@@ -35,3 +35,11 @@ MonoBehaviour:
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
+  - CharName: Deck Man
+    Text: Oh before you go I have your first package to my left. Pick it up and check
+      your database for instructions.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0

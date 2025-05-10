@@ -4,6 +4,7 @@ public class Package : Interactable
 {
     public InventoryObject packageType;
     public string reciepent;
+    public QuestData questData;
 
     void Start()
     {
@@ -22,6 +23,8 @@ public class Package : Interactable
             Debug.Log("inventory full!"); 
             return;
         }
+        
+        QuestManager.instance.AddQuest(questData);
 
         Destroy(gameObject);
     }

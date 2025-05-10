@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: FishermanIntro
+  m_EditorClassIdentifier: 
+  Label: 
+  Dialogues:
+  - CharName: Gilberto
+    Text: Hey dude, why are you a robot?
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Gilberto
+    Text: Did I see you over there at that big island.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Gilberto
+    Text: If so I am expecting a package from Harold. He owes me one.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Gilberto
+    Text: If you have it just put it buy my table. That would be great.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Gilberto
+    Text: I also have a package for Grando over by the stairs.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Gilberto
+    Text: Can you bring that to him. BUT NEVER OPEN IT!!!!!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Gilberto
+    Text: Anyway, It was good to meet you dude.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
