@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 
 public class DirectiveScript : MonoBehaviour
@@ -7,6 +8,7 @@ public class DirectiveScript : MonoBehaviour
     public GameObject questEntryPrefab;
     //this variable is a pointer to content, which holds the questEntryPrefabs for our UI.
     public Transform contentParent;
+    public bool database;
 
     void Start()
     {
@@ -21,8 +23,14 @@ public class DirectiveScript : MonoBehaviour
          
         //Adds our quests to a list to populate the UI later.
         List<QuestData> quests = new List<QuestData>();
-        quests.AddRange(QuestManager.instance.activeQuests);
-        quests.AddRange(QuestManager.instance.completedQuests);
+        if (database)
+        {
+            quests.AddRange(QuestManager.instance.activeQuests);
+        }
+        else
+        {
+            quests.AddRange(QuestManager.instance.completedQuests);
+        }
 
         foreach (var quest in quests)
         {

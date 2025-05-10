@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4901434539162194326}
-  - component: {fileID: 3971965064430260913}
-  - component: {fileID: 7705437066181366149}
+  - component: {fileID: 7710153318691777883}
+  - component: {fileID: 2890946710635227728}
   m_Layer: 0
   m_Name: SharkRoot
   m_TagString: Animal
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 4872907862649274056}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &3971965064430260913
+--- !u!143 &7710153318691777883
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,12 +54,12 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 0
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7705437066181366149
+--- !u!114 &2890946710635227728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,11 +68,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2208929322570938532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498c4da7b7265e642a6a614aa89fdd5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a3ce5eaebd55146b4b84beb4bcd5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLandAnimal: 0
-  speed: 5
+  moveSpeed: 3.5
+  gravity: 9.81
   isMoving: 0
   inWater: 0
 --- !u!1001 &36705550761988511
@@ -130,6 +130,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 39137163787820892, guid: 6df80444578b05a46b3781f8edb09002, type: 3}
     - {fileID: 4268878725521510935, guid: 6df80444578b05a46b3781f8edb09002, type: 3}
+    - {fileID: 1928038095232157193, guid: 6df80444578b05a46b3781f8edb09002, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
