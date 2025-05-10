@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
+  m_Name: HorseCopIntro
+  m_EditorClassIdentifier: 
+  Label: 
+  Dialogues:
+  - CharName: Harold
+    Text: Well, Hello!! I am Harold and this here is Bertha.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Bertha
+    Text: Snfffff! Pffrrrfftt! BRRrrrrrrr!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Harold
+    Text: Bertha says you smell like the Volcano Island. I am waiting for a package
+      from them.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Harold
+    Text: If you have my package you can go deliver it to my table in front of my
+      house.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Harold
+    Text: Before you go, I have a package that needs to be delivered to a Fisherman
+      just west of here. Check your map to not get lost
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Bertha
+    Text: Snrk-snrrff! Nnk-kkhh! Neeeeighhh!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Harold
+    Text: Bertha and I wish you good luck and good bye!!!
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
