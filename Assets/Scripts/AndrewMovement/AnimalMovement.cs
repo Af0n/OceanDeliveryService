@@ -7,7 +7,6 @@ public class AnimalMovement : MonoBehaviour
     private NavMeshAgent agent;
     private Animator anim;
 
-    public bool isLandAnimal;
     public float speed = 3.5f;
 
     public bool isMoving;
@@ -41,13 +40,13 @@ public class AnimalMovement : MonoBehaviour
 
     IEnumerator StopTimer()
     {
-        if (isLandAnimal)
-        {
-            anim.SetBool("Walking", false);
-        }
+        anim.SetBool("Walking", false);
 
         isMoving = false;
-        agent.ResetPath();
+        if (agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
 
         yield return new WaitForSeconds(stopDuration);
 
@@ -57,10 +56,7 @@ public class AnimalMovement : MonoBehaviour
 
     IEnumerator MoveTimer()
     {
-        if (isLandAnimal)
-        {
-            anim.SetBool("Walking", true);
-        }
+        anim.SetBool("Walking", true);
 
         Vector3 destination = GetRandomNavMeshLocation(transform.position, 5f); // 5 = search radius
         if (destination != Vector3.zero)

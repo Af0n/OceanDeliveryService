@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 6676901609533549798}
   - component: {fileID: 1424233574960307499}
   - component: {fileID: 7816516779548661229}
-  - component: {fileID: 7280298383261323649}
-  - component: {fileID: 4633757315185345454}
   m_Layer: 0
   m_Name: FishV1
   m_TagString: Untagged
@@ -88,41 +86,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7280298383261323649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6472451937761194578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498c4da7b7265e642a6a614aa89fdd5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLandAnimal: 0
-  speed: 5
-  isMoving: 0
-  inWater: 0
---- !u!195 &4633757315185345454
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6472451937761194578}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.39098388
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.2647459
-  m_BaseOffset: 0.13237295
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4

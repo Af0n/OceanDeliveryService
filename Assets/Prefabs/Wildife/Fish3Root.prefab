@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8361635339399054141}
-  - component: {fileID: 5148556612794665230}
-  - component: {fileID: -4550906831326232200}
+  - component: {fileID: 8216810525836513403}
+  - component: {fileID: 7162674327844155984}
   m_Layer: 0
   m_Name: Fish3Root
   m_TagString: Animal
@@ -34,7 +34,32 @@ Transform:
   - {fileID: 2162043438672172391}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5148556612794665230
+--- !u!143 &8216810525836513403
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4509433198464122686}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 0
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7162674327844155984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,35 +68,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4509433198464122686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498c4da7b7265e642a6a614aa89fdd5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a3ce5eaebd55146b4b84beb4bcd5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLandAnimal: 0
-  speed: 5
+  moveSpeed: 3.5
+  gravity: 9.81
   isMoving: 0
   inWater: 0
---- !u!195 &-4550906831326232200
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4509433198464122686}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1001 &6442847435545876031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,6 +130,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 566334272900090841, guid: d53fcc870e47b3247936965739c3e944, type: 3}
     - {fileID: 6253253506683871885, guid: d53fcc870e47b3247936965739c3e944, type: 3}
+    - {fileID: -369231142928023512, guid: d53fcc870e47b3247936965739c3e944, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
