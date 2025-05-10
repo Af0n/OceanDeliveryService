@@ -43,10 +43,7 @@ public class AnimalMovement : MonoBehaviour
         anim.SetBool("Walking", false);
 
         isMoving = false;
-        if (agent.isOnNavMesh)
-        {
-            agent.ResetPath();
-        }
+        agent.ResetPath();
 
         yield return new WaitForSeconds(stopDuration);
 
