@@ -7257,6 +7257,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6842560335196596053}
+    - target: {fileID: 3224124603016572265, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3224124603016572265, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3688940846235117742, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -7333,6 +7341,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6401215289907053033, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: questEntryPrefab
+      value: 
+      objectReference: {fileID: 7842023724175803594, guid: 036a016f6eaf11d499abf5ef81418cac, type: 3}
     - target: {fileID: 6658741967324121935, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
       propertyPath: m_Name
       value: Pause UI
@@ -7381,6 +7393,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6842560335196596053}
+    - target: {fileID: 7273513917914320890, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: database
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7528817170747059803, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7404,6 +7420,18 @@ PrefabInstance:
     - target: {fileID: 7528817170747059803, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082423095816715461, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_text
+      value: Directives
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082423095816715461, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082423095816715461, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8230463425983974819, guid: ea766cdd9dca8cf4d8cbb337a1e5f2b5, type: 3}
       propertyPath: m_AnchorMax.y

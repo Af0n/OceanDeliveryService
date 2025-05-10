@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 695351390648953442}
   - component: {fileID: 9185808083761079425}
   - component: {fileID: 2698316241863426533}
-  - component: {fileID: 912972866634965247}
   m_Layer: 0
   m_Name: DeliveryZone
   m_TagString: DeliveryZone
@@ -126,20 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
   questData: {fileID: 11400000, guid: 5652dd196fbac6f49b09b204d6dfba64, type: 2}
---- !u!114 &912972866634965247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362877810222608994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c645801e5d6c82743a9efc7d6d0f8bde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeQuests: []
-  completedQuests: []
 --- !u!1 &4746327860597463182
 GameObject:
   m_ObjectHideFlags: 0
