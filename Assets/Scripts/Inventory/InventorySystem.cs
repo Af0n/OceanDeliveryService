@@ -346,6 +346,7 @@ public class InventorySystem : MonoBehaviour
                     deliveryZone.CompleteDelivery();
                     ClearDeliveryZone();
                     questFlag.CompleteQuest();
+                    Economy.Scrap += 30;
                     return;
                 }
             }
