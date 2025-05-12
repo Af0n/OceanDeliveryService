@@ -26,7 +26,11 @@ namespace Water
             if (other.CompareTag("Animal"))
             {
                 Debug.Log("Exited Water Volume");
-                other.GetComponent<AquaticMovement>().inWater = true;
+                AquaticMovement aq = other.GetComponent<AquaticMovement>();
+                if (aq != null)
+                {
+                    aq.inWater = true;
+                }
             }
         }
 
@@ -48,7 +52,11 @@ namespace Water
             if (other.CompareTag("Animal"))
             {
                 Debug.Log("Exited Water Volume");
-                other.GetComponent<AquaticMovement>().inWater = false;
+                AquaticMovement aq = other.GetComponent<AquaticMovement>();
+                if (aq != null)
+                {
+                    aq.inWater = false;
+                }
             }
         }
     }

@@ -151,7 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   packageType: {fileID: 11400000, guid: 669dd3317b8bd594f8b8051353bca318, type: 2}
-  reciepent: 
+  reciepent: ZombieMaster
+  questData: {fileID: 11400000, guid: c1729fc68ae14d54d9ee447f6cca8474, type: 2}
 --- !u!1001 &5586193092781692530
 PrefabInstance:
   m_ObjectHideFlags: 0

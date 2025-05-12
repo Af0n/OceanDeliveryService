@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class Economy
 {
-    public static int Scrap = 100;
+    public static int Scrap = 20;
 
     public static void ChangeScrap(int amount){
         Scrap += amount;

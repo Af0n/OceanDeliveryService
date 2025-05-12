@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c445707a81752d24a9b3f1bd9bd448ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 2
+  Value: 8
   InventoryObject: {fileID: 11400000, guid: ef597df812cd26946a66d7efa43fe631, type: 2}
 --- !u!65 &5949019739062302051
 BoxCollider:

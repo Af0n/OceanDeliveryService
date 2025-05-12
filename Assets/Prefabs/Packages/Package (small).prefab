@@ -151,7 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   packageType: {fileID: 11400000, guid: 2571549ff3fab414fb9fbd3816e7e3b7, type: 2}
-  reciepent: 
+  reciepent: HorseCop
+  questData: {fileID: 11400000, guid: fc20c57c5572bbe4da16de9304716af2, type: 2}
 --- !u!1001 &2999852580562171505
 PrefabInstance:
   m_ObjectHideFlags: 0
