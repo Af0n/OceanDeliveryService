@@ -12,25 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad1ffd269f52404b93251cf424c40da, type: 3}
   m_Name: GoodBye
   m_EditorClassIdentifier: 
-  Label: Grando the Warlord
+  Label: No one
   Dialogues:
   - CharName: Mrs.Wylde
-    Text: Oh no, you need to bring him a package. He is very scary just be careful
-    HasMenu: 0
-    MenuOptions: []
-    DoesJump: 0
-    JumpChain: {fileID: 0}
-    JumpIndex: 0
-  - CharName: Mrs. Wylde
-    Text: He is hiding out on that big island. He hides behind mountain with his
-      army of Chicken Jockey's.
+    Text: 'Ok, it was very good to talk to you then. '
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Mr. Wylde
-    Text: Just be careful when you see him and stay safe!!
+    Text: Yes, it was. I hope to see you soon Mr. Robot.
+    HasMenu: 0
+    MenuOptions: []
+    DoesJump: 0
+    JumpChain: {fileID: 0}
+    JumpIndex: 0
+  - CharName: Mr. Wylde
+    Text: Don't forget to come talk to us if you get lost.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
