@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reciepent: 
+  isPackage: 0
 --- !u!1 &4099531049877859712
 GameObject:
   m_ObjectHideFlags: 0

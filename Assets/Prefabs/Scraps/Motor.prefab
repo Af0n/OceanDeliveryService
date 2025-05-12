@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 15
   InventoryObject: {fileID: 11400000, guid: 8988dd789ae765d4ab66d8825306df33, type: 2}
+  spriteIndex: 4
 --- !u!65 &8873443186829869632
 BoxCollider:
   m_ObjectHideFlags: 0

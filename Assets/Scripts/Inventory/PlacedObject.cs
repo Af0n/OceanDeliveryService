@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlacedObject : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class PlacedObject : MonoBehaviour
     private string reciepent; // set as serialize field so viewable from inspector (for testing)
     private int value;
 
+    public bool isPackage;
+
     public void DestroySelf()
     {
         Destroy(gameObject);
@@ -48,5 +51,14 @@ public class PlacedObject : MonoBehaviour
     public int GetValue()
     {
         return value;
+    }
+
+    void Start()
+    {
+        if(!isPackage)
+        {
+            Image sprite = GetComponentInChildren<Image>();
+            sprite.sprite = SpriteManager.Instance.GetIndexSprite(inventoryObject.spriteIndex);
+        }
     }
 }
