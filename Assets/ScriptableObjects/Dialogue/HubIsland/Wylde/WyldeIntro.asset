@@ -29,24 +29,22 @@ MonoBehaviour:
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Mrs. Wylde
-    Text: Our son is walking around here somewhere. He is a bit shy so he won't talk
-      to you.
-    HasMenu: 0
-    MenuOptions: []
-    DoesJump: 0
-    JumpChain: {fileID: 0}
-    JumpIndex: 0
-  - CharName: Mrs. Wylde
-    Text: We have all we need over here. So that package is not for us.
+    Text: You are here to deliver a package. We have all we need over here. So that
+      package is not for us.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Mr. Wylde
-    Text: Farewell, Friend hope to see you soon.
-    HasMenu: 0
-    MenuOptions: []
+    Text: We can help you out, we here a lot about the other islands. Who are you
+      looking for?
+    HasMenu: 1
+    MenuOptions:
+    - {fileID: 11400000, guid: 7af65c6eee007764d980763450a205c6, type: 2}
+    - {fileID: 11400000, guid: 98fa3a40fd0595e4dbf0433e6f8d4706, type: 2}
+    - {fileID: 11400000, guid: 31150d9c8ccc62f479dbe99432922d5e, type: 2}
+    - {fileID: 11400000, guid: 31150d9c8ccc62f479dbe99432922d5e, type: 2}
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0

@@ -29,17 +29,19 @@ MonoBehaviour:
     JumpChain: {fileID: 0}
     JumpIndex: 0
   - CharName: Mr. Wylde
-    Text: I heard there was a tiny island to the west of the big island against the
-      glacier wall. Might be a good place to find a Fisherman.
+    Text: Let us help you find the rightful owner then.
     HasMenu: 0
     MenuOptions: []
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
-  - CharName: Mr. & Mrs. Wylde
-    Text: Farewell, Friend!!!
-    HasMenu: 0
-    MenuOptions: []
+  - CharName: Mrs. Wylde
+    Text: Who are you trying to find.
+    HasMenu: 1
+    MenuOptions:
+    - {fileID: 11400000, guid: 7af65c6eee007764d980763450a205c6, type: 2}
+    - {fileID: 11400000, guid: 98fa3a40fd0595e4dbf0433e6f8d4706, type: 2}
+    - {fileID: 11400000, guid: 31150d9c8ccc62f479dbe99432922d5e, type: 2}
     DoesJump: 0
     JumpChain: {fileID: 0}
     JumpIndex: 0
