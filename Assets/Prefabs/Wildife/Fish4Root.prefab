@@ -72,9 +72,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3.5
-  gravity: 9.81
   isMoving: 0
   inWater: 0
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  standableLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  sampleRadius: 10
 --- !u!1001 &2438269193960421310
 PrefabInstance:
   m_ObjectHideFlags: 0
