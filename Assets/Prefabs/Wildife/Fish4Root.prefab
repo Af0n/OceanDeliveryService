@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9152950868638573300}
-  - component: {fileID: 3919848120942288715}
-  - component: {fileID: 6298733361277098245}
+  - component: {fileID: -1066033845467628948}
+  - component: {fileID: 7304399269413730450}
   m_Layer: 0
   m_Name: Fish4Root
   m_TagString: Animal
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7253105064714207527}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 195.60905, y: 228.772, z: 588.9225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 8799339293871453889}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &3919848120942288715
+--- !u!143 &-1066033845467628948
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,12 +54,12 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 0
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6298733361277098245
+--- !u!114 &7304399269413730450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,11 +68,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7253105064714207527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498c4da7b7265e642a6a614aa89fdd5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a3ce5eaebd55146b4b84beb4bcd5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLandAnimal: 0
-  speed: 5
+  moveSpeed: 3.5
+  gravity: 9.81
   isMoving: 0
   inWater: 0
 --- !u!1001 &2438269193960421310
@@ -130,6 +130,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5542960343339976461, guid: 60b66bb591ee4b845bab7db6a5120cf0, type: 3}
     - {fileID: -5606361021998943328, guid: 60b66bb591ee4b845bab7db6a5120cf0, type: 3}
+    - {fileID: -205047856544027244, guid: 60b66bb591ee4b845bab7db6a5120cf0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
