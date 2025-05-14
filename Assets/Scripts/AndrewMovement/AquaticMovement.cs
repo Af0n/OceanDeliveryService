@@ -15,7 +15,10 @@ public class AquaticMovement : MonoBehaviour
     public bool inWater;
     private float yVelocity = Physics.gravity.magnitude;
 
-    // Start is called before the first frame update
+    public LayerMask waterLayer;      // Assign your Water layer in inspector
+    public LayerMask standableLayer;  // Assign your Land layer in inspector
+    public float sampleRadius = 10f;  // How far to search for water spots
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -30,6 +33,11 @@ public class AquaticMovement : MonoBehaviour
     {
         if (isMoving)
         {
+            if (!inWater)
+            {
+                StopCoroutine(MoveTimer());
+                StartCoroutine(MoveTimer());
+            }
             cc.Move(moveDirection * moveSpeed * Time.deltaTime);
             Vector3 flatDirection = new Vector3(moveDirection.x, 0, moveDirection.z);
             if (flatDirection != Vector3.zero)
@@ -50,7 +58,7 @@ public class AquaticMovement : MonoBehaviour
         isMoving = false;
         moveDirection = Vector3.zero;
 
-        stopDuration = Random.Range(1f, 5f);
+        stopDuration = Random.Range(1f, 3f);
         yield return new WaitForSeconds(stopDuration);
 
         StartCoroutine(MoveTimer());
@@ -59,15 +67,46 @@ public class AquaticMovement : MonoBehaviour
     IEnumerator MoveTimer()
     {
         isMoving = true;
-        
-        moveDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.5f, 0.5f), Random.Range(-1f, 1f));
+        moveDirection = Vector3.zero;
+
+        Vector3 origin = transform.position + Vector3.up * 0.5f; // Raise the ray origin a bit to avoid hitting the ground below
+
+        for (int attempt = 0; attempt < 10; attempt++)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere;
+            randomDirection.y = Random.Range(-0.5f, 0.5f);
+            Vector3 candidatePosition = transform.position + randomDirection * sampleRadius;
+
+            // Check if the candidate position is in water
+            bool isInWater = Physics.CheckSphere(candidatePosition, 0.5f, waterLayer);
+
+            // Check if there's a clear path to it (no land in the way)
+            bool blockedByLand = Physics.Raycast(origin, (candidatePosition - origin).normalized,
+                                                  Vector3.Distance(origin, candidatePosition),
+                                                  standableLayer);
+
+            if (isInWater && !blockedByLand)
+            {
+                moveDirection = (candidatePosition - transform.position).normalized;
+                break;
+            }
+        }
+
+        // If a valid direction wasn't found
+        if (moveDirection == Vector3.zero)
+        {
+            isMoving = false;
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(MoveTimer());
+            yield break;
+        }
 
         walkDuration = Random.Range(1f, 5f);
         yield return new WaitForSeconds(walkDuration);
 
         StartCoroutine(StopTimer());
     }
-    
+
     public void Gravity()
     {
         cc.Move(Time.deltaTime * yVelocity * Vector3.down);

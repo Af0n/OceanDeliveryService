@@ -133,8 +133,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c445707a81752d24a9b3f1bd9bd448ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 7
+  Value: 15
   InventoryObject: {fileID: 11400000, guid: 8988dd789ae765d4ab66d8825306df33, type: 2}
+  spriteIndex: 4
 --- !u!65 &8873443186829869632
 BoxCollider:
   m_ObjectHideFlags: 0

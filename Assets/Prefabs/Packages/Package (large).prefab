@@ -151,7 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   packageType: {fileID: 11400000, guid: b625ccb204cc91544b6bf014bd8186fc, type: 2}
-  reciepent: 
+  reciepent: Fisherman
+  questData: {fileID: 11400000, guid: 082188d2c7c90384c9efc8bda28ea359, type: 2}
 --- !u!1001 &8649913416660159202
 PrefabInstance:
   m_ObjectHideFlags: 0

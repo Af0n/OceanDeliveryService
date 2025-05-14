@@ -263,6 +263,35 @@ public class InventorySystem : MonoBehaviour
 
         return false;
     }
+    
+    public bool AddScrapToInventory(InventoryObject inventoryObject, int value)
+    {
+        foreach (GameObject slot in inventorySlots)
+        {
+            if (gridUI.CanPlaceItem(inventoryObject, dir, slot))
+            {
+                GameObject newItem = Instantiate(inventoryObject.uiPrefab, slot.transform);
+                newItem.transform.localPosition = Vector3.zero;
+
+                float rotation = inventoryObject.GetRotationAngle(dir);
+                newItem.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+
+                // save the object when it's created
+                PlacedObject.SetUpScrap(newItem, inventoryObject, dir, value);
+
+                gridUI.PlaceItem(inventoryObject, dir, slot);
+                // Debug.Log("setting slot unavailable: " + slot.name);
+
+                return true;
+            }
+            else
+            {
+                Debug.Log("could not find slot -- see GridUI.CanPlaceItem()");
+            }
+        }
+
+        return false;
+    }
 
     private void Rotate(InputAction.CallbackContext context)
     {
@@ -378,6 +407,32 @@ public class InventorySystem : MonoBehaviour
         // input system boilerplate
         rotate.Disable(); // null reference here
         drop.Disable();
+    }
+
+    public void SellScrap()
+    {
+        foreach (GameObject slot in inventorySlots)
+        {
+            // Check if the slot has a child and that child has a Scrap component
+            if (slot.transform.childCount > 0)
+            {
+                if(slot.transform.GetChild(0).GetComponent<PlacedObject>().GetValue() != 0)
+                {
+                    Cell cellComp = slot.GetComponent<Cell>();
+                    Transform rootCell = cellComp.GetRoot();
+                    PlacedObject tempPlacedObject = rootCell.GetComponentInChildren<PlacedObject>();
+                    dir = tempPlacedObject.GetDir();
+                    inventoryObject = tempPlacedObject.GetInventoryObject();
+                    objectToMove = tempPlacedObject.gameObject;
+
+                    Economy.ChangeScrap(slot.transform.GetChild(0).GetComponent<PlacedObject>().GetValue());
+
+                    // Remove the item from the grid and reset
+                    gridUI.RemoveItem(inventoryObject, dir, slot);
+                    ResetObjectToMove();
+                }
+            }
+        }
     }
 }
     

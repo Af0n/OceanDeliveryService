@@ -17,6 +17,7 @@ public class InventoryObject : ScriptableObject
     public int width;
     public bool dontRotate;
     private Dir dir;
+    public int spriteIndex;
 
     public int GetRotationAngle(Dir dir)
     {
