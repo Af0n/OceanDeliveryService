@@ -20,56 +20,33 @@ public class AnimalMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-
         agent.speed = speed;
-        stopDuration = Random.Range(1f, 5f);
-        walkDuration = Random.Range(1f, 5f);
-
-        StartCoroutine(StopTimer());
+        StartCoroutine(MovementLoop());
     }
 
-    void Update()
+    IEnumerator MovementLoop()
     {
-        if (isMoving && agent.remainingDistance <= agent.stoppingDistance)
+        while (true)
         {
+            // Stop phase
             isMoving = false;
-            stopDuration = Random.Range(1f, 5f);
-            StartCoroutine(StopTimer());
-        }
-    }
-
-    IEnumerator StopTimer()
-    {
-        anim.SetBool("Walking", false);
-
-        isMoving = false;
-        agent.ResetPath();
-
-        yield return new WaitForSeconds(stopDuration);
-
-        walkDuration = Random.Range(1f, 5f);
-        StartCoroutine(MoveTimer());
-    }
-
-    IEnumerator MoveTimer()
-    {
-        anim.SetBool("Walking", true);
-
-        Vector3 destination = GetRandomNavMeshLocation(transform.position, 5f); // 5 = search radius
-        if (destination != Vector3.zero)
-        {
-            agent.SetDestination(destination);
-            isMoving = true;
-        }
-
-        yield return new WaitForSeconds(walkDuration);
-
-        if (isMoving)
-        {
+            anim.SetBool("Walking", false);
             agent.ResetPath();
-            isMoving = false;
+
             stopDuration = Random.Range(1f, 5f);
-            StartCoroutine(StopTimer());
+            yield return new WaitForSeconds(stopDuration);
+
+            // Walk phase
+            Vector3 destination = GetRandomNavMeshLocation(transform.position, 5f);
+            if (destination != Vector3.zero)
+            {
+                agent.SetDestination(destination);
+                isMoving = true;
+                anim.SetBool("Walking", true);
+
+                walkDuration = Random.Range(1f, 5f);
+                yield return new WaitForSeconds(walkDuration);
+            }
         }
     }
 
