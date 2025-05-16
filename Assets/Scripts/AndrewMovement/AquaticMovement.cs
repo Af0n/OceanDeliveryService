@@ -18,6 +18,8 @@ public class AquaticMovement : MonoBehaviour
     public LayerMask waterLayer;      // Assign your Water layer in inspector
     public LayerMask standableLayer;  // Assign your Land layer in inspector
     public float sampleRadius = 10f;  // How far to search for water spots
+    
+    private Coroutine moveCoroutine;
 
     void Start()
     {
@@ -35,8 +37,11 @@ public class AquaticMovement : MonoBehaviour
         {
             if (!inWater)
             {
-                StopCoroutine(MoveTimer());
-                StartCoroutine(MoveTimer());
+                if (moveCoroutine != null)
+                {
+                    StopCoroutine(moveCoroutine);
+                }
+                moveCoroutine = StartCoroutine(MoveTimer());
             }
             cc.Move(moveDirection * moveSpeed * Time.deltaTime);
             Vector3 flatDirection = new Vector3(moveDirection.x, 0, moveDirection.z);
